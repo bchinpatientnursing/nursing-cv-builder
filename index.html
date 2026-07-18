@@ -6,7 +6,7 @@
     <style>
         * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         body { background-color: #f0f4f8; color: #333; margin: 0; padding: 20px; }
-        .container { max-width: 1200px; margin: 0 auto; display: flex; gap: 20px; }
+        .container { max-width: 1300px; margin: 0 auto; display: flex; gap: 25px; }
         .form-panel { width: 50%; padding: 10px; }
         .preview-panel { width: 50%; padding: 10px; }
         .card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px; border-top: 4px solid #005A9C; }
@@ -16,11 +16,11 @@
         label { display: block; font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #444; text-transform: uppercase; }
         input, select, textarea { width: 100%; padding: 8px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; }
         textarea { height: 85px; resize: vertical; }
-        .form-row { display: flex; gap: 10px; }
+        .form-row { display: flex; gap: 10px; margin-bottom: 4px; }
         .form-col { flex: 1; }
-        .btn { background-color: #005A9C; color: white; border: none; padding: 12px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; font-size: 13px; margin-bottom: 10px; transition: background 0.2s; }
+        .btn { background-color: #005A9C; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; font-size: 13px; margin-bottom: 10px; transition: background 0.2s; }
         .btn:hover { background-color: #004070; }
-        .btn-secondary { background-color: #fff; color: #005A9C; border: 1px dashed #005A9C; }
+        .btn-secondary { background-color: #fff; color: #005A9C; border: 1px dashed #005A9C; margin-top: 5px; }
         .btn-secondary:hover { background-color: #f4f8fb; }
         .btn-danger { background-color: #fff; color: #cc0000; border: 1px solid #cc0000; font-size: 11px; padding: 4px 8px; width: auto; margin-bottom: 15px; border-radius: 4px; cursor: pointer; }
         .btn-danger:hover { background-color: #fff0f0; }
@@ -30,42 +30,34 @@
         .btn-word:hover { background-color: #124596; }
         .error-box { background-color: #fff0f0; border: 2px solid #cc0000; padding: 10px; border-radius: 4px; color: #cc0000; font-weight: bold; font-size: 12px; margin-bottom: 15px; display: none; }
         
-        /* Strict Academic Print Canvas Styling */
-        .preview-pane { background: white; padding: 54px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); font-family: "Times New Roman", Times, serif; color: black; line-height: 1.2; font-size: 11pt; position: sticky; top: 20px; }
-        .p-header { text-align: center; margin-bottom: 20px; width: 100%; }
-        .p-name { font-size: 18pt; font-weight: bold; text-transform: uppercase; margin: 0 0 6px 0; letter-spacing: 0.5px; }
-        .p-contact { font-size: 10pt; margin: 0; color: #000; word-spacing: 1px; }
-        .p-section { margin-top: 16px; margin-bottom: 4px; width: 100%; }
-        .p-section:first-of-type { margin-top: 10px; }
-        .p-sectitle { font-size: 13pt; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid black; padding-bottom: 2px; margin: 0 0 8px 0; letter-spacing: 0.5px; }
+        /* Elite Academic Print Canvas - Exact Stylesheet Compliance */
+        .preview-pane { background: white; padding: 54px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); font-family: "Times New Roman", Times, serif; color: black; line-height: 1.15; font-size: 11pt; position: sticky; top: 20px; }
+        .p-header { text-align: center; margin-bottom: 22px; width: 100%; }
+        .p-name { font-size: 16pt; font-weight: bold; text-transform: uppercase; margin: 0 0 5px 0; letter-spacing: 0.75px; }
+        .p-contact { font-size: 10.5pt; margin: 0; color: #000; }
+        .p-section { margin-top: 18px; margin-bottom: 4px; width: 100%; }
+        .p-sectitle { font-size: 13pt; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid black; padding-bottom: 3px; margin: 0 0 10px 0; letter-spacing: 0.75px; }
         
-        /* Bulletproof Print Layout Tables */
-        .cv-table { width: 100%; border-collapse: collapse; margin-bottom: 6px; table-layout: fixed; }
-        .cv-table td { padding: 0; vertical-align: top; font-family: "Times New Roman", Times, serif; font-size: 11pt; }
-        .td-left { text-align: left; width: 80%; padding-right: 15px; }
-        .td-right { text-align: right; width: 20%; white-space: nowrap; font-size: 11pt; }
+        .cv-table { width: 100%; border-collapse: collapse; margin-bottom: 4px; table-layout: fixed; }
+        .cv-table td { padding: 0; vertical-align: top; font-family: "Times New Roman", Times, serif; font-size: 11pt; line-height: 1.15; }
+        .td-left { text-align: left; width: 75%; padding-right: 15px; }
+        .td-right { text-align: right; width: 25%; white-space: nowrap; font-size: 11pt; }
         
-        .p-bold { font-weight: bold; }
-        .p-text { font-size: 11pt; text-align: justify; margin: 0 0 4px 0; font-family: "Times New Roman", Times, serif; }
-        .p-bullets { margin: 2px 0 6px 0; padding-left: 20px; list-style-type: disc; }
-        .p-bullet-item { font-size: 10.5pt; margin-bottom: 3px; text-align: justify; }
+        .p-bold { font-family: "Times New Roman", Times, serif; font-weight: bold; }
+        .p-text { font-size: 11pt; text-align: justify; margin: 0 0 4px 0; }
+        .p-bullets { margin: 3px 0 8px 0; padding-left: 24px; list-style-type: disc; }
+        .p-bullet-item { font-size: 11pt; margin-bottom: 4px; text-align: justify; line-height: 1.15; }
         
-        .skills-table { width: 100%; border-collapse: collapse; }
-        .skills-table td { width: 50%; font-size: 10.5pt; padding: 2px 0; vertical-align: top; font-family: "Times New Roman", Times, serif; }
+        .skills-table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+        .skills-table td { width: 50%; font-size: 11pt; padding: 3px 0; vertical-align: top; font-family: "Times New Roman", Times, serif; }
 
-        /* ================= ABSOLUTE PRINT COMPILATION ================= */
         @media print {
             body, html { background: white !important; padding: 0 !important; margin: 0 !important; }
             .form-panel, h1, p, .btn, .card { display: none !important; }
             .container { display: block !important; width: 100% !important; }
             .preview-panel { width: 100% !important; padding: 0 !important; }
             .preview-pane { box-shadow: none !important; padding: 0 !important; border: none !important; position: static !important; }
-            
-            /* The Secret Weapon: Forcibly deletes browser website links, dates, and header text slots */
-            @page { 
-                size: letter;
-                margin: 0.75in !important; 
-            }
+            @page { size: letter; margin: 0.75in !important; }
         }
     </style>
 </head>
@@ -73,11 +65,11 @@
 
     <h1>📋 Academic Nursing CV Builder & Real-Time Layout Tool</h1>
     <p style="text-align:center; color:#555; max-width:800px; margin: 0 auto 25px auto; font-size: 14px;">
-        Fill out your entries below. Blanks vanish automatically. Save your <strong>.cvdata</strong> file locally to preserve progress.
+        Fill out your entries below. Empty sections completely vanish from final exports.
     </p>
 
     <div class="container">
-        <!-- FORM CONTROL PANEL -->
+        <!-- FORM CONFIGURATION ENGINE -->
         <div class="form-panel">
             
             <div class="card">
@@ -99,7 +91,7 @@
                         <input type="text" id="fullName" placeholder="Jane Doe" oninput="handleTextInput('fullName', this.value)">
                     </div>
                     <div class="form-col">
-                        <label>Credentials (Order: Degree, Licensure, Certs)</label>
+                        <label>Credentials (Order: Highest Degree, Licensure, Certs)</label>
                         <input type="text" id="credentials" placeholder="e.g., MSN, RN, CPN" oninput="handleTextInput('credentials', this.value)">
                     </div>
                 </div>
@@ -118,7 +110,7 @@
                         <label>Address (Optional)</label>
                         <input type="text" id="address" placeholder="Boston, MA" oninput="handleTextInput('address', this.value)">
                     </div>
-                    <div class="col">
+                    <div class="form-col">
                         <label>LinkedIn (Optional)</label>
                         <input type="text" id="linkedin" placeholder="linkedin.com/in/username" oninput="handleTextInput('linkedin', this.value)">
                     </div>
@@ -135,7 +127,7 @@
             <!-- EDUCATION -->
             <div class="card">
                 <h2>Education</h2>
-                <span class="subtitle">Ensure reverse chronological order (newest at top) is followed.</span>
+                <span class="subtitle">List oldest or newest. Ensure reverse chronological order is maintained.</span>
                 <div id="educationContainer"></div>
                 <button class="btn btn-secondary" onclick="addEducation()">+ Add Education Slot</button>
             </div>
@@ -143,7 +135,7 @@
             <!-- EXPERIENCE -->
             <div class="card">
                 <h2>Professional Experience</h2>
-                <span class="subtitle">List nursing positions. Each features clinical reporting prompts.</span>
+                <span class="subtitle">Add any past positions. Click "+ Add Bullet" inside each card to frame accomplishments.</span>
                 <div id="experienceContainer"></div>
                 <button class="btn btn-secondary" onclick="addExperience()">+ Add Experience Slot</button>
             </div>
@@ -151,7 +143,7 @@
             <!-- SKILLS -->
             <div class="card">
                 <h2>Clinical Skills</h2>
-                <span class="subtitle">Comma-separated skills (e.g., Patient Assessment, Epic EMR, IV Insertion)</span>
+                <span class="subtitle">Comma-separated list (e.g., Patient Assessment, Epic EMR, IV Insertion)</span>
                 <textarea id="skills" placeholder="Patient Assessment, Medication Administration, Wound Care, Epic EMR" oninput="handleTextInput('skills', this.value)"></textarea>
             </div>
 
@@ -164,7 +156,7 @@
 
         </div>
 
-        <!-- PRINT PREVIEW PANEL -->
+        <!-- TYPOGRAPHIC EMULATION SURFACE -->
         <div class="preview-panel">
             <div class="preview-pane" id="preview"></div>
         </div>
@@ -184,13 +176,14 @@
                 { degree: "Bachelor of Science in Nursing (BSN)", school: "Boston College", location: "Chestnut Hill, MA", year: "2023" }
             ],
             experience: [
-                { title: "Clinical Director of Innovation and Education", org: "Boston Children's Hospital", location: "Boston, MA", endYear: "Present", bullets: ["Manage localized quality improvement initiatives and advanced clinical technology workflows across a high-acuity pediatric inpatient footprint.","Coordinate nursing educational tracks, transforming complex operational and technological guidelines into digestible training pathways.","Collaborate closely with Senior Nursing Directors to implement dynamic, frontline-focused care protocols."] },
-                { title: "Staff Nurse, Inpatient Medical Program", org: "Boston Children's Hospital", location: "Boston, MA", startMonth: "June", startYear: "2023", endMonth: "Oct", endYear: "2025", endYear: "2025", bullets: ["Delivered comprehensive, safe, and family-centered acute care to pediatric populations within specialized medical units.","Assessed clinical parameters, administered high-risk medications, and initiated continuous monitoring for complex patient profiles.","Served as an active unit council representative assisting with technology implementation and safety metrics."] }
+                { title: "Clinical Director of Innovation and Education", org: "Boston Children's Hospital", location: "Boston, MA", startMonth: "Nov", startYear: "2025", endMonth: "Present", endYear: "Present", bullets: ["Manage localized quality improvement initiatives and advanced clinical technology workflows across a high-acuity pediatric inpatient footprint.","Coordinate nursing educational tracks, transforming complex operational and technological guidelines into digestible training pathways.","Collaborate closely with Senior Nursing Directors to implement dynamic, frontline-focused care protocols."] },
+                { title: "Staff Nurse, Inpatient Medical Program", org: "Boston Children's Hospital", location: "Boston, MA", startMonth: "June", startYear: "2023", endMonth: "Oct", endYear: "2025", bullets: ["Delivered comprehensive, safe, and family-centered acute care to pediatric populations within specialized medical units.","Assessed clinical parameters, administered high-risk medications, and initiated continuous monitoring for complex patient profiles.","Served as an active unit council representative assisting with technology implementation and safety metrics."] }
             ],
             skills: "Patient Assessment & Triage, Medication Administration, Pediatric Advanced Life Support (PALS), Quality Improvement, Workflow Automation, Epic EMR, Care Coordination",
             isValid: true
         };
 
+        const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
         const YEARS = ["Present", "2027", "2026", "2025", "2024", "2023", "2022", "2021", "2020", "2019"];
 
         function init() {
@@ -227,6 +220,18 @@
             updatePreview();
         }
 
+        function addExpBulletSlot(idx) {
+            state.experience[idx].bullets.push("");
+            renderFormLists();
+            updatePreview();
+        }
+
+        function removeExpBulletSlot(idx, bIdx) {
+            state.experience[idx].bullets.splice(bIdx, 1);
+            renderFormLists();
+            updatePreview();
+        }
+
         function renderFormLists() {
             const eduCont = document.getElementById('educationContainer');
             eduCont.innerHTML = '';
@@ -235,10 +240,10 @@
                     <div style="background:#fcfcfc; padding:12px; border:1px solid #eee; margin-bottom:10px; border-radius:4px;">
                         <div class="form-row">
                             <div class="form-col"><label>Degree</label><input type="text" value="${edu.degree}" oninput="updateEduField(${idx}, 'degree', this.value)"></div>
-                            <div class="col"><label>School</label><input type="text" value="${edu.school}" oninput="updateEduField(${idx}, 'school', this.value)"></div>
+                            <div class="form-col"><label>School Name</label><input type="text" value="${edu.school}" oninput="updateEduField(${idx}, 'school', this.value)"></div>
                         </div>
                         <div class="form-row">
-                            <div class="form-col"><label>Location</label><input type="text" value="${edu.location}" oninput="updateEduField(${idx}, 'location', this.value)"></div>
+                            <div class="form-col"><label>Location (City, State)</label><input type="text" value="${edu.location}" oninput="updateEduField(${idx}, 'location', this.value)"></div>
                             <div class="form-col">
                                 <label>Graduation Year</label>
                                 <select onchange="updateEduField(${idx}, 'year', this.value); checkChronology();">
@@ -246,7 +251,7 @@
                                 </select>
                             </div>
                         </div>
-                        <button class="btn-danger" onclick="removeEdu(${idx})">✕ Remove</button>
+                        <button class="btn-danger" onclick="removeEdu(${idx})">✕ Remove Education Entry</button>
                     </div>
                 `;
             });
@@ -254,14 +259,47 @@
             const expCont = document.getElementById('experienceContainer');
             expCont.innerHTML = '';
             state.experience.forEach((exp, idx) => {
+                let bulletsHtml = '';
+                exp.bullets.forEach((b, bIdx) => {
+                    bulletsHtml += `
+                        <div style="display:flex; gap:5px; margin-bottom:5px; align-items:center;">
+                            <input type="text" value="${b}" placeholder="Start with a strong verb..." oninput="updateExpBullet(${idx}, ${bIdx}, this.value)" style="margin-bottom:0; flex:1;">
+                            <button class="btn-danger" onclick="removeExpBulletSlot(${idx}, ${bIdx})" style="margin-bottom:0; padding:8px;">✕</button>
+                        </div>
+                    `;
+                });
+
                 expCont.innerHTML += `
-                    <div style="background:#fcfcfc; padding:12px; border:1px solid #eee; margin-bottom:10px; border-radius:4px;">
+                    <div style="background:#fcfcfc; padding:15px; border:1px solid #eee; margin-bottom:15px; border-radius:4px;">
                         <div class="form-row">
                             <div class="form-col"><label>Job Title</label><input type="text" value="${exp.title}" oninput="updateExpField(${idx}, 'title', this.value)"></div>
-                            <div class="form-col"><label>Organization</label><input type="text" value="${exp.org}" oninput="updateExpField(${idx}, 'org', this.value)"></div>
+                            <div class="form-col"><label>Organization Name</label><input type="text" value="${exp.org}" oninput="updateExpField(${idx}, 'org', this.value)"></div>
                         </div>
                         <div class="form-row">
-                            <div class="form-col"><label>Location</label><input type="text" value="${exp.location}" oninput="updateExpField(${idx}, 'location', this.value)"></div>
+                            <div class="form-col"><label>Location (City, State)</label><input type="text" value="${exp.location}" oninput="updateExpField(${idx}, 'location', this.value)"></div>
+                        </div>
+                        
+                        <!-- EXACT START DATE TIMELINE STRUCTURE -->
+                        <div class="form-row">
+                            <div class="form-col">
+                                <label>Start Month</label>
+                                <select onchange="updateExpField(${idx}, 'startMonth', this.value);">
+                                    ${MONTHS.map(m => `<option value="${m}" ${exp.startMonth===m?'selected':''}>${m}</option>`).join('')}
+                                </select>
+                            </div>
+                            <div class="form-col">
+                                <label>Start Year</label>
+                                <select onchange="updateExpField(${idx}, 'startYear', this.value);">
+                                    ${YEARS.filter(y => y !== 'Present').map(y => `<option value="${y}" ${exp.startYear===y?'selected':''}>${y}</option>`).join('')}
+                                </select>
+                            </div>
+                            <div class="form-col">
+                                <label>End Month</label>
+                                <select onchange="updateExpField(${idx}, 'endMonth', this.value);">
+                                    <option value="Present" ${exp.endMonth==='Present'?'selected':''}>Present</option>
+                                    ${MONTHS.map(m => `<option value="${m}" ${exp.endMonth===m?'selected':''}>${m}</option>`).join('')}
+                                </select>
+                            </div>
                             <div class="form-col">
                                 <label>End Year</label>
                                 <select onchange="updateExpField(${idx}, 'endYear', this.value); checkChronology();">
@@ -269,13 +307,13 @@
                                 </select>
                             </div>
                         </div>
-                        <label style="color:#005A9C; margin-top:5px;">Bullet 1: Clinical Scope & Competency</label>
-                        <textarea oninput="updateExpBullet(${idx}, 0, this.value)">${exp.bullets[0]||''}</textarea>
-                        <label style="color:#005A9C;">Bullet 2: Interdisciplinary Care Coordination</label>
-                        <textarea oninput="updateExpBullet(${idx}, 1, this.value)">${exp.bullets[1]||''}</textarea>
-                        <label style="color:#005A9C;">Bullet 3: Quality Initiatives & Academic Inquiry</label>
-                        <textarea oninput="updateExpBullet(${idx}, 2, this.value)">${exp.bullets[2]||''}</textarea>
-                        <button class="btn-danger" onclick="removeExp(${idx})">✕ Remove</button>
+
+                        <label style="color:#005A9C; margin-top:10px;">Accomplishment Bullet Points</label>
+                        ${bulletsHtml}
+                        <button class="btn btn-secondary" onclick="addExpBulletSlot(${idx})">+ Add Bullet Point</button>
+                        <div style="margin-top:10px; border-top:1px dashed #ccc; padding-top:10px;">
+                            <button class="btn-danger" onclick="removeExp(${idx})">✕ Remove Position Card</button>
+                        </div>
                     </div>
                 `;
             });
@@ -292,7 +330,7 @@
             checkChronology();
         }
         function addExperience() {
-            state.experience.unshift({ title: "", org: "", location: "", endYear: "Present", bullets: ["", "", ""] });
+            state.experience.unshift({ title: "", org: "", location: "", startMonth: "Jan", startYear: "2026", endMonth: "Present", endYear: "Present", bullets: [""] });
             renderFormLists();
             checkChronology();
         }
@@ -346,12 +384,7 @@
             `;
 
             if(state.summary && state.summary.trim() !== "") {
-                html += `
-                    <div class="p-section">
-                        <div class="p-sectitle">Professional Summary</div>
-                        <p class="p-text">${state.summary}</p>
-                    </div>
-                `;
+                html += `<div class="p-section"><div class="p-sectitle">Professional Summary</div><p class="p-text">${state.summary}</p></div>`;
             }
 
             if(state.education.length > 0) {
@@ -379,11 +412,19 @@
                     html += `<div class="p-section"><div class="p-sectitle">Professional Experience</div>`;
                     state.experience.forEach(exp => {
                         if(exp.title || exp.org) {
+                            // FORMAT DATES PRECISELY BASED ON FORM SELECTIONS
+                            let dateRangeStr = "";
+                            if (exp.endYear === 'Present') {
+                                dateRangeStr = `${exp.startMonth} ${exp.startYear} – Present`;
+                            } else {
+                                dateRangeStr = `${exp.startMonth} ${exp.startYear} – ${exp.endMonth} ${exp.endYear}`;
+                            }
+
                             html += `
-                                <table class="cv-table" style="margin-top: 4px;">
+                                <table class="cv-table" style="margin-top: 5px;">
                                     <tr>
                                         <td class="td-left"><span class="p-bold">${exp.title}</span> – ${exp.org}, ${exp.location}</td>
-                                        <td class="td-right">${exp.endYear}</td>
+                                        <td class="td-right">${dateRangeStr}</td>
                                     </tr>
                                 </table>
                                 <ul class="p-bullets">
@@ -401,14 +442,11 @@
             if(state.skills && state.skills.trim() !== "") {
                 html += `<div class="p-section"><div class="p-sectitle">Clinical Skills</div><table class="skills-table"><tr>`;
                 let items = state.skills.split(',').map(s => s.trim()).filter(s => s !== "");
-                
-                let col1 = "";
-                let col2 = "";
+                let col1 = ""; let col2 = "";
                 items.forEach((item, index) => {
                     if (index % 2 === 0) col1 += `<div>&bull; ${item}</div>`;
                     else col2 += `<div>&bull; ${item}</div>`;
                 });
-                
                 html += `<td>${col1}</td><td>${col2}</td></tr></table></div>`;
             }
 
@@ -466,16 +504,16 @@
                         body { font-family: "Times New Roman", Serif; font-size: 11pt; line-height: 1.15; color: black; margin: 0.75in; }
                         .p-header { text-align: center; margin-bottom: 15pt; }
                         .p-name { font-size: 16pt; font-weight: bold; text-transform: uppercase; margin: 0; }
-                        .p-contact { font-size: 10pt; margin: 0; color: #222; }
+                        .p-contact { font-size: 10.5pt; margin: 0; color: #222; }
                         .p-section { margin-top: 14pt; margin-bottom: 2pt; }
                         .p-sectitle { font-size: 13pt; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid black; padding-bottom: 2pt; margin: 12pt 0 6pt 0; letter-spacing: 0.5px; }
                         .w-table { width: 100%; border: none; margin-bottom: 2pt; }
-                        .w-left { text-align: left; font-size: 11pt; width: 80%; }
-                        .w-right { text-align: right; font-size: 11pt; width: 20%; }
+                        .w-left { text-align: left; font-size: 11pt; width: 75%; }
+                        .w-right { text-align: right; font-size: 11pt; width: 25%; }
                         .p-bold { font-weight: bold; }
                         .p-text { font-size: 11pt; text-align: justify; margin: 0; }
-                        .w-bullet { font-size: 10.5pt; margin-left: 15pt; margin-bottom: 2pt; }
-                        .w-skill-col { width: 50%; font-size: 10.5pt; }
+                        .w-bullet { font-size: 11pt; margin-left: 15pt; margin-bottom: 2pt; }
+                        .w-skill-col { width: 50%; font-size: 11pt; }
                     </style>
                 </head>
                 <body>
@@ -509,11 +547,12 @@
                 docHeader += `<div class="p-section"><div class="p-sectitle">Professional Experience</div>`;
                 state.experience.forEach(exp => {
                     if(exp.title || exp.org) {
+                        let rangeStr = exp.endYear === 'Present' ? `${exp.startMonth} ${exp.startYear} – Present` : `${exp.startMonth} ${exp.startYear} – ${exp.endMonth} ${exp.endYear}`;
                         docHeader += `
                             <table class="w-table" style="margin-top: 5pt;">
                                 <tr>
                                     <td class="w-left"><span class="p-bold">${exp.title}</span> – ${exp.org}, ${exp.location}</td>
-                                    <td class="w-right">${exp.endYear}</td>
+                                    <td class="w-right">${rangeStr}</td>
                                 </tr>
                             </table>`;
                         exp.bullets.forEach(b => {
