@@ -1,246 +1,478 @@
-import React from 'react';
-import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Academic Nursing CV Builder</title>
+    <style>
+        * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background-color: #f0f4f8; color: #333; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; display: table; width: 100%; }
+        .panel { display: table-cell; width: 50%; padding: 20px; vertical-align: top; }
+        .card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px; border-top: 4px solid #005A9C; }
+        h1 { color: #005A9C; margin-top: 0; font-size: 24px; text-align: center; }
+        h2 { color: #005A9C; font-size: 16px; border-bottom: 2px solid #005A9C; padding-bottom: 5px; margin-top: 0; text-transform: uppercase; letter-spacing: 0.5px; }
+        h3 { font-size: 14px; margin: 10px 0 5px 0; color: #333; }
+        .subtitle { font-size: 12px; color: #666; margin-bottom: 15px; display: block; }
+        label { display: block; font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #444; text-transform: uppercase; }
+        input, select, textarea { width: 100%; padding: 8px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; }
+        textarea { height: 60px; resize: vertical; }
+        .row { display: table; width: 100%; table-layout: fixed; margin-bottom: 5px; }
+        .col { display: table-cell; padding-right: 10px; vertical-align: top; }
+        .col:last-child { padding-right: 0; }
+        .btn { background-color: #005A9C; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; font-size: 13px; margin-bottom: 10px; transition: background 0.2s; }
+        .btn:hover { background-color: #004070; }
+        .btn-secondary { background-color: #fff; color: #005A9C; border: 1px dashed #005A9C; }
+        .btn-secondary:hover { background-color: #f4f8fb; }
+        .btn-danger { background-color: #fff; color: #cc0000; border: 1px solid #cc0000; font-size: 11px; padding: 4px 8px; width: auto; margin-bottom: 15px; }
+        .btn-danger:hover { background-color: #fff0f0; }
+        .btn-main { background-color: #2e7d32; font-size: 15px; padding: 12px; margin-top: 10px; }
+        .btn-main:hover { background-color: #1b5e20; }
+        .btn-word { background-color: #185abd; font-size: 15px; padding: 12px; }
+        .btn-word:hover { background-color: #124596; }
+        .error-box { background-color: #fff0f0; border: 2px solid #cc0000; padding: 10px; border-radius: 4px; color: #cc0000; font-weight: bold; font-size: 12px; margin-bottom: 15px; display: none; }
+        
+        /* Live Preview Styles - Simulates Strict Printed Academic CV */
+        .preview-pane { background: white; padding: 54px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); font-family: "Times New Roman", Times, serif; color: black; line-height: 1.15; font-size: 11pt; position: sticky; top: 20px; }
+        .p-header { text-align: center; margin-bottom: 15px; }
+        .p-name { font-size: 16pt; font-weight: bold; text-transform: uppercase; margin: 0 0 4px 0; }
+        .p-contact { font-size: 10pt; margin: 0; color: #222; }
+        .p-section { margin-top: 14px; margin-bottom: 2px; }
+        .p-sectitle { font-size: 13pt; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid black; padding-bottom: 2px; margin: 0 0 6px 0; letter-spacing: 0.5px; }
+        .p-row { display: table; width: 100%; margin-bottom: 2px; }
+        .p-left { display: table-cell; text-align: left; width: 75%; font-size: 11pt; }
+        .p-right { display: table-cell; text-align: right; width: 25%; font-size: 10pt; font-style: normal; }
+        .p-bold { font-weight: bold; }
+        .p-italic { font-style: italic; }
+        .p-text { font-size: 10.5pt; text-align: justify; margin: 0; }
+        .p-bullets { margin: 2px 0; padding-left: 15px; }
+        .p-bullet-item { font-size: 10pt; margin-bottom: 2px; list-style-type: disc; }
+        .p-grid { display: block; margin-top: 2px; }
+        .p-grid-item { display: inline-block; width: 50%; font-size: 10pt; margin-bottom: 2px; vertical-align: top; }
+        .p-grid-item::before { content: "• "; }
+    </style>
+</head>
+<body>
 
-// 1. Precise styling matching your formatting rules
-const styles = StyleSheet.create({
-  page: {
-    paddingTop: 54,
-    paddingBottom: 54,
-    paddingHorizontal: 54,
-    fontFamily: 'Times-Roman',
-    fontSize: 11,            // Target body text size
-    lineHeight: 1.15,        // Target line spacing
-    color: '#000000',
-  },
-  headerContainer: {
-    alignItems: 'center',
-    marginBottom: 15,
-  },
-  fullName: {
-    fontSize: 16,
-    fontFamily: 'Times-Bold',
-    textTransform: 'uppercase',
-    marginBottom: 4,
-  },
-  contactLine: {
-    fontSize: 10,
-    color: '#333333',
-  },
-  sectionContainer: {
-    marginTop: 14,          // Provides the blank line between sections
-    marginBottom: 2,
-  },
-  sectionTitle: {
-    fontSize: 13,           // Target Heading size
-    fontFamily: 'Times-Bold',
-    textTransform: 'uppercase',
-    borderBottomWidth: 1,
-    borderBottomColor: '#000000',
-    paddingBottom: 2,
-    marginBottom: 6,
-  },
-  summaryText: {
-    textAlign: 'justify',
-    fontSize: 10.5,
-  },
-  entryRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'baseline',
-    marginBottom: 2,
-  },
-  entryLeft: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    maxWidth: '75%',
-  },
-  boldText: {
-    fontFamily: 'Times-Bold',
-  },
-  italicText: {
-    fontFamily: 'Times-Italic',
-  },
-  entryRight: {
-    fontSize: 10,
-    textAlign: 'right',
-  },
-  bulletContainer: {
-    flexDirection: 'row',
-    paddingLeft: 12,
-    marginTop: 1,
-    marginBottom: 2,
-  },
-  bullet: {
-    width: 12,
-  },
-  bulletText: {
-    flex: 1,
-    fontSize: 10,
-  },
-  skillsGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginTop: 2,
-  },
-  skillItem: {
-    width: '50%',          // Two-column skills layout to save vertical space
-    fontSize: 10,
-    marginBottom: 2,
-  }
-});
+    <h1>📋 Academic Nursing CV Builder & Real-Time Layout Tool</h1>
+    <p style="text-align:center; color:#555; max-width:800px; margin: 0 auto 25px auto; font-size: 14px;">
+        Fill out your professional entries below. If you leave an area completely empty, it will automatically vanish from your generated documents. 
+        Save your <strong>.cvdata</strong> file locally to bring back your entries in 6 months.
+    </p>
 
-// Helper check: Returns true only if an array exists and has content
-const hasData = (arr) => arr && arr.length > 0 && arr.some(item => Object.values(item).some(val => val !== ''));
+    <div class="container">
+        <!-- LEFT HAND FORM PANEL -->
+        <div class="panel">
+            
+            <div class="card">
+                <h2>🔄 Data Operations</h2>
+                <span class="subtitle">Bring back a 6-month old draft, or download your current state data.</span>
+                <div class="row">
+                    <div class="col">
+                        <label>Upload .cvdata file</label>
+                        <input type="file" id="importFile" accept=".cvdata,.json" onchange="importData(event)">
+                    </div>
+                </div>
+                <button class="btn btn-secondary" onclick="exportData()">💾 Save Progress Data File (.cvdata)</button>
+            </div>
 
-export const NursingAcademicCV = ({ data }) => (
-  <Document author={data.fullName} title={`${data.fullName} - Professional CV`}>
-    <Page size="LETTER" style={styles.page}>
-      
-      {/* ================= HEADER ================= */}
-      <View style={styles.headerContainer}>
-        <Text style={styles.fullName}>{data.fullName}{data.credentials ? `, ${data.credentials}` : ''}</Text>
-        <Text style={styles.contactLine}>
-          Phone: {data.phone}  |  Email: {data.email}
-          {data.address ? `  |  Address: ${data.address}` : ''}
-          {data.linkedin ? `  |  LinkedIn: ${data.linkedin}` : ''}
-        </Text>
-      </View>
+            <div id="chronError" class="error-box">⚠️ Error: Entries are out of reverse chronological order. Please ensure your newest qualifications are at the top.</div>
 
-      {/* ================= PROFESSIONAL SUMMARY ================= */}
-      {data.professionalSummary ? (
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>Professional Summary</Text>
-          <Text style={styles.summaryText}>{data.professionalSummary}</Text>
-        </View>
-      ) : null}
+            <!-- CONTACT -->
+            <div class="card">
+                <h2>Full Name & Contact</h2>
+                <div class="row">
+                    <div class="col">
+                        <label>Full Name</label>
+                        <input type="text" id="fullName" placeholder="Jane Doe" oninput="update()">
+                    </div>
+                    <div class="col">
+                        <label>Credentials</label>
+                        <input type="text" id="credentials" placeholder="RN, BSN" oninput="update()">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label>Phone</label>
+                        <input type="text" id="phone" placeholder="(555) 123-4567" oninput="update()">
+                    </div>
+                    <div class="col">
+                        <label>Email</label>
+                        <input type="text" id="email" placeholder="jdoe@hospital.org" oninput="update()">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label>Address (Optional)</label>
+                        <input type="text" id="address" placeholder="Boston, MA" oninput="update()">
+                    </div>
+                    <div class="col">
+                        <label>LinkedIn (Optional)</label>
+                        <input type="text" id="linkedin" placeholder="linkedin.com/in/username" oninput="update()">
+                    </div>
+                </div>
+            </div>
 
-      {/* ================= LICENSURE & CERTIFICATIONS ================= */}
-      {hasData(data.certifications) ? (
-        <View style={styles.sectionContainer} wrap={false}>
-          <Text style={styles.sectionTitle}>Licensure & Certifications</Text>
-          {data.certifications.map((cert, index) => (
-            <View key={index} style={styles.entryRow}>
-              <View style={styles.entryLeft}>
-                <Text style={styles.boldText}>{cert.name}</Text>
-                {cert.details ? <Text> – {cert.details}</Text> : null}
-              </View>
-              <Text style={styles.entryRight}>Exp: {cert.expDate}</Text>
-            </View>
-          ))}
-        </View>
-      ) : null}
+            <!-- SUMMARY -->
+            <div class="card">
+                <h2>Professional Summary</h2>
+                <label>3–4 Sentence Professional Overview</label>
+                <textarea id="summary" placeholder="Compassionate and detail-oriented Registered Nurse with experience in acute care..." oninput="update()"></textarea>
+            </div>
 
-      {/* ================= EDUCATION ================= */}
-      {hasData(data.education) ? (
-        <View style={styles.sectionContainer} wrap={false}>
-          <Text style={styles.sectionTitle}>Education</Text>
-          {data.education.map((edu, index) => (
-            <View key={index} style={{ marginBottom: 4 }}>
-              <View style={styles.entryRow}>
-                <View style={styles.entryLeft}>
-                  <Text style={styles.boldText}>{edu.degree}</Text>
-                  <Text> – {edu.schoolName}, {edu.location}</Text>
-                </View>
-                <Text style={styles.entryRight}>{edu.gradDate}</Text>
-              </View>
-              {edu.coursework ? <Text style={[styles.italicText, { fontSize: 9.5 }]}>Relevant Coursework: {edu.coursework}</Text> : null}
-              {edu.honors ? <Text style={[styles.italicText, { fontSize: 9.5 }]}>Honors: {edu.honors}</Text> : null}
-            </View>
-          ))}
-        </View>
-      ) : null}
+            <!-- EDUCATION -->
+            <div class="card">
+                <h2>Education</h2>
+                <span class="subtitle">List oldest or newest. Ensure reverse chronological order (newest at top) is followed.</span>
+                <div id="educationContainer"></div>
+                <button class="btn btn-secondary" onclick="addEducation()">+ Add Education Slot</button>
+            </div>
 
-      {/* ================= PROFESSIONAL EXPERIENCE ================= */}
-      {hasData(data.experience) ? (
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>Professional Experience</Text>
-          {data.experience.map((exp, index) => (
-            <View key={index} style={{ marginBottom: 8 }} wrap={false}>
-              <View style={styles.entryRow}>
-                <View style={styles.entryLeft}>
-                  <Text style={styles.boldText}>{exp.jobTitle}</Text>
-                  <Text> – {exp.orgName}, {exp.location}</Text>
-                </View>
-                <Text style={styles.entryRight}>{exp.dateRange}</Text>
-              </View>
-              
-              {exp.bullets?.map((bullet, bIndex) => (
-                bullet ? (
-                  <View key={bIndex} style={styles.bulletContainer}>
-                    <Text style={styles.bullet}>•</Text>
-                    <Text style={styles.bulletText}>{bullet}</Text>
-                  </View>
-                ) : null
-              ))}
-            </View>
-          ))}
-        </View>
-      ) : null}
+            <!-- EXPERIENCE -->
+            <div class="card">
+                <h2>Professional Experience</h2>
+                <span class="subtitle">List nursing positions. Each role features structured prompts for clinical reporting.</span>
+                <div id="experienceContainer"></div>
+                <button class="btn btn-secondary" onclick="addExperience()">+ Add Experience Slot</button>
+            </div>
 
-      {/* ================= CLINICAL SKILLS ================= */}
-      {hasData(data.skills) ? (
-        <View style={styles.sectionContainer} wrap={false}>
-          <Text style={styles.sectionTitle}>Clinical Skills</Text>
-          <View style={styles.skillsGrid}>
-            {data.skills.map((skill, index) => (
-              <Text key={index} style={styles.skillItem}>• {skill}</Text>
-            ))}
-          </View>
-        </View>
-      ) : null}
+            <!-- SKILLS -->
+            <div class="card">
+                <h2>Clinical Skills</h2>
+                <span class="subtitle">Comma-separated skills (e.g., Patient Assessment, Epic EMR, IV Insertion)</span>
+                <textarea id="skills" placeholder="Patient Assessment, Medication Administration, Wound Care, Epic EMR" oninput="update()"></textarea>
+            </div>
 
-      {/* ================= PROFESSIONAL MEMBERSHIPS ================= */}
-      {hasData(data.memberships) ? (
-        <View style={styles.sectionContainer} wrap={false}>
-          <Text style={styles.sectionTitle}>Professional Memberships</Text>
-          {data.memberships.map((member, index) => (
-            <Text key={index} style={{ fontSize: 10, marginBottom: 2 }}>• {member}</Text>
-          ))}
-        </View>
-      ) : null}
+            <!-- DOWNLOAD ACTIONS -->
+            <div class="card">
+                <h2>📤 Generate Final Outputs</h2>
+                <button class="btn btn-main" id="btnPdf" onclick="generatePDF()">Download Academic Layout (PDF)</button>
+                <button class="btn btn-word" id="btnWord" onclick="generateWord()">Download Editable Document (Word .doc)</button>
+            </div>
 
-      {/* ================= PROFESSIONAL DEVELOPMENT ================= */}
-      {hasData(data.development) ? (
-        <View style={styles.sectionContainer} wrap={false}>
-          <Text style={styles.sectionTitle}>Professional Development & Training</Text>
-          {data.development.map((dev, index) => (
-            <Text key={index} style={{ fontSize: 10, marginBottom: 2 }}>• {dev}</Text>
-          ))}
-        </View>
-      ) : null}
+        </div>
 
-      {/* ================= AWARDS & RECOGNITION ================= */}
-      {hasData(data.awards) ? (
-        <View style={styles.sectionContainer} wrap={false}>
-          <Text style={styles.sectionTitle}>Awards & Recognition</Text>
-          {data.awards.map((award, index) => (
-            <Text key={index} style={{ fontSize: 10, marginBottom: 2 }}>• {award}</Text>
-          ))}
-        </View>
-      ) : null}
+        <!-- RIGHT HAND PRINT PREVIEW -->
+        <div class="panel">
+            <div class="preview-pane" id="preview">
+                <!-- Dynamic Content Hydrated by JavaScript -->
+            </div>
+        </div>
+    </div>
 
-      {/* ================= VOLUNTEER EXPERIENCE ================= */}
-      {hasData(data.volunteer) ? (
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>Volunteer Experience</Text>
-          {data.volunteer.map((vol, index) => (
-            <View key={index} style={{ marginBottom: 4 }} wrap={false}>
-              <View style={styles.entryRow}>
-                <Text style={styles.boldText}>{vol.role} – {vol.orgName}</Text>
-                <Text style={styles.entryRight}>{vol.dates}</Text>
-              </View>
-              {vol.description ? <Text style={{ fontSize: 9.5, paddingLeft: 12 }}>{vol.description}</Text> : null}
-            </View>
-          ))}
-        </View>
-      ) : null}
+    <!-- SCRIPT INJECTION FOR OFFLINE COMPILATION -->
+    <script>
+        // Master Application State Object
+        let state = {
+            fullName: "Kate Donovan",
+            credentials: "RN, BSN",
+            phone: "(617) 555-0199",
+            email: "kdonovan@bch.org",
+            address: "Boston, MA",
+            linkedin: "linkedin.com/in/katedonovan-rn",
+            summary: "Detail-oriented and innovative Registered Nurse within the Inpatient Medical Programs at Boston Children's Hospital. Specialized in providing high-acuity pediatric clinical care, implementing workflow technologies, and coordinating interdisciplinary care pathways. Committed to evidence-based practice and preserving human connection within advanced clinical frameworks.",
+            education: [
+                { degree: "Master of Business Administration (MBA)", school: "Northeast University", location: "Boston, MA", month: "May", year: "2026" },
+                { degree: "Bachelor of Science in Nursing (BSN)", school: "Boston College", location: "Chestnut Hill, MA", month: "May", year: "2023" }
+            ],
+            experience: [
+                { title: "Clinical Director of Innovation and Education", org: "Boston Children's Hospital", location: "Boston, MA", startMonth: "Nov", startYear: "2025", endMonth: "Present", endYear: "Present", bullets: ["Manage localized quality improvement initiatives and advanced clinical technology workflows across a high-acuity pediatric inpatient footprint.","Coordinate nursing educational tracks, transforming complex operational and technological guidelines into digestible training pathways.","Collaborate closely with Senior Nursing Directors to implement dynamic, frontline-focused care protocols."] },
+                { title: "Staff Nurse, Inpatient Medical Program", org: "Boston Children's Hospital", location: "Boston, MA", startMonth: "June", startYear: "2023", endMonth: "Oct", endYear: "2025", bullets: ["Delivered comprehensive, safe, and family-centered acute care to pediatric populations within specialized medical units.","Assessed clinical parameters, administered high-risk medications, and initiated continuous monitoring for complex patient profiles.","Served as an active unit council representative assisting with technology implementation and safety metrics."] }
+            ],
+            skills: "Patient Assessment & Triage, Medication Administration, Pediatric Advanced Life Support (PALS), Quality Improvement, Workflow Automation, Epic EMR, Care Coordination",
+            isValid: true
+        };
 
-      {/* ================= REFERENCES ================= */}
-      <View style={styles.sectionContainer} wrap={false}>
-        <Text style={styles.sectionTitle}>References</Text>
-        <Text style={{ fontSize: 10 }}>Available upon request.</Text>
-      </View>
+        const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Present"];
+        const YEARS = ["Present", "2027", "2026", "2025", "2024", "2023", "2022", "2021", "2020", "2019"];
 
-    </Page>
-  </Document>
-);
+        function init() {
+            renderFormLists();
+            update();
+        }
+
+        function renderFormLists() {
+            // Render Edu List
+            const eduCont = document.getElementById('educationContainer');
+            eduCont.innerHTML = '';
+            state.education.forEach((edu, idx) => {
+                eduCont.innerHTML += `
+                    <div style="background:#fcfcfc; padding:10px; border:1px solid #eee; margin-bottom:10px; border-radius:4px;">
+                        <div class="row">
+                            <div class="col"><label>Degree</label><input type="text" value="${edu.degree}" oninput="window.state.education(${idx}, 'degree', this.value)"></div>
+                            <div class="col"><label>School</label><input type="text" value="${edu.school}" oninput="window.state.education(${idx}, 'school', this.value)"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col"><label>Location</label><input type="text" value="${edu.location}" oninput="window.state.education(${idx}, 'location', this.value)"></div>
+                            <div class="col">
+                                <label>Graduation Year</label>
+                                <select onchange="window.state.education(${idx}, 'year', this.value); checkChronology();">
+                                    ${YEARS.map(y => `<option value="${y}" ${edu.year===y?'selected':''}>${y}</option>`).join('')}
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn-danger" onclick="removeEdu(${idx})">✕ Remove</button>
+                    </div>
+                `;
+            });
+
+            // Proxy individual element modifications inside arrays
+            window.state.education = function(idx, key, val) { state.education[idx][key] = val; update(); };
+            window.state.experience = function(idx, key, val) { state.experience[idx][key] = val; update(); };
+            window.state.bullet = function(idx, bIdx, val) { state.experience[idx].bullets[bIdx] = val; update(); };
+
+            // Render Exp List
+            const expCont = document.getElementById('experienceContainer');
+            expCont.innerHTML = '';
+            state.experience.forEach((exp, idx) => {
+                expCont.innerHTML += `
+                    <div style="background:#fcfcfc; padding:10px; border:1px solid #eee; margin-bottom:10px; border-radius:4px;">
+                        <div class="row">
+                            <div class="col"><label>Job Title</label><input type="text" value="${exp.title}" oninput="window.state.experience(${idx}, 'title', this.value)"></div>
+                            <div class="col"><label>Organization</label><input type="text" value="${exp.org}" oninput="window.state.experience(${idx}, 'org', this.value)"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col"><label>Location</label><input type="text" value="${exp.location}" oninput="window.state.experience(${idx}, 'location', this.value)"></div>
+                            <div class="col">
+                                <label>End Year</label>
+                                <select onchange="window.state.experience(${idx}, 'endYear', this.value); checkChronology();">
+                                    ${YEARS.map(y => `<option value="${y}" ${exp.endYear===y?'selected':''}>${y}</option>`).join('')}
+                                </select>
+                            </div>
+                        </div>
+                        <label style="color:#005A9C;">Bullet 1: Clinical Scope & Competency</label>
+                        <textarea oninput="window.state.bullet(${idx}, 0, this.value)">${exp.bullets[0]||''}</textarea>
+                        <label style="color:#005A9C;">Bullet 2: Interdisciplinary Care Coordination</label>
+                        <textarea oninput="window.state.bullet(${idx}, 1, this.value)">${exp.bullets[1]||''}</textarea>
+                        <label style="color:#005A9C;">Bullet 3: Quality Initiatives & Academic Inquiry</label>
+                        <textarea oninput="window.state.bullet(${idx}, 2, this.value)">${exp.bullets[2]||''}</textarea>
+                        <button class="btn-danger" onclick="removeExp(${idx})">✕ Remove</button>
+                    </div>
+                `;
+            });
+        }
+
+        function addEducation() {
+            state.education.unshift({ degree: "", school: "", location: "", month: "May", year: "2026" });
+            renderFormLists();
+            checkChronology();
+        }
+        function removeEdu(idx) {
+            state.education.splice(idx, 1);
+            renderFormLists();
+            checkChronology();
+        }
+        function addExperience() {
+            state.experience.unshift({ title: "", org: "", location: "", startMonth: "Jan", startYear: "2026", endMonth: "Present", endYear: "Present", bullets: ["", "", ""] });
+            renderFormLists();
+            checkChronology();
+        }
+        function removeExp(idx) {
+            state.experience.splice(idx, 1);
+            renderFormLists();
+            checkChronology();
+        }
+
+        function getYearVal(y) {
+            if (y === 'Present') return 9999;
+            return parseInt(y) || 0;
+        }
+
+        function checkChronology() {
+            let valid = true;
+            
+            // Check Education ordering
+            for(let i=0; i<state.education.length-1; i++) {
+                if(getYearVal(state.education[i].year) < getYearVal(state.education[i+1].year)) { valid = false; }
+            }
+            // Check Experience ordering
+            for(let i=0; i<state.experience.length-1; i++) {
+                if(getYearVal(state.experience[i].endYear) < getYearVal(state.experience[i+1].endYear)) { valid = false; }
+            }
+
+            state.isValid = valid;
+            const errBox = document.getElementById('chronError');
+            const btnP = document.getElementById('btnPdf');
+            const btnW = document.getElementById('btnWord');
+            
+            if(!valid) {
+                errBox.style.display = 'block';
+                btnP.disabled = true; btnW.disabled = true;
+                btnP.style.background = '#ccc'; btnW.style.background = '#ccc';
+            } else {
+                errBox.style.display = 'none';
+                btnP.disabled = false; btnW.disabled = false;
+                btnP.style.background = '#2e7d32'; btnW.style.background = '#185abd';
+            }
+            update();
+        }
+
+        function update() {
+            // Read basic text values back into state dynamically on keystroke
+            const fn = document.getElementById('fullName').value; if(fn!==undefined && fn!=="") state.fullName = fn;
+            const cr = document.getElementById('credentials').value; state.credentials = cr;
+            const ph = document.getElementById('phone').value; state.phone = ph;
+            const em = document.getElementById('email').value; state.email = em;
+            const ad = document.getElementById('address').value; state.address = ad;
+            const li = document.getElementById('linkedin').value; state.linkedin = li;
+            const sm = document.getElementById('summary').value; state.summary = sm;
+            const sk = document.getElementById('skills').value; state.skills = sk;
+
+            // Render Print Preview
+            let html = `
+                <div class="p-header">
+                    <div class="p-name">${state.fullName}${state.credentials ? ', '+state.credentials : ''}</div>
+                    <div class="p-contact">Phone: ${state.phone} | Email: ${state.email}${state.address?' | Address: '+state.address:''}${state.linkedin?' | LinkedIn: '+state.linkedin:''}</div>
+                </div>
+            `;
+
+            if(state.summary.trim() !== "") {
+                html += `
+                    <div class="p-section">
+                        <div class="p-sectitle">Professional Summary</div>
+                        <p class="p-text">${state.summary}</p>
+                    </div>
+                `;
+            }
+
+            if(state.education.length > 0) {
+                html += `<div class="p-section"><div class="p-sectitle">Education</div>`;
+                state.education.forEach(edu => {
+                    if(edu.degree || edu.school) {
+                        html += `
+                            <div class="p-row">
+                                <div class="p-left"><span class="p-bold">${edu.degree}</span> – ${edu.school}, ${edu.location}</div>
+                                <div class="p-right">${edu.year}</div>
+                            </div>
+                        `;
+                    }
+                });
+                html += `</div>`;
+            }
+
+            if(state.experience.length > 0) {
+                html += `<div class="p-section"><div class="p-sectitle">Professional Experience</div>`;
+                state.experience.forEach(exp => {
+                    if(exp.title || exp.org) {
+                        html += `
+                            <div class="p-row" style="margin-top:5px;">
+                                <div class="p-left"><span class="p-bold">${exp.title}</span> – ${exp.org}, ${exp.location}</div>
+                                <div class="p-right">${exp.endYear}</div>
+                            </div>
+                            <ul class="p-bullets">
+                        `;
+                        exp.bullets.forEach(b => {
+                            if(b && b.trim()!=="") html += `<li class="p-bullet-item">${b}</li>`;
+                        });
+                        html += `</ul>`;
+                    }
+                });
+                html += `</div>`;
+            }
+
+            if(state.skills.trim() !== "") {
+                html += `<div class="p-section"><div class="p-sectitle">Clinical Skills</div><div class="p-grid">`;
+                state.skills.split(',').forEach(s => {
+                    if(s && s.trim()!=="") html += `<div class="p-grid-item">${s.trim()}</div>`;
+                });
+                html += `</div></div>`;
+            }
+
+            html += `
+                <div class="p-section">
+                    <div class="p-sectitle">References</div>
+                    <p class="p-text">Available upon request.</p>
+                </div>
+            `;
+
+            document.getElementById('preview').innerHTML = html;
+        }
+
+        function exportData() {
+            const str = JSON.stringify(state, null, 2);
+            const blob = new Blob([str], {type: "application/json"});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${state.fullName.replace(/\s+/g, '_')}_CVData.cvdata`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        function importData(e) {
+            const file = e.target.files[0];
+            if(!file) return;
+            const r = new FileReader();
+            r.onload = function(evt) {
+                try {
+                    const parsed = JSON.parse(evt.target.result);
+                    state = parsed;
+                    document.getElementById('fullName').value = state.fullName || '';
+                    document.getElementById('credentials').value = state.credentials || '';
+                    document.getElementById('phone').value = state.phone || '';
+                    document.getElementById('email').value = state.email || '';
+                    document.getElementById('address').value = state.address || '';
+                    document.getElementById('linkedin').value = state.linkedin || '';
+                    document.getElementById('summary').value = state.summary || '';
+                    document.getElementById('skills').value = state.skills || '';
+                    renderFormLists();
+                    checkChronology();
+                } catch(err) {
+                    alert('Error parsing CVData file.');
+                }
+            };
+            r.readAsText(file);
+        }
+
+        function generatePDF() {
+            window.print();
+        }
+
+        function generateWord() {
+            let previewContent = document.getElementById('preview').innerHTML;
+            let docContent = `
+                <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+                <head>
+                    <title>Academic CV</title>
+                    <style>
+                        body { font-family: "Times New Roman", Serif; font-size: 11pt; line-height: 1.15; color: black; }
+                        .p-header { text-align: center; margin-bottom: 15pt; }
+                        .p-name { font-size: 16pt; font-weight: bold; text-transform: uppercase; }
+                        .p-contact { font-size: 10pt; }
+                        .p-section { margin-top: 14pt; margin-bottom: 2pt; }
+                        .p-sectitle { font-size: 13pt; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid black; padding-bottom: 2pt; margin-bottom: 6pt; }
+                        .p-bold { font-weight: bold; }
+                        .p-italic { font-style: italic; }
+                        .p-bullet-item { font-size: 10pt; }
+                    </style>
+                </head>
+                <body>
+                    ${previewContent}
+                </body>
+                </html>
+            `;
+            const blob = new Blob(['\ufeff' + docContent], {type: 'application/msword'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${state.fullName.replace(/\s+/g, '_')}_AcademicCV.doc`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        // Initialize values natively
+        window.onload = function() {
+            document.getElementById('fullName').value = state.fullName;
+            document.getElementById('credentials').value = state.credentials;
+            document.getElementById('phone').value = state.phone;
+            document.getElementById('email').value = state.email;
+            document.getElementById('address').value = state.address;
+            document.getElementById('linkedin').value = state.linkedin;
+            document.getElementById('summary').value = state.summary;
+            document.getElementById('skills').value = state.skills;
+            init();
+        };
+    </script>
+</body>
+</html>
