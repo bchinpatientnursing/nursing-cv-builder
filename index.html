@@ -19,6 +19,9 @@
         textarea { height: 95px; resize: vertical; }
         .form-row { display: flex; gap: 10px; margin-bottom: 4px; }
         .form-col { flex: 1; }
+        .checkbox-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+        .checkbox-row input { width: auto; margin-bottom: 0; cursor: pointer; }
+        .cert-subform { background: #fafafa; border: 1px solid #eef2f5; padding: 12px; border-radius: 4px; margin-bottom: 15px; display: none; }
         .btn { background-color: #005A9C; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; font-size: 13px; margin-bottom: 10px; transition: background 0.2s; }
         .btn:hover { background-color: #004070; }
         .btn-secondary { background-color: #fff; color: #005A9C; border: 1px dashed #005A9C; margin-top: 5px; }
@@ -45,7 +48,7 @@
         .p-section { margin-top: 20px; margin-bottom: 5px; width: 100%; }
         .p-sectitle { font-size: 12pt; font-weight: bold; text-transform: uppercase; border-bottom: 1.5px solid black; padding-bottom: 3px; margin: 0 0 12px 0; letter-spacing: 0.5px; }
         
-        .p-print-table { width: 100% !important; border-collapse: collapse !important; margin-top: 8px; margin-bottom: 2px; table-layout: fixed !important; }
+        .p-print-table { width: 100% !important; border-collapse: collapse !important; margin-top: 4px; margin-bottom: 4px; table-layout: fixed !important; }
         .p-print-table td { padding: 0 !important; vertical-align: top !important; font-size: 10.5pt !important; line-height: 1.4 !important; }
         
         .p-left-cell { text-align: left !important; width: 75% !important; padding-right: 15px !important; }
@@ -100,7 +103,7 @@
                     </div>
                     <div class="form-col">
                         <label>Credentials</label>
-                        <input type="text" id="credentials" placeholder="e.g., MBA, MSN, RN" oninput="handleTextInput('credentials', this.value)">
+                        <input type="text" id="credentials" placeholder="e.g., MSN, RN, CPN" oninput="handleTextInput('credentials', this.value)">
                     </div>
                 </div>
                 <div class="form-row">
@@ -132,6 +135,70 @@
                 <textarea id="summary" placeholder="Summarize experience and core expertise here..." oninput="handleSummaryInput(this.value)"></textarea>
             </div>
 
+            <!-- LICENSURE & CERTIFICATIONS -->
+            <div class="card">
+                <h2>Licensure & Certifications</h2>
+                <span class="subtitle">Check the items you hold to activate data entry and printable layouts.</span>
+                
+                <!-- RN Toggle -->
+                <div class="checkbox-row">
+                    <input type="checkbox" id="hasRn" onchange="toggleCertSubform('rn', this.checked)">
+                    <label style="display:inline; font-size:13px; text-transform:none; cursor:pointer;" for="hasRn">Registered Nurse (RN)</label>
+                </div>
+                <div id="subform-rn" class="cert-subform">
+                    <div class="form-row">
+                        <div class="form-col"><label>State of Licensure</label><input type="text" id="rnState" placeholder="MA" oninput="handleCertInput('rn', 'state', this.value)"></div>
+                        <div class="form-col"><label>License Number</label><input type="text" id="rnNum" placeholder="RN123456" oninput="handleCertInput('rn', 'num', this.value)"></div>
+                        <div class="form-col"><label>Expiration Date</label><input type="text" id="rnExp" placeholder="MM/DD/YYYY" oninput="handleCertInput('rn', 'exp', this.value)"></div>
+                    </div>
+                </div>
+
+                <!-- BLS Toggle -->
+                <div class="checkbox-row">
+                    <input type="checkbox" id="hasBls" onchange="toggleCertSubform('bls', this.checked)">
+                    <label style="display:inline; font-size:13px; text-transform:none; cursor:pointer;" for="hasBls">Basic Life Support (BLS)</label>
+                </div>
+                <div id="subform-bls" class="cert-subform">
+                    <div class="form-row">
+                        <div class="form-col"><label>Expiration Date</label><input type="text" id="blsExp" placeholder="MM/YYYY" oninput="handleCertInput('bls', 'exp', this.value)"></div>
+                    </div>
+                </div>
+
+                <!-- ACLS Toggle -->
+                <div class="checkbox-row">
+                    <input type="checkbox" id="hasAcls" onchange="toggleCertSubform('acls', this.checked)">
+                    <label style="display:inline; font-size:13px; text-transform:none; cursor:pointer;" for="hasAcls">Advanced Cardiovascular Life Support (ACLS)</label>
+                </div>
+                <div id="subform-acls" class="cert-subform">
+                    <div class="form-row">
+                        <div class="form-col"><label>Expiration Date</label><input type="text" id="aclsExp" placeholder="MM/YYYY" oninput="handleCertInput('acls', 'exp', this.value)"></div>
+                    </div>
+                </div>
+
+                <!-- PALS Toggle -->
+                <div class="checkbox-row">
+                    <input type="checkbox" id="hasPals" onchange="toggleCertSubform('pals', this.checked)">
+                    <label style="display:inline; font-size:13px; text-transform:none; cursor:pointer;" for="hasPals">Pediatric Advanced Life Support (PALS)</label>
+                </div>
+                <div id="subform-pals" class="cert-subform">
+                    <div class="form-row">
+                        <div class="form-col"><label>Expiration Date</label><input type="text" id="palsExp" placeholder="MM/YYYY" oninput="handleCertInput('pals', 'exp', this.value)"></div>
+                    </div>
+                </div>
+
+                <!-- Custom Specialty Toggle -->
+                <div class="checkbox-row">
+                    <input type="checkbox" id="hasSpec" onchange="toggleCertSubform('spec', this.checked)">
+                    <label style="display:inline; font-size:13px; text-transform:none; cursor:pointer;" for="hasSpec">Specialty / Other Certifications</label>
+                </div>
+                <div id="subform-spec" class="cert-subform">
+                    <div class="form-row">
+                        <div class="form-col"><label>Certification Title (e.g., CCRN, CPN)</label><input type="text" id="specTitle" placeholder="CCRN" oninput="handleCertInput('spec', 'title', this.value)"></div>
+                        <div class="form-col"><label>Expiration Date (Optional)</label><input type="text" id="specExp" placeholder="MM/YYYY" oninput="handleCertInput('spec', 'exp', this.value)"></div>
+                    </div>
+                </div>
+            </div>
+
             <!-- EDUCATION -->
             <div class="card">
                 <h2>Education</h2>
@@ -151,7 +218,7 @@
             <!-- SKILLS -->
             <div class="card">
                 <h2>Core Skills</h2>
-                <span class="subtitle">Comma-separated list (e.g., Project Management, Workflow Automation, Strategic Planning)</span>
+                <span class="subtitle">Comma-separated list (e.g., Patient Assessment, Workflow Automation, Quality Improvement)</span>
                 <textarea id="skills" placeholder="Skill 1, Skill 2, Skill 3..." oninput="handleTextInput('skills', this.value)"></textarea>
             </div>
 
@@ -178,6 +245,13 @@
             address: "",
             linkedin: "",
             summary: "",
+            certs: {
+                rn: { active: false, state: "", num: "", exp: "" },
+                bls: { active: false, exp: "" },
+                acls: { active: false, exp: "" },
+                pals: { active: false, exp: "" },
+                spec: { active: false, title: "", exp: "" }
+            },
             education: [],
             experience: [],
             skills: "",
@@ -199,6 +273,17 @@
 
         function handleSummaryInput(value) {
             state.summary = value;
+            updatePreview();
+        }
+
+        function toggleCertSubform(certKey, isChecked) {
+            state.certs[certKey].active = isChecked;
+            document.getElementById(`subform-${certKey}`).style.display = isChecked ? "block" : "none";
+            updatePreview();
+        }
+
+        function handleCertInput(certKey, field, value) {
+            state.certs[certKey][field] = value;
             updatePreview();
         }
 
@@ -369,6 +454,57 @@
                 `;
             }
 
+            // Certifications Preview Logic Block
+            let activeCerts = Object.keys(state.certs).filter(k => state.certs[k].active);
+            if (activeCerts.length > 0) {
+                html += `<div class="p-section"><div class="p-sectitle">Licensure & Certifications</div>`;
+                activeCerts.forEach(k => {
+                    let c = state.certs[k];
+                    if (k === 'rn') {
+                        html += `
+                            <table class="p-print-table">
+                                <tr>
+                                    <td class="p-left-cell"><span class="p-bold">Registered Nurse (RN)</span>${c.state ? ' – State of ' + c.state : ''}${c.num ? ', License #' + c.num : ''}</td>
+                                    <td class="p-right-cell">${c.exp ? 'Exp. ' + c.exp : ''}</td>
+                                </tr>
+                            </table>`;
+                    } else if (k === 'bls') {
+                        html += `
+                            <table class="p-print-table">
+                                <tr>
+                                    <td class="p-left-cell">Basic Life Support (BLS)</td>
+                                    <td class="p-right-cell">${c.exp ? 'Exp. ' + c.exp : ''}</td>
+                                </tr>
+                            </table>`;
+                    } else if (k === 'acls') {
+                        html += `
+                            <table class="p-print-table">
+                                <tr>
+                                    <td class="p-left-cell">Advanced Cardiovascular Life Support (ACLS)</td>
+                                    <td class="p-right-cell">${c.exp ? 'Exp. ' + c.exp : ''}</td>
+                                </tr>
+                            </table>`;
+                    } else if (k === 'pals') {
+                        html += `
+                            <table class="p-print-table">
+                                <tr>
+                                    <td class="p-left-cell">Pediatric Advanced Life Support (PALS)</td>
+                                    <td class="p-right-cell">${c.exp ? 'Exp. ' + c.exp : ''}</td>
+                                </tr>
+                            </table>`;
+                    } else if (k === 'spec' && c.title) {
+                        html += `
+                            <table class="p-print-table">
+                                <tr>
+                                    <td class="p-left-cell"><span class="p-bold">${c.title}</span></td>
+                                    <td class="p-right-cell">${c.exp ? 'Exp. ' + c.exp : ''}</td>
+                                </tr>
+                            </table>`;
+                    }
+                });
+                html += `</div>`;
+            }
+
             if(state.education.length > 0) {
                 let hasData = state.education.some(e => e.degree || e.school);
                 if (hasData) {
@@ -458,6 +594,26 @@
                     document.getElementById('linkedin').value = state.linkedin || '';
                     document.getElementById('summary').value = state.summary || '';
                     document.getElementById('skills').value = state.skills || '';
+                    
+                    // Reset Checkboxes & Forms on Upload File Sync
+                    Object.keys(state.certs).forEach(k => {
+                        let active = state.certs[k].active || false;
+                        let box = document.getElementById(`has${k.charAt(0).toUpperCase() + k.slice(1)}`);
+                        if(box) box.checked = active;
+                        document.getElementById(`subform-${k}`).style.display = active ? "block" : "none";
+                        if(k === 'rn') {
+                            document.getElementById('rnState').value = state.certs.rn.state || '';
+                            document.getElementById('rnNum').value = state.certs.rn.num || '';
+                            document.getElementById('rnExp').value = state.certs.rn.exp || '';
+                        } else if (k === 'spec') {
+                            document.getElementById('specTitle').value = state.certs.spec.title || '';
+                            document.getElementById('specExp').value = state.certs.spec.exp || '';
+                        } else {
+                            let inputEl = document.getElementById(`${k}Exp`);
+                            if(inputEl) inputEl.value = state.certs[k].exp || '';
+                        }
+                    });
+
                     renderFormLists();
                     checkChronology();
                 } catch(err) {
@@ -507,6 +663,56 @@
 
             if(state.summary && state.summary.trim() !== "") {
                 docHeader += `<div class="p-section"><div class="p-sectitle">Professional Summary</div><p class="p-text">${state.summary}</p></div>`;
+            }
+
+            let activeCerts = Object.keys(state.certs).filter(k => state.certs[k].active);
+            if (activeCerts.length > 0) {
+                docHeader += `<div class="p-section"><div class="p-sectitle">Licensure & Certifications</div>`;
+                activeCerts.forEach(k => {
+                    let c = state.certs[k];
+                    if (k === 'rn') {
+                        docHeader += `
+                            <table class="w-table">
+                                <tr>
+                                    <td class="w-left"><span class="p-bold">Registered Nurse (RN)</span>${c.state ? ' – State of ' + c.state : ''}${c.num ? ', License #' + c.num : ''}</td>
+                                    <td class="w-right">${c.exp ? 'Exp. ' + c.exp : ''}</td>
+                                </tr>
+                            </table>`;
+                    } else if (k === 'bls') {
+                        docHeader += `
+                            <table class="w-table">
+                                <tr>
+                                    <td class="w-left">Basic Life Support (BLS)</td>
+                                    <td class="w-right">${c.exp ? 'Exp. ' + c.exp : ''}</td>
+                                </tr>
+                            </table>`;
+                    } else if (k === 'acls') {
+                        docHeader += `
+                            <table class="w-table">
+                                <tr>
+                                    <td class="w-left">Advanced Cardiovascular Life Support (ACLS)</td>
+                                    <td class="w-right">${c.exp ? 'Exp. ' + c.exp : ''}</td>
+                                </tr>
+                            </table>`;
+                    } else if (k === 'pals') {
+                        docHeader += `
+                            <table class="w-table">
+                                <tr>
+                                    <td class="w-left">Pediatric Advanced Life Support (PALS)</td>
+                                    <td class="w-right">${c.exp ? 'Exp. ' + c.exp : ''}</td>
+                                </tr>
+                            </table>`;
+                    } else if (k === 'spec' && c.title) {
+                        docHeader += `
+                            <table class="w-table">
+                                <tr>
+                                    <td class="w-left"><span class="p-bold">${c.title}</span></td>
+                                    <td class="w-right">${c.exp ? 'Exp. ' + c.exp : ''}</td>
+                                </tr>
+                            </table>`;
+                    }
+                });
+                docHeader += `</div>`;
             }
 
             if(state.education.length > 0) {
