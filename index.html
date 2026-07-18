@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Academic Nursing CV Builder</title>
+    <title>Academic CV Builder</title>
     <style>
         /* Global UI Styling */
         * { box-sizing: border-box; font-family: "Arial", "Helvetica", sans-serif; }
@@ -31,7 +31,7 @@
         .btn-word:hover { background-color: #124596; }
         .error-box { background-color: #fff0f0; border: 2px solid #cc0000; padding: 10px; border-radius: 4px; color: #cc0000; font-weight: bold; font-size: 12px; margin-bottom: 15px; display: none; }
         
-        /* ================= ARIAL PRINT CANVAS RE-ENGINEERING ================= */
+        /* ================= ARIAL PRINT CANVAS ================= */
         .preview-pane { background: white; padding: 54px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); color: black; line-height: 1.4; font-size: 10.5pt; position: sticky; top: 20px; }
         
         .preview-pane, .preview-pane *, .p-header, .p-name, .p-contact, .p-section, .p-sectitle, .p-text, .p-bullet-item, .skills-table td {
@@ -45,11 +45,9 @@
         .p-section { margin-top: 20px; margin-bottom: 5px; width: 100%; }
         .p-sectitle { font-size: 12pt; font-weight: bold; text-transform: uppercase; border-bottom: 1.5px solid black; padding-bottom: 3px; margin: 0 0 12px 0; letter-spacing: 0.5px; }
         
-        /* Fixed-Width Layout Tables - Structural Margins Locked */
         .p-print-table { width: 100% !important; border-collapse: collapse !important; margin-top: 8px; margin-bottom: 2px; table-layout: fixed !important; }
         .p-print-table td { padding: 0 !important; vertical-align: top !important; font-size: 10.5pt !important; line-height: 1.4 !important; }
         
-        /* Strict Alignment Directives */
         .p-left-cell { text-align: left !important; width: 75% !important; padding-right: 15px !important; }
         .p-right-cell { text-align: right !important; width: 25% !important; white-space: nowrap !important; font-weight: bold !important; }
         
@@ -73,7 +71,7 @@
 </head>
 <body>
 
-    <h1>📋 Academic Nursing CV Builder & Real-Time Layout Tool</h1>
+    <h1>📋 Professional CV Builder</h1>
     <p style="text-align:center; color:#555; max-width:800px; margin: 0 auto 25px auto; font-size: 14px;">
         Fill out your entries below. Empty sections completely vanish from final exports.
     </p>
@@ -84,7 +82,7 @@
             
             <div class="card">
                 <h2>🔄 Data Operations</h2>
-                <span class="subtitle">Upload a saved draft or export your current state data.</span>
+                <span class="subtitle">Upload a saved draft or export your current data file.</span>
                 <label>Upload .cvdata file</label>
                 <input type="file" id="importFile" accept=".cvdata,.json" onchange="importData(event)">
                 <button class="btn btn-secondary" onclick="exportData()">💾 Save Progress Data File (.cvdata)</button>
@@ -102,7 +100,7 @@
                     </div>
                     <div class="form-col">
                         <label>Credentials</label>
-                        <input type="text" id="credentials" placeholder="e.g., MSN, RN, CPN" oninput="handleTextInput('credentials', this.value)">
+                        <input type="text" id="credentials" placeholder="e.g., MBA, MSN, RN" oninput="handleTextInput('credentials', this.value)">
                     </div>
                 </div>
                 <div class="form-row">
@@ -112,13 +110,13 @@
                     </div>
                     <div class="form-col">
                         <label>Email</label>
-                        <input type="text" id="email" placeholder="jdoe@hospital.org" oninput="handleTextInput('email', this.value)">
+                        <input type="text" id="email" placeholder="jdoe@organization.org" oninput="handleTextInput('email', this.value)">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-col">
                         <label>Address (Optional)</label>
-                        <input type="text" id="address" placeholder="Boston, MA" oninput="handleTextInput('address', this.value)">
+                        <input type="text" id="address" placeholder="City, State" oninput="handleTextInput('address', this.value)">
                     </div>
                     <div class="form-col">
                         <label>LinkedIn (Optional)</label>
@@ -131,7 +129,7 @@
             <div class="card">
                 <h2>Professional Summary</h2>
                 <label>3–4 Sentence Professional Overview</label>
-                <textarea id="summary" placeholder="Overview..." oninput="handleSummaryInput(this.value)"></textarea>
+                <textarea id="summary" placeholder="Summarize experience and core expertise here..." oninput="handleSummaryInput(this.value)"></textarea>
             </div>
 
             <!-- EDUCATION -->
@@ -152,9 +150,9 @@
 
             <!-- SKILLS -->
             <div class="card">
-                <h2>Clinical Skills</h2>
-                <span class="subtitle">Comma-separated list (e.g., Patient Assessment, Epic EMR, IV Insertion)</span>
-                <textarea id="skills" placeholder="Skills..." oninput="handleTextInput('skills', this.value)"></textarea>
+                <h2>Core Skills</h2>
+                <span class="subtitle">Comma-separated list (e.g., Project Management, Workflow Automation, Strategic Planning)</span>
+                <textarea id="skills" placeholder="Skill 1, Skill 2, Skill 3..." oninput="handleTextInput('skills', this.value)"></textarea>
             </div>
 
             <!-- DOWNLOAD ACTIONS -->
@@ -173,22 +171,16 @@
 
     <script>
         let state = {
-            fullName: "Kate Donovan",
-            credentials: "MSN, RN, CPN",
-            phone: "(617) 555-0199",
-            email: "kdonovan@bch.org",
-            address: "Boston, MA",
-            linkedin: "linkedin.com/in/katedonovan-rn",
-            summary: "Detail-oriented and innovative Registered Nurse within the Inpatient Medical Programs at Boston Children's Hospital. Specialized in providing high-acuity pediatric clinical care, implementing workflow technologies, and coordinating interdisciplinary care pathways. Committed to evidence-based practice and preserving human connection within advanced clinical frameworks.",
-            education: [
-                { degree: "Master of Business Administration (MBA)", school: "Northeast University", location: "Boston, MA", year: "2026" },
-                { degree: "Bachelor of Science in Nursing (BSN)", school: "Boston College", location: "Chestnut Hill, MA", year: "2023" }
-            ],
-            experience: [
-                { title: "Clinical Director of Innovation and Education", org: "Boston Children's Hospital", location: "Boston, MA", startMonth: "Nov", startYear: "2025", endMonth: "Present", endYear: "Present", bullets: ["Manage localized quality improvement initiatives and advanced clinical technology workflows across a high-acuity pediatric inpatient footprint.","Coordinate nursing educational tracks, transforming complex operational and technological guidelines into digestible training pathways.","Collaborate closely with Senior Nursing Directors to implement dynamic, frontline-focused care protocols."] },
-                { title: "Staff Nurse, Inpatient Medical Program", org: "Boston Children's Hospital", location: "Boston, MA", startMonth: "June", startYear: "2023", endMonth: "Oct", endYear: "2025", bullets: ["Delivered comprehensive, safe, and family-centered acute care to pediatric populations within specialized medical units.","Assessed clinical parameters, administered high-risk medications, and initiated continuous monitoring for complex patient profiles.","Served as an active unit council representative assisting with technology implementation and safety metrics."] }
-            ],
-            skills: "Patient Assessment & Triage, Medication Administration, Pediatric Advanced Life Support (PALS), Quality Improvement, Workflow Automation, Epic EMR, Care Coordination",
+            fullName: "",
+            credentials: "",
+            phone: "",
+            email: "",
+            address: "",
+            linkedin: "",
+            summary: "",
+            education: [],
+            experience: [],
+            skills: "",
             isValid: true
         };
 
@@ -196,15 +188,6 @@
         const YEARS = ["Present", "2027", "2026", "2025", "2024", "2023", "2022", "2021", "2020", "2019"];
 
         function init() {
-            document.getElementById('fullName').value = state.fullName;
-            document.getElementById('credentials').value = state.credentials;
-            document.getElementById('phone').value = state.phone;
-            document.getElementById('email').value = state.email;
-            document.getElementById('address').value = state.address;
-            document.getElementById('linkedin').value = state.linkedin;
-            document.getElementById('summary').value = state.summary;
-            document.getElementById('skills').value = state.skills;
-            
             renderFormLists();
             updatePreview();
         }
@@ -253,8 +236,8 @@
                 eduCont.innerHTML += `
                     <div style="background:#fcfcfc; padding:12px; border:1px solid #eee; margin-bottom:10px; border-radius:4px;">
                         <div class="form-row">
-                            <div class="form-col"><label>Degree</label><input type="text" value="${edu.degree}" oninput="updateEduField(${idx}, 'degree', this.value)"></div>
-                            <div class="col"><label>School Name</label><input type="text" value="${edu.school}" oninput="updateEduField(${idx}, 'school', this.value)"></div>
+                            <div class="form-col"><label>Degree / Qualification</label><input type="text" value="${edu.degree}" oninput="updateEduField(${idx}, 'degree', this.value)"></div>
+                            <div class="col"><label>Institution Name</label><input type="text" value="${edu.school}" oninput="updateEduField(${idx}, 'school', this.value)"></div>
                         </div>
                         <div class="form-row">
                             <div class="form-col"><label>Location (City, State)</label><input type="text" value="${edu.location}" oninput="updateEduField(${idx}, 'location', this.value)"></div>
@@ -368,9 +351,9 @@
 
             let html = `
                 <div class="p-header">
-                    <div class="p-name">${state.fullName}${state.credentials ? ', ' + state.credentials : ''}</div>
+                    <div class="p-name">${state.fullName || "YOUR NAME"}${state.credentials ? ', ' + state.credentials : ''}</div>
                     <div class="p-contact">
-                        Phone: ${state.phone} &bull; Email: ${state.email}
+                        ${state.phone ? 'Phone: ' + state.phone : ''} ${state.email ? ' &bull; Email: ' + state.email : ''}
                         ${state.address ? ' &bull; Address: ' + state.address : ''}
                         ${state.linkedin ? ' &bull; LinkedIn: ' + state.linkedin : ''}
                     </div>
@@ -432,7 +415,7 @@
             }
 
             if(state.skills && state.skills.trim() !== "") {
-                html += `<div class="p-section"><div class="p-sectitle">Clinical Skills</div><table class="skills-table"><tr>`;
+                html += `<div class="p-section"><div class="p-sectitle">Skills</div><table class="skills-table"><tr>`;
                 let items = state.skills.split(',').map(s => s.trim()).filter(s => s !== "");
                 let col1 = ""; let col2 = "";
                 items.forEach((item, index) => {
@@ -453,7 +436,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `${state.fullName.replace(/\s+/g, '_')}_CVData.cvdata`;
+            a.download = `CVData_Export.cvdata`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -517,8 +500,8 @@
                 <body>
                     <div class="Section1">
                         <div class="p-header">
-                            <div class="p-name">${state.fullName}${state.credentials ? ', ' + state.credentials : ''}</div>
-                            <div class="p-contact">Phone: ${state.phone} &bull; Email: ${state.email}${state.address ? ' | Address: ' + state.address : ''}${state.linkedin ? ' | LinkedIn: ' + state.linkedin : ''}</div>
+                            <div class="p-name">${state.fullName || "YOUR NAME"}${state.credentials ? ', ' + state.credentials : ''}</div>
+                            <div class="p-contact">${state.phone ? 'Phone: ' + state.phone : ''} ${state.email ? ' &bull; Email: ' + state.email : ''} ${state.address ? ' | Address: ' + state.address : ''} ${state.linkedin ? ' | LinkedIn: ' + state.linkedin : ''}</div>
                         </div>
             `;
 
@@ -565,7 +548,7 @@
             }
 
             if(state.skills && state.skills.trim() !== "") {
-                docHeader += `<div class="p-section"><div class="p-sectitle">Clinical Skills</div><table class="w-table"><tr>`;
+                docHeader += `<div class="p-section"><div class="p-sectitle">Skills</div><table class="w-table"><tr>`;
                 let items = state.skills.split(',').map(s => s.trim()).filter(s => s !== "");
                 let c1 = ""; let c2 = "";
                 items.forEach((item, idx) => {
@@ -589,7 +572,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `${state.fullName.replace(/\s+/g, '_')}_AcademicCV.doc`;
+            a.download = `AcademicCV.doc`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
