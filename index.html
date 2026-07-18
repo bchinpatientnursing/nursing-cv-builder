@@ -141,7 +141,6 @@
                 <h2>Licensure & Certifications</h2>
                 <span class="subtitle">Check standard items to activate fields, or add multiple custom specialty certs at the bottom.</span>
                 
-                <!-- RN Toggle -->
                 <div class="checkbox-row">
                     <input type="checkbox" id="hasRn" onchange="toggleCertSubform('rn', this.checked)">
                     <label style="display:inline; font-size:13px; text-transform:none; cursor:pointer;" for="hasRn">Registered Nurse (RN)</label>
@@ -154,7 +153,6 @@
                     </div>
                 </div>
 
-                <!-- BLS Toggle -->
                 <div class="checkbox-row">
                     <input type="checkbox" id="hasBls" onchange="toggleCertSubform('bls', this.checked)">
                     <label style="display:inline; font-size:13px; text-transform:none; cursor:pointer;" for="hasBls">Basic Life Support (BLS)</label>
@@ -165,7 +163,6 @@
                     </div>
                 </div>
 
-                <!-- ACLS Toggle -->
                 <div class="checkbox-row">
                     <input type="checkbox" id="hasAcls" onchange="toggleCertSubform('acls', this.checked)">
                     <label style="display:inline; font-size:13px; text-transform:none; cursor:pointer;" for="hasAcls">Advanced Cardiovascular Life Support (ACLS)</label>
@@ -176,7 +173,6 @@
                     </div>
                 </div>
 
-                <!-- PALS Toggle -->
                 <div class="checkbox-row">
                     <input type="checkbox" id="hasPals" onchange="toggleCertSubform('pals', this.checked)">
                     <label style="display:inline; font-size:13px; text-transform:none; cursor:pointer;" for="hasPals">Pediatric Advanced Life Support (PALS)</label>
@@ -187,7 +183,6 @@
                     </div>
                 </div>
 
-                <!-- Specialty Certifications Block -->
                 <div style="margin-top: 15px; border-top: 1px dashed #ddd; padding-top: 15px;">
                     <label style="color: #005A9C; margin-bottom: 8px;">Specialty Certifications (e.g., CCRN, CMSRN, TNCC, CPN)</label>
                     <div id="specialtyCertsContainer"></div>
@@ -211,12 +206,36 @@
                 <button class="btn btn-secondary" onclick="addExperience()">+ Add Experience Slot</button>
             </div>
 
+            <!-- PROFESSIONAL DEVELOPMENT & TRAINING -->
+            <div class="card">
+                <h2>Professional Development & Training</h2>
+                <span class="subtitle">Workshops, seminars, continuing education modules, leadership/preceptor training.</span>
+                <div id="trainingContainer"></div>
+                <button class="btn btn-secondary" onclick="addTraining()">+ Add Training Module</button>
+            </div>
+
+            <!-- AWARDS & RECOGNITION -->
+            <div class="card">
+                <h2>Awards & Recognition</h2>
+                <span class="subtitle">DAISY nomination or award, Employee of the Month/Quarter/Year, internal appreciation letters.</span>
+                <div id="awardsContainer"></div>
+                <button class="btn btn-secondary" onclick="addAward()">+ Add Award/Recognition</button>
+            </div>
+
             <!-- PROFESSIONAL MEMBERSHIPS -->
             <div class="card">
                 <h2>Professional Memberships & Affiliations</h2>
-                <span class="subtitle">Add relevant professional networks or associations.</span>
+                <span class="subtitle">American Nurses Association (ANA), Specialty organizations (AACN, ENA), local committees.</span>
                 <div id="membershipContainer"></div>
                 <button class="btn btn-secondary" onclick="addMembership()">+ Add Membership Slot</button>
+            </div>
+
+            <!-- VOLUNTEER EXPERIENCE -->
+            <div class="card">
+                <h2>Volunteer Experience (Optional)</h2>
+                <span class="subtitle">Community health contributions, global missions, or local organization roles.</span>
+                <div id="volunteerContainer"></div>
+                <button class="btn btn-secondary" onclick="addVolunteer()">+ Add Volunteer Slot</button>
             </div>
 
             <!-- SKILLS -->
@@ -258,7 +277,10 @@
             specialtyCerts: [],
             education: [],
             experience: [],
+            trainings: [],
+            awards: [],
             memberships: [],
+            volunteers: [],
             skills: "Patient Assessment & Triage, Medication Administration, Patient Advocacy, Epic EMR, Case Management, Quality Improvement, Care Coordination, Clinical Workflow Optimization, Project Management",
             isValid: true
         };
@@ -293,54 +315,18 @@
             updatePreview();
         }
 
-        function addSpecialtyCert() {
-            state.specialtyCerts.push({ title: "", exp: "" });
-            renderFormLists();
-            updatePreview();
-        }
+        function addSpecialtyCert() { state.specialtyCerts.push({ title: "", exp: "" }); renderFormLists(); updatePreview(); }
+        function updateSpecialtyCertField(idx, field, value) { state.specialtyCerts[idx][field] = value; updatePreview(); }
+        function removeSpecialtyCert(idx) { state.specialtyCerts.splice(idx, 1); renderFormLists(); updatePreview(); }
 
-        function updateSpecialtyCertField(idx, field, value) {
-            state.specialtyCerts[idx][field] = value;
-            updatePreview();
-        }
+        function updateEduField(idx, field, val) { state.education[idx][field] = val; updatePreview(); }
+        function updateExpField(idx, field, val) { state.experience[idx][field] = val; updatePreview(); }
+        function updateExpBullet(idx, bIdx, val) { state.experience[idx].bullets[bIdx] = val; updatePreview(); }
+        function addExpBulletSlot(idx) { state.experience[idx].bullets.push(""); renderFormLists(); updatePreview(); }
+        function removeExpBulletSlot(idx, bIdx) { state.experience[idx].bullets.splice(bIdx, 1); renderFormLists(); updatePreview(); }
 
-        function removeSpecialtyCert(idx) {
-            state.specialtyCerts.splice(idx, 1);
-            renderFormLists();
-            updatePreview();
-        }
-
-        function updateEduField(idx, field, val) {
-            state.education[idx][field] = val;
-            updatePreview();
-        }
-
-        function updateExpField(idx, field, val) {
-            state.experience[idx][field] = val;
-            updatePreview();
-        }
-
-        function updateExpBullet(idx, bIdx, val) {
-            state.experience[idx].bullets[bIdx] = val;
-            updatePreview();
-        }
-
-        function addExpBulletSlot(idx) {
-            state.experience[idx].bullets.push("");
-            renderFormLists();
-            updatePreview();
-        }
-
-        function updateMembershipField(idx, field, val) {
-            state.memberships[idx][field] = val;
-            updatePreview();
-        }
-
-        function removeExpBulletSlot(idx, bIdx) {
-            state.experience[idx].bullets.splice(bIdx, 1);
-            renderFormLists();
-            updatePreview();
-        }
+        function updateListField(arrayKey, idx, field, val) { state[arrayKey][idx][field] = val; updatePreview(); }
+        function removeListEntry(arrayKey, idx) { state[arrayKey].splice(idx, 1); renderFormLists(); updatePreview(); }
 
         function renderFormLists() {
             const specCont = document.getElementById('specialtyCertsContainer');
@@ -441,25 +427,67 @@
                 `;
             });
 
+            const trainCont = document.getElementById('trainingContainer');
+            trainCont.innerHTML = '';
+            state.trainings.forEach((t, idx) => {
+                trainCont.innerHTML += `
+                    <div style="background:#fcfcfc; padding:12px; border:1px solid #eee; margin-bottom:10px; border-radius:4px;">
+                        <div class="form-row">
+                            <div class="form-col"><label>Course / Seminar / QI Module</label><input type="text" value="${t.name}" placeholder="e.g., Preceptor Training Course / Quality Improvement Seminar" oninput="updateListField('trainings', ${idx}, 'name', this.value)"></div>
+                            <div class="form-col"><label>Provider / Institution</label><input type="text" value="${t.provider}" placeholder="e.g., Facility Education Dept" oninput="updateListField('trainings', ${idx}, 'provider', this.value)"></div>
+                            <div class="form-col"><label>Year</label><input type="text" value="${t.year}" placeholder="2025" oninput="updateListField('trainings', ${idx}, 'year', this.value)"></div>
+                        </div>
+                        <button class="btn-danger" onclick="removeListEntry('trainings', ${idx})">✕ Remove Module</button>
+                    </div>
+                `;
+            });
+
+            const awardCont = document.getElementById('awardsContainer');
+            awardCont.innerHTML = '';
+            state.awards.forEach((a, idx) => {
+                awardCont.innerHTML += `
+                    <div style="background:#fcfcfc; padding:12px; border:1px solid #eee; margin-bottom:10px; border-radius:4px;">
+                        <div class="form-row">
+                            <div class="form-col"><label>Award / Recognition Honor</label><input type="text" value="${a.name}" placeholder="e.g., DAISY Nomination / Employee of the Quarter" oninput="updateListField('awards', ${idx}, 'name', this.value)"></div>
+                            <div class="form-col"><label>Granting Body</label><input type="text" value="${a.body}" placeholder="e.g., The DAISY Foundation / Hospital Administration" oninput="updateListField('awards', ${idx}, 'body', this.value)"></div>
+                            <div class="form-col"><label>Year</label><input type="text" value="${a.year}" placeholder="2024" oninput="updateListField('awards', ${idx}, 'year', this.value)"></div>
+                        </div>
+                        <button class="btn-danger" onclick="removeListEntry('awards', ${idx})">✕ Remove Award</button>
+                    </div>
+                `;
+            });
+
             const memCont = document.getElementById('membershipContainer');
             memCont.innerHTML = '';
             state.memberships.forEach((mem, idx) => {
                 memCont.innerHTML += `
                     <div style="background:#fcfcfc; padding:12px; border:1px solid #eee; margin-bottom:10px; border-radius:4px;">
                         <div class="form-row">
-                            <div class="form-col"><label>Association / Society Name</label><input type="text" value="${mem.name}" placeholder="e.g., American Nurses Association (ANA)" oninput="updateMembershipField(${idx}, 'name', this.value)"></div>
-                            <div class="form-col"><label>Role</label><input type="text" value="${mem.role}" placeholder="Active Member" oninput="updateMembershipField(${idx}, 'role', this.value)"></div>
-                            <div class="form-col"><label>Year Active</label><input type="text" value="${mem.year}" placeholder="2024 – Present" oninput="updateMembershipField(${idx}, 'year', this.value)"></div>
+                            <div class="form-col"><label>Association / Society / Unit Council</label><input type="text" value="${mem.name}" placeholder="e.g., American Nurses Association (ANA) / Facility Practice Council" oninput="updateListField('memberships', ${idx}, 'name', this.value)"></div>
+                            <div class="form-col"><label>Role / Position</label><input type="text" value="${mem.role}" placeholder="Active Member / Committee Chair" oninput="updateListField('memberships', ${idx}, 'role', this.value)"></div>
+                            <div class="form-col"><label>Year Active</label><input type="text" value="${mem.year}" placeholder="2024 – Present" oninput="updateListField('memberships', ${idx}, 'year', this.value)"></div>
                         </div>
-                        <button class="btn-danger" onclick="removeMembership(${idx})">✕ Remove Membership</button>
+                        <button class="btn-danger" onclick="removeListEntry('memberships', ${idx})">✕ Remove Membership</button>
                     </div>
                 `;
             });
-        }
 
-        function getYearVal(y) {
-            if (y === 'Present') return 9999;
-            return parseInt(y) || 0;
+            const volCont = document.getElementById('volunteerContainer');
+            volCont.innerHTML = '';
+            state.volunteers.forEach((v, idx) => {
+                volCont.innerHTML += `
+                    <div style="background:#fcfcfc; padding:15px; border:1px solid #eee; margin-bottom:15px; border-radius:4px;">
+                        <div class="form-row">
+                            <div class="form-col"><label>Organization Name</label><input type="text" value="${v.org}" placeholder="e.g., Red Cross Disaster Response" oninput="updateListField('volunteers', ${idx}, 'org', this.value)"></div>
+                            <div class="form-col"><label>Role / Position</label><input type="text" value="${v.role}" placeholder="Volunteer Clinic Nurse" oninput="updateListField('volunteers', ${idx}, 'role', this.value)"></div>
+                            <div class="form-col"><label>Dates Active</label><input type="text" value="${v.year}" placeholder="2023 – 2025" oninput="updateListField('volunteers', ${idx}, 'year', this.value)"></div>
+                        </div>
+                        <label>Brief Description of Contributions</label>
+                        <input type="text" value="${v.desc}" placeholder="Assisted with community medical screenings..." oninput="updateListField('volunteers', ${idx}, 'desc', this.value)">
+                        <button class="btn-danger" onclick="removeListEntry('volunteers', ${idx})">✕ Remove Volunteer Card</button>
+                    </div>
+                `;
+            });
         }
 
         function checkChronology() {
@@ -511,12 +539,11 @@
                 `;
             }
 
+            // Certifications Section
             let hasStandardCerts = Object.keys(state.certs).some(k => state.certs[k].active);
             let hasSpecialtyCerts = state.specialtyCerts.some(c => c.title);
-            
             if (hasStandardCerts || hasSpecialtyCerts) {
                 html += `<div class="p-section"><div class="p-sectitle">Licensure & Certifications</div>`;
-                
                 Object.keys(state.certs).forEach(k => {
                     let c = state.certs[k];
                     if (c.active) {
@@ -530,93 +557,81 @@
                                 </table>`;
                         } else {
                             let titles = { bls: "Basic Life Support (BLS)", acls: "Advanced Cardiovascular Life Support (ACLS)", pals: "Pediatric Advanced Life Support (PALS)" };
-                            html += `
-                                <table class="p-print-table">
-                                    <tr>
-                                        <td class="p-left-cell">${titles[k]}</td>
-                                        <td class="p-right-cell">${c.exp ? 'Exp. ' + c.exp : ''}</td>
-                                    </tr>
-                                </table>`;
+                            html += `<table class="p-print-table"><tr><td class="p-left-cell">${titles[k]}</td><td class="p-right-cell">${c.exp ? 'Exp. ' + c.exp : ''}</td></tr></table>`;
                         }
                     }
                 });
-
                 state.specialtyCerts.forEach(c => {
                     if (c.title) {
-                        html += `
-                            <table class="p-print-table">
-                                <tr>
-                                    <td class="p-left-cell"><span class="p-bold">${c.title}</span></td>
-                                    <td class="p-right-cell">${c.exp ? 'Exp. ' + c.exp : ''}</td>
-                                </tr>
-                            </table>`;
+                        html += `<table class="p-print-table"><tr><td class="p-left-cell"><span class="p-bold">${c.title}</span></td><td class="p-right-cell">${c.exp ? 'Exp. ' + c.exp : ''}</td></tr></table>`;
                     }
                 });
                 html += `</div>`;
             }
 
-            if(state.education.length > 0) {
-                let hasData = state.education.some(e => e.degree || e.school);
-                if (hasData) {
-                    html += `<div class="p-section"><div class="p-sectitle">Education</div>`;
-                    state.education.forEach(edu => {
-                        if(edu.degree || edu.school) {
-                            html += `
-                                <table class="p-print-table">
-                                    <tr>
-                                        <td class="p-left-cell"><span class="p-bold">${edu.degree}</span> – ${edu.school}, ${edu.location}</td>
-                                        <td class="p-right-cell">${edu.year}</td>
-                                    </tr>
-                                </table>`;
-                        }
-                    });
-                    html += `</div>`;
-                }
+            // Education Section
+            if(state.education.length > 0 && state.education.some(e => e.degree || e.school)) {
+                html += `<div class="p-section"><div class="p-sectitle">Education</div>`;
+                state.education.forEach(edu => {
+                    if(edu.degree || edu.school) {
+                        html += `<table class="p-print-table"><tr><td class="p-left-cell"><span class="p-bold">${edu.degree}</span> – ${edu.school}, ${edu.location}</td><td class="p-right-cell">${edu.year}</td></tr></table>`;
+                    }
+                });
+                html += `</div>`;
             }
 
-            if(state.experience.length > 0) {
-                let hasData = state.experience.some(e => e.title || e.org);
-                if (hasData) {
-                    html += `<div class="p-section"><div class="p-sectitle">Professional Experience</div>`;
-                    state.experience.forEach(exp => {
-                        if(exp.title || exp.org) {
-                            let dateRangeStr = exp.endYear === 'Present' ? `${exp.startMonth} ${exp.startYear} – Present` : `${exp.startMonth} ${exp.startYear} – ${exp.endMonth} ${exp.endYear}`;
-                            html += `
-                                <table class="p-print-table">
-                                    <tr>
-                                        <td class="p-left-cell"><span class="p-bold">${exp.title}</span> – ${exp.org}, ${exp.location}</td>
-                                        <td class="p-right-cell">${dateRangeStr}</td>
-                                    </tr>
-                                </table>
-                                <ul class="p-bullets">
-                            `;
-                            exp.bullets.forEach(b => {
-                                if(b && b.trim() !== "") html += `<li class="p-bullet-item">${b}</li>`;
-                            });
-                            html += `</ul>`;
-                        }
-                    });
-                    html += `</div>`;
-                }
+            // Experience Section
+            if(state.experience.length > 0 && state.experience.some(e => e.title || e.org)) {
+                html += `<div class="p-section"><div class="p-sectitle">Professional Experience</div>`;
+                state.experience.forEach(exp => {
+                    if(exp.title || exp.org) {
+                        let dateRangeStr = exp.endYear === 'Present' ? `${exp.startMonth} ${exp.startYear} – Present` : `${exp.startMonth} ${exp.startYear} – ${exp.endMonth} ${exp.endYear}`;
+                        html += `
+                            <table class="p-print-table"><tr><td class="p-left-cell"><span class="p-bold">${exp.title}</span> – ${exp.org}, ${exp.location}</td><td class="p-right-cell">${dateRangeStr}</td></tr></table>
+                            <ul class="p-bullets">`;
+                        exp.bullets.forEach(b => { if(b && b.trim() !== "") html += `<li class="p-bullet-item">${b}</li>`; });
+                        html += `</ul>`;
+                    }
+                });
+                html += `</div>`;
             }
 
-            if(state.memberships.length > 0) {
-                let hasMemData = state.memberships.some(m => m.name);
-                if (hasMemData) {
-                    html += `<div class="p-section"><div class="p-sectitle">Professional Memberships & Affiliations</div>`;
-                    state.memberships.forEach(mem => {
-                        if(mem.name) {
-                            html += `
-                                <table class="p-print-table">
-                                    <tr>
-                                        <td class="p-left-cell"><span class="p-bold">${mem.name}</span>${mem.role ? ' – ' + mem.role : ''}</td>
-                                        <td class="p-right-cell">${mem.year || ''}</td>
-                                    </tr>
-                                </table>`;
-                        }
-                    });
-                    html += `</div>`;
-                }
+            // Trainings Section
+            if(state.trainings.length > 0 && state.trainings.some(t => t.name)) {
+                html += `<div class="p-section"><div class="p-sectitle">Professional Development & Training</div>`;
+                state.trainings.forEach(t => { if(t.name) {
+                    html += `<table class="p-print-table"><tr><td class="p-left-cell"><span class="p-bold">${t.name}</span>${t.provider ? ' – ' + t.provider : ''}</td><td class="p-right-cell">${t.year || ''}</td></tr></table>`;
+                }});
+                html += `</div>`;
+            }
+
+            // Awards Section
+            if(state.awards.length > 0 && state.awards.some(a => a.name)) {
+                html += `<div class="p-section"><div class="p-sectitle">Awards & Recognition</div>`;
+                state.awards.forEach(a => { if(a.name) {
+                    html += `<table class="p-print-table"><tr><td class="p-left-cell"><span class="p-bold">${a.name}</span>${a.body ? ' – ' + a.body : ''}</td><td class="p-right-cell">${a.year || ''}</td></tr></table>`;
+                }});
+                html += `</div>`;
+            }
+
+            // Memberships Section
+            if(state.memberships.length > 0 && state.memberships.some(m => m.name)) {
+                html += `<div class="p-section"><div class="p-sectitle">Professional Memberships & Affiliations</div>`;
+                state.memberships.forEach(mem => { if(mem.name) {
+                    html += `<table class="p-print-table"><tr><td class="p-left-cell"><span class="p-bold">${mem.name}</span>${mem.role ? ' – ' + mem.role : ''}</td><td class="p-right-cell">${mem.year || ''}</td></tr></table>`;
+                }});
+                html += `</div>`;
+            }
+
+            // Volunteer Section
+            if(state.volunteers.length > 0 && state.volunteers.some(v => v.org)) {
+                html += `<div class="p-section"><div class="p-sectitle">Volunteer Experience</div>`;
+                state.volunteers.forEach(v => { if(v.org) {
+                    html += `
+                        <table class="p-print-table"><tr><td class="p-left-cell"><span class="p-bold">${v.org}</span>${v.role ? ' – ' + v.role : ''}</td><td class="p-right-cell">${v.year || ''}</td></tr></table>
+                        ${v.desc ? `<p class="p-text" style="margin-left:10px; font-style:italic; color:#444;">${v.desc}</p>` : ''}`;
+                }});
+                html += `</div>`;
             }
 
             if(state.skills && state.skills.trim() !== "") {
@@ -637,25 +652,17 @@
         function exportData() {
             state.summary = document.getElementById('summary').value;
             state.skills = document.getElementById('skills').value;
-            const str = JSON.stringify(state, null, 2);
-            const blob = new Blob([str], {type: "application/json"});
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `CVData_Export.cvdata`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+            const blob = new Blob([JSON.stringify(state, null, 2)], {type: "application/json"});
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+            a.download = `CVData_Export.cvdata`; document.body.appendChild(a); a.click(); document.body.removeChild(a);
         }
 
         function importData(e) {
-            const file = e.target.files[0];
-            if(!file) return;
+            const file = e.target.files[0]; if(!file) return;
             const r = new FileReader();
             r.onload = function(evt) {
                 try {
-                    const parsed = JSON.parse(evt.target.result);
-                    state = parsed;
+                    state = JSON.parse(evt.target.result);
                     document.getElementById('fullName').value = state.fullName || '';
                     document.getElementById('credentials').value = state.credentials || '';
                     document.getElementById('phone').value = state.phone || '';
@@ -675,228 +682,128 @@
                             document.getElementById('rnNum').value = state.certs.rn.num || '';
                             document.getElementById('rnExp').value = state.certs.rn.exp || '';
                         } else {
-                            let inputEl = document.getElementById(`${k}Exp`);
-                            if(inputEl) inputEl.value = state.certs[k].exp || '';
+                            let inputEl = document.getElementById(`${k}Exp`); if(inputEl) inputEl.value = state.certs[k].exp || '';
                         }
                     });
-
-                    renderFormLists();
-                    checkChronology();
-                } catch(err) {
-                    alert('Error parsing CVData file.');
-                }
+                    renderFormLists(); checkChronology();
+                } catch(err) { alert('Error parsing CVData file.'); }
             };
             r.readAsText(file);
         }
 
-        function generatePDF() {
-            state.summary = document.getElementById('summary').value;
-            state.skills = document.getElementById('skills').value;
-            updatePreview();
-            window.print();
-        }
+        function generatePDF() { state.summary = document.getElementById('summary').value; state.skills = document.getElementById('skills').value; updatePreview(); window.print(); }
 
         function generateWord() {
             state.summary = document.getElementById('summary').value;
             state.skills = document.getElementById('skills').value;
             let docHeader = `
                 <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-                <head>
-                    <title>Academic CV</title>
-                    <style>
-                        @page WordSection1 { size: 8.5in 11.0in; margin: 0.75in 0.75in 0.75in 0.75in; mso-header-margin: 0in; mso-footer-margin: 0in; mso-header: none; mso-footer: none; }
-                        div.Section1 { page: WordSection1; }
-                        body { font-family: "Arial", Sans-Serif; font-size: 10.5pt; line-height: 1.4; color: black; }
-                        .p-header { text-align: center; margin-bottom: 20pt; }
-                        .p-name { font-size: 16pt; font-weight: bold; text-transform: uppercase; margin: 0; }
-                        .p-contact { font-size: 10pt; margin: 0; color: #333; }
-                        .p-section { margin-top: 16pt; margin-bottom: 4pt; }
-                        .p-sectitle { font-size: 12pt; font-weight: bold; text-transform: uppercase; border-bottom: 1.5px solid black; padding-bottom: 2pt; margin: 12pt 0 8pt 0; letter-spacing: 0.5px; }
-                        .w-table { width: 100%; border: none; margin-bottom: 2pt; }
-                        .w-left { text-align: left; font-size: 10.5pt; width: 75%; }
-                        .w-right { text-align: right; font-size: 10.5pt; width: 25%; font-weight: bold; }
-                        .p-bold { font-weight: bold; }
-                        .p-text { font-size: 10.5pt; text-align: justify; margin: 0; }
-                        .w-bullet { font-size: 10.5pt; margin-left: 15pt; margin-bottom: 2pt; }
-                        .w-skill-col { width: 50%; font-size: 10.5pt; }
-                    </style>
-                </head>
-                <body>
-                    <div class="Section1">
-                        <div class="p-header">
-                            <div class="p-name">${state.fullName || "YOUR NAME"}${state.credentials ? ', ' + state.credentials : ''}</div>
-                            <div class="p-contact">${state.phone ? 'Phone: ' + state.phone : ''} ${state.email ? ' &bull; Email: ' + state.email : ''} ${state.address ? ' | Address: ' + state.address : ''} ${state.linkedin ? ' | LinkedIn: ' + state.linkedin : ''}</div>
-                        </div>
-            `;
+                <head><title>Academic CV</title>
+                <style>
+                    @page WordSection1 { size: 8.5in 11.0in; margin: 0.75in 0.75in 0.75in 0.75in; mso-header-margin: 0in; mso-footer-margin: 0in; mso-header: none; mso-footer: none; }
+                    div.Section1 { page: WordSection1; }
+                    body { font-family: "Arial", Sans-Serif; font-size: 10.5pt; line-height: 1.4; color: black; }
+                    .p-header { text-align: center; margin-bottom: 20pt; }
+                    .p-name { font-size: 16pt; font-weight: bold; text-transform: uppercase; margin: 0; }
+                    .p-contact { font-size: 10pt; margin: 0; color: #333; }
+                    .p-section { margin-top: 16pt; margin-bottom: 4pt; }
+                    .p-sectitle { font-size: 12pt; font-weight: bold; text-transform: uppercase; border-bottom: 1.5px solid black; padding-bottom: 2pt; margin: 12pt 0 8pt 0; letter-spacing: 0.5px; }
+                    .w-table { width: 100%; border: none; margin-bottom: 2pt; }
+                    .w-left { text-align: left; font-size: 10.5pt; width: 75%; }
+                    .w-right { text-align: right; font-size: 10.5pt; width: 25%; font-weight: bold; }
+                    .p-bold { font-weight: bold; }
+                    .p-text { font-size: 10.5pt; text-align: justify; margin: 0; }
+                    .w-bullet { font-size: 10.5pt; margin-left: 15pt; margin-bottom: 2pt; }
+                    .w-skill-col { width: 50%; font-size: 10.5pt; }
+                </style></head>
+                <body><div class="Section1">
+                    <div class="p-header">
+                        <div class="p-name">${state.fullName || "YOUR NAME"}${state.credentials ? ', ' + state.credentials : ''}</div>
+                        <div class="p-contact">${state.phone ? 'Phone: ' + state.phone : ''} ${state.email ? ' &bull; Email: ' + state.email : ''} ${state.address ? ' | Address: ' + state.address : ''} ${state.linkedin ? ' | LinkedIn: ' + state.linkedin : ''}</div>
+                    </div>`;
 
-            if(state.summary && state.summary.trim() !== "") {
-                docHeader += `<div class="p-section"><div class="p-sectitle">Professional Summary</div><p class="p-text">${state.summary}</p></div>`;
-            }
+            if(state.summary && state.summary.trim() !== "") { docHeader += `<div class="p-section"><div class="p-sectitle">Professional Summary</div><p class="p-text">${state.summary}</p></div>`; }
 
             let hasStandardCerts = Object.keys(state.certs).some(k => state.certs[k].active);
             let hasSpecialtyCerts = state.specialtyCerts.some(c => c.title);
             if (hasStandardCerts || hasSpecialtyCerts) {
                 docHeader += `<div class="p-section"><div class="p-sectitle">Licensure & Certifications</div>`;
-                Object.keys(state.certs).forEach(k => {
-                    let c = state.certs[k];
-                    if (c.active) {
-                        if (k === 'rn') {
-                            docHeader += `
-                                <table class="w-table">
-                                    <tr>
-                                        <td class="w-left"><span class="p-bold">Registered Nurse (RN)</span>${c.state ? ' – State of ' + c.state : ''}${c.num ? ', License #' + c.num : ''}</td>
-                                        <td class="w-right">${c.exp ? 'Exp. ' + c.exp : ''}</td>
-                                    </tr>
-                                </table>`;
-                        } else {
-                            let titles = { bls: "Basic Life Support (BLS)", acls: "Advanced Cardiovascular Life Support (ACLS)", pals: "Pediatric Advanced Life Support (PALS)" };
-                            docHeader += `
-                                <table class="w-table">
-                                    <tr>
-                                        <td class="w-left">${titles[k]}</td>
-                                        <td class="w-right">${c.exp ? 'Exp. ' + c.exp : ''}</td>
-                                    </tr>
-                                </table>`;
-                        }
-                    }
-                });
-
-                state.specialtyCerts.forEach(c => {
-                    if (c.title) {
-                        docHeader += `
-                            <table class="w-table">
-                                <tr>
-                                    <td class="w-left"><span class="p-bold">${c.title}</span></td>
-                                    <td class="w-right">${c.exp ? 'Exp. ' + c.exp : ''}</td>
-                                </tr>
-                            </table>`;
-                    }
-                });
+                Object.keys(state.certs).forEach(k => { let c = state.certs[k]; if (c.active) {
+                    if (k === 'rn') { docHeader += `<table class="w-table"><tr><td class="w-left"><span class="p-bold">Registered Nurse (RN)</span>${c.state ? ' – State of ' + c.state : ''}${c.num ? ', License #' + c.num : ''}</td><td class="w-right">${c.exp ? 'Exp. ' + c.exp : ''}</td></tr></table>`; }
+                    else { let titles = { bls: "Basic Life Support (BLS)", acls: "Advanced Cardiovascular Life Support (ACLS)", pals: "Pediatric Advanced Life Support (PALS)" }; docHeader += `<table class="w-table"><tr><td class="w-left">${titles[k]}</td><td class="w-right">${c.exp ? 'Exp. ' + c.exp : ''}</td></tr></table>`; }
+                }});
+                state.specialtyCerts.forEach(c => { if (c.title) { docHeader += `<table class="w-table"><tr><td class="w-left"><span class="p-bold">${c.title}</span></td><td class="w-right">${c.exp ? 'Exp. ' + c.exp : ''}</td></tr></table>`; } });
                 docHeader += `</div>`;
             }
 
-            if(state.education.length > 0) {
+            if(state.education.length > 0 && state.education.some(e => e.degree || e.school)) {
                 docHeader += `<div class="p-section"><div class="p-sectitle">Education</div>`;
-                state.education.forEach(edu => {
-                    if(edu.degree || edu.school) {
-                        docHeader += `
-                            <table class="w-table">
-                                <tr>
-                                    <td class="w-left"><span class="p-bold">${edu.degree}</span> – ${edu.school}, ${edu.location}</td>
-                                    <td class="w-right">${edu.year}</td>
-                                </tr>
-                            </table>`;
-                    }
-                });
+                state.education.forEach(edu => { if(edu.degree || edu.school) { docHeader += `<table class="w-table"><tr><td class="w-left"><span class="p-bold">${edu.degree}</span> – ${edu.school}, ${edu.location}</td><td class="w-right">${edu.year}</td></tr></table>`; } });
                 docHeader += `</div>`;
             }
 
-            if(state.experience.length > 0) {
+            if(state.experience.length > 0 && state.experience.some(e => e.title || e.org)) {
                 docHeader += `<div class="p-section"><div class="p-sectitle">Professional Experience</div>`;
-                state.experience.forEach(exp => {
-                    if(exp.title || exp.org) {
-                        let rangeStr = exp.endYear === 'Present' ? `${exp.startMonth} ${exp.startYear} – Present` : `${exp.startMonth} ${exp.startYear} – ${exp.endMonth} ${exp.endYear}`;
-                        docHeader += `
-                            <table class="w-table" style="margin-top: 5pt;">
-                                <tr>
-                                    <td class="w-left"><span class="p-bold">${exp.title}</span> – ${exp.org}, ${exp.location}</td>
-                                    <td class="w-right">${rangeStr}</td>
-                                </tr>
-                            </table>`;
-                        exp.bullets.forEach(b => {
-                            if(b && b.trim() !== "") {
-                                docHeader += `<div class="w-bullet">• ${b}</div>`;
-                            }
-                        });
-                    }
-                });
+                state.experience.forEach(exp => { if(exp.title || exp.org) {
+                    let rangeStr = exp.endYear === 'Present' ? `${exp.startMonth} ${exp.startYear} – Present` : `${exp.startMonth} ${exp.startYear} – ${exp.endMonth} ${exp.endYear}`;
+                    docHeader += `<table class="w-table" style="margin-top: 5pt;"><tr><td class="w-left"><span class="p-bold">${exp.title}</span> – ${exp.org}, ${exp.location}</td><td class="w-right">${rangeStr}</td></tr></table>`;
+                    exp.bullets.forEach(b => { if(b && b.trim() !== "") docHeader += `<div class="w-bullet">• ${b}</div>`; });
+                }});
                 docHeader += `</div>`;
             }
 
-            if(state.memberships.length > 0) {
-                let hasMemData = state.memberships.some(m => m.name);
-                if (hasMemData) {
-                    docHeader += `<div class="p-section"><div class="p-sectitle">Professional Memberships & Affiliations</div>`;
-                    state.memberships.forEach(mem => {
-                        if(mem.name) {
-                            docHeader += `
-                                <table class="w-table">
-                                    <tr>
-                                        <td class="w-left"><span class="p-bold">${mem.name}</span>${mem.role ? ' – ' + mem.role : ''}</td>
-                                        <td class="w-right">${mem.year || ''}</td>
-                                    </tr>
-                                </table>`;
-                        }
-                    });
-                    docHeader += `</div>`;
-                }
+            if(state.trainings.length > 0 && state.trainings.some(t => t.name)) {
+                docHeader += `<div class="p-section"><div class="p-sectitle">Professional Development & Training</div>`;
+                state.trainings.forEach(t => { if(t.name) { docHeader += `<table class="w-table"><tr><td class="w-left"><span class="p-bold">${t.name}</span>${t.provider ? ' – ' + t.provider : ''}</td><td class="w-right">${t.year || ''}</td></tr></table>`; } });
+                docHeader += `</div>`;
+            }
+
+            if(state.awards.length > 0 && state.awards.some(a => a.name)) {
+                docHeader += `<div class="p-section"><div class="p-sectitle">Awards & Recognition</div>`;
+                state.awards.forEach(a => { if(a.name) { docHeader += `<table class="w-table"><tr><td class="w-left"><span class="p-bold">${a.name}</span>${a.body ? ' – ' + a.body : ''}</td><td class="w-right">${a.year || ''}</td></tr></table>`; } });
+                docHeader += `</div>`;
+            }
+
+            if(state.memberships.length > 0 && state.memberships.some(m => m.name)) {
+                docHeader += `<div class="p-section"><div class="p-sectitle">Professional Memberships & Affiliations</div>`;
+                state.memberships.forEach(mem => { if(mem.name) { docHeader += `<table class="w-table"><tr><td class="w-left"><span class="p-bold">${mem.name}</span>${mem.role ? ' – ' + mem.role : ''}</td><td class="w-right">${mem.year || ''}</td></tr></table>`; } });
+                docHeader += `</div>`;
+            }
+
+            if(state.volunteers.length > 0 && state.volunteers.some(v => v.org)) {
+                docHeader += `<div class="p-section"><div class="p-sectitle">Volunteer Experience</div>`;
+                state.volunteers.forEach(v => { if(v.org) {
+                    docHeader += `<table class="w-table"><tr><td class="w-left"><span class="p-bold">${v.org}</span>${v.role ? ' – ' + v.role : ''}</td><td class="w-right">${v.year || ''}</td></tr></table>`;
+                    if(v.desc) docHeader += `<div style="margin-left:15pt; font-style:italic; color:#444;">${v.desc}</div>`;
+                }});
+                docHeader += `</div>`;
             }
 
             if(state.skills && state.skills.trim() !== "") {
-                docHeader += `<div class="p-section"><div class="p-sectitle">Clinical & Technical Skills</div><table class="w-table"><tr>`;
-                let items = state.skills.split(',').map(s => s.trim()).filter(s => s !== "");
-                let c1 = ""; let c2 = "";
-                items.forEach((item, idx) => {
-                    if (idx % 2 === 0) c1 += `<div>• ${item}</div>`;
-                    else c2 += `<div>• ${item}</div>`;
-                });
+                docHeader += `<div class="p-section"><div class="p-sectitle">Skills</div><table class="w-table"><tr>`;
+                let items = state.skills.split(',').map(s => s.trim()).filter(s => s !== ""); let c1 = ""; let c2 = "";
+                items.forEach((item, idx) => { if (idx % 2 === 0) c1 += `<div>• ${item}</div>`; else c2 += `<div>• ${item}</div>`; });
                 docHeader += `<td class="w-skill-col">${c1}</td><td class="w-skill-col">${c2}</td></tr></table></div>`;
             }
 
-            docHeader += `
-                        <div class="p-section">
-                            <div class="p-sectitle">References</div>
-                            <p class="p-text">Available upon request.</p>
-                        </div>
-                    </div>
-                </body>
-                </html>
-            `;
-
+            docHeader += `<div class="p-section"><div class="p-sectitle">References</div><p class="p-text">Available upon request.</p></div></div></body></html>`;
             const blob = new Blob(['\ufeff' + docHeader], {type: 'application/msword'});
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `AcademicCV.doc`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+            a.download = `AcademicCV.doc`; document.body.appendChild(a); a.click(); document.body.removeChild(a);
         }
 
-        function addEducation() {
-            state.education.unshift({ degree: "", school: "", location: "", year: "2026" });
-            renderFormLists();
-            checkChronology();
-        }
-        function removeEdu(idx) {
-            state.education.splice(idx, 1);
-            renderFormLists();
-            checkChronology();
-        }
-        function addExperience() {
-            state.experience.unshift({ title: "", org: "", location: "", startMonth: "Jan", startYear: "2026", endMonth: "Present", endYear: "Present", bullets: [""] });
-            renderFormLists();
-            checkChronology();
-        }
-        function removeExp(idx) {
-            state.experience.splice(idx, 1);
-            renderFormLists();
-            checkChronology();
-        }
-        function addMembership() {
-            state.memberships.push({ name: "", role: "", year: "" });
-            renderFormLists();
-            updatePreview();
-        }
-        function removeMembership(idx) {
-            state.memberships.splice(idx, 1);
-            renderFormLists();
-            updatePreview();
-        }
+        function addEducation() { state.education.unshift({ degree: "", school: "", location: "", year: "2026" }); renderFormLists(); checkChronology(); }
+        function removeEdu(idx) { state.education.splice(idx, 1); renderFormLists(); checkChronology(); }
+        
+        function addExperience() { state.experience.unshift({ title: "", org: "", location: "", startMonth: "Jan", startYear: "2026", endMonth: "Present", endYear: "Present", bullets: [""] }); renderFormLists(); checkChronology(); }
+        function removeExp(idx) { state.experience.splice(idx, 1); renderFormLists(); checkChronology(); }
+        
+        function addTraining() { state.trainings.push({ name: "", provider: "", year: "" }); renderFormLists(); updatePreview(); }
+        function addAward() { state.awards.push({ name: "", body: "", year: "" }); renderFormLists(); updatePreview(); }
+        function addMembership() { state.memberships.push({ name: "", role: "", year: "" }); renderFormLists(); updatePreview(); }
+        function addVolunteer() { state.volunteers.push({ org: "", role: "", year: "", desc: "" }); renderFormLists(); updatePreview(); }
 
-        window.onload = function() {
-            init();
-        };
+        window.onload = function() { init(); };
     </script>
 </body>
 </html>
