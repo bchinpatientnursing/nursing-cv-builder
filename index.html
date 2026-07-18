@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <title>Academic Nursing CV Builder</title>
     <style>
-        * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        body { background-color: #f0f4f8; color: #333; margin: 0; padding: 20px; }
+        /* Interactive Input Form Side Styling Only */
+        * { box-sizing: border-box; }
+        body { background-color: #f0f4f8; color: #333; margin: 0; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         .container { max-width: 1300px; margin: 0 auto; display: flex; gap: 25px; }
         .form-panel { width: 50%; padding: 10px; }
         .preview-panel { width: 50%; padding: 10px; }
@@ -30,26 +31,33 @@
         .btn-word:hover { background-color: #124596; }
         .error-box { background-color: #fff0f0; border: 2px solid #cc0000; padding: 10px; border-radius: 4px; color: #cc0000; font-weight: bold; font-size: 12px; margin-bottom: 15px; display: none; }
         
-        /* Elite Academic Print Canvas Stylesheet */
-        .preview-pane { background: white; padding: 54px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); font-family: "Times New Roman", Times, serif; color: black; line-height: 1.2; font-size: 11pt; position: sticky; top: 20px; }
+        /* ================= UNCOMPROMISING ACADEMIC PRINT CANVAS ================= */
+        .preview-pane { background: white; padding: 54px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); color: black; line-height: 1.3; font-size: 11pt; position: sticky; top: 20px; }
+        
+        /* Enforce single serif typeface everywhere on print canvas */
+        .preview-pane, .preview-pane *, .p-header, .p-name, .p-contact, .p-section, .p-sectitle, .p-row-block, .p-text, .p-bullet-item, .skills-table td {
+            font-family: "Times New Roman", Times, serif !important;
+            color: black !important;
+        }
+        
         .p-header { text-align: center; margin-bottom: 22px; width: 100%; }
         .p-name { font-size: 16pt; font-weight: bold; text-transform: uppercase; margin: 0 0 5px 0; letter-spacing: 0.75px; }
-        .p-contact { font-size: 10.5pt; margin: 0; color: #000; }
-        .p-section { margin-top: 18px; margin-bottom: 4px; width: 100%; }
+        .p-contact { font-size: 10.5pt; margin: 0; }
+        .p-section { margin-top: 18px; margin-bottom: 4px; width: 100%; clear: both; }
         .p-sectitle { font-size: 13pt; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid black; padding-bottom: 3px; margin: 0 0 10px 0; letter-spacing: 0.75px; }
         
-        .cv-table { width: 100%; border-collapse: collapse; margin-bottom: 4px; table-layout: fixed; }
-        .cv-table td { padding: 0; vertical-align: top; font-family: "Times New Roman", Times, serif; font-size: 11pt; line-height: 1.2; }
-        .td-left { text-align: left; width: 75%; padding-right: 15px; }
-        .td-right { text-align: right; width: 25%; white-space: nowrap; font-size: 11pt; }
+        /* Flawless Block Alignment Engine - Avoids Table Squishing completely */
+        .p-row-block { width: 100%; margin-bottom: 4px; clear: both; position: relative; display: block; }
+        .p-left-text { float: left; width: 72%; text-align: left; font-size: 11pt; margin: 0; padding: 0; line-height: 1.3; }
+        .p-right-date { float: right; width: 28%; text-align: right; font-size: 11pt; margin: 0; padding: 0; white-space: nowrap; line-height: 1.3; }
         
-        .p-bold { font-family: "Times New Roman", Times, serif; font-weight: bold; }
-        .p-text { font-size: 11pt; text-align: justify; margin: 0 0 4px 0; line-height: 1.2; font-family: "Times New Roman", Times, serif; }
-        .p-bullets { margin: 4px 0 8px 0; padding-left: 24px; list-style-type: disc; }
-        .p-bullet-item { font-size: 11pt; margin-bottom: 4px; text-align: justify; line-height: 1.2; }
+        .p-bold { font-weight: bold; }
+        .p-text { font-size: 11pt; text-align: justify; margin: 0 0 4px 0; line-height: 1.3; }
+        .p-bullets { margin: 4px 0 8px 0; padding-left: 24px; list-style-type: disc; clear: both; }
+        .p-bullet-item { font-size: 11pt; margin-bottom: 4px; text-align: justify; line-height: 1.3; }
         
-        .skills-table { width: 100%; border-collapse: collapse; margin-top: 4px; }
-        .skills-table td { width: 50%; font-size: 11pt; padding: 3px 0; vertical-align: top; font-family: "Times New Roman", Times, serif; }
+        .skills-table { width: 100%; border-collapse: collapse; margin-top: 4px; clear: both; }
+        .skills-table td { width: 50%; font-size: 11pt; padding: 3px 0; vertical-align: top; }
 
         @media print {
             body, html { background: white !important; padding: 0 !important; margin: 0 !important; }
@@ -65,52 +73,53 @@
 
     <h1>📋 Academic Nursing CV Builder & Real-Time Layout Tool</h1>
     <p style="text-align:center; color:#555; max-width:800px; margin: 0 auto 25px auto; font-size: 14px;">
-        Fill out your entries below. Empty sections completely vanish from final exports.[cite: 1]
+        Fill out your entries below. Empty sections completely vanish from final exports.
     </p>
 
     <div class="container">
+        <!-- FORM PANEL -->
         <div class="form-panel">
             
             <div class="card">
                 <h2>🔄 Data Operations</h2>
-                <span class="subtitle">Upload a saved draft or export your current state data.[cite: 1]</span>
-                <label>Upload .cvdata file[cite: 1]</label>
+                <span class="subtitle">Upload a saved draft or export your current state data.</span>
+                <label>Upload .cvdata file</label>
                 <input type="file" id="importFile" accept=".cvdata,.json" onchange="importData(event)">
-                <button class="btn btn-secondary" onclick="exportData()">💾 Save Progress Data File (.cvdata)[cite: 1]</button>
+                <button class="btn btn-secondary" onclick="exportData()">💾 Save Progress Data File (.cvdata)</button>
             </div>
 
-            <div id="chronError" class="error-box">⚠️ Error: Entries are out of reverse chronological order. Please ensure your newest qualifications are at the top.[cite: 1]</div>
+            <div id="chronError" class="error-box">⚠️ Error: Entries are out of reverse chronological order. Please ensure your newest qualifications are at the top.</div>
 
             <!-- CONTACT -->
             <div class="card">
-                <h2>Full Name & Contact[cite: 1]</h2>
+                <h2>Full Name & Contact</h2>
                 <div class="form-row">
                     <div class="form-col">
-                        <label>Full Name[cite: 1]</label>
+                        <label>Full Name</label>
                         <input type="text" id="fullName" placeholder="Jane Doe" oninput="handleTextInput('fullName', this.value)">
                     </div>
                     <div class="form-col">
-                        <label>Credentials (Order: Highest Degree, Licensure, Certs)[cite: 1]</label>
+                        <label>Credentials (Order: Highest Degree, Licensure, Certs)</label>
                         <input type="text" id="credentials" placeholder="e.g., MSN, RN, CPN" oninput="handleTextInput('credentials', this.value)">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-col">
-                        <label>Phone[cite: 1]</label>
+                        <label>Phone</label>
                         <input type="text" id="phone" placeholder="(555) 123-4567" oninput="handleTextInput('phone', this.value)">
                     </div>
                     <div class="form-col">
-                        <label>Email[cite: 1]</label>
+                        <label>Email</label>
                         <input type="text" id="email" placeholder="jdoe@hospital.org" oninput="handleTextInput('email', this.value)">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-col">
-                        <label>Address (Optional)[cite: 1]</label>
+                        <label>Address (Optional)</label>
                         <input type="text" id="address" placeholder="Boston, MA" oninput="handleTextInput('address', this.value)">
                     </div>
                     <div class="form-col">
-                        <label>LinkedIn (Optional)[cite: 1]</label>
+                        <label>LinkedIn (Optional)</label>
                         <input type="text" id="linkedin" placeholder="linkedin.com/in/username" oninput="handleTextInput('linkedin', this.value)">
                     </div>
                 </div>
@@ -118,39 +127,39 @@
 
             <!-- SUMMARY -->
             <div class="card">
-                <h2>Professional Summary[cite: 1]</h2>
-                <label>3–4 Sentence Professional Overview[cite: 1]</label>
-                <textarea id="summary" placeholder="Compassionate and detail-oriented Registered Nurse..." oninput="handleTextInput('summary', this.value)"></textarea>
+                <h2>Professional Summary</h2>
+                <label>3–4 Sentence Professional Overview</label>
+                <textarea id="summary" placeholder="Compassionate and detail-oriented Registered Nurse..." oninput="handleSummaryInput(this.value)"></textarea>
             </div>
 
             <!-- EDUCATION -->
             <div class="card">
-                <h2>Education[cite: 1]</h2>
-                <span class="subtitle">Ensure reverse chronological order is maintained.[cite: 1]</span>
+                <h2>Education</h2>
+                <span class="subtitle">Ensure reverse chronological order is maintained.</span>
                 <div id="educationContainer"></div>
-                <button class="btn btn-secondary" onclick="addEducation()">+ Add Education Slot[cite: 1]</button>
+                <button class="btn btn-secondary" onclick="addEducation()">+ Add Education Slot</button>
             </div>
 
             <!-- EXPERIENCE -->
             <div class="card">
-                <h2>Professional Experience[cite: 1]</h2>
-                <span class="subtitle">Add any past positions. Click "+ Add Bullet" inside each card to frame accomplishments.[cite: 1]</span>
+                <h2>Professional Experience</h2>
+                <span class="subtitle">Add past positions. Click "+ Add Bullet" inside cards to expand text items.</span>
                 <div id="experienceContainer"></div>
-                <button class="btn btn-secondary" onclick="addExperience()">+ Add Experience Slot[cite: 1]</button>
+                <button class="btn btn-secondary" onclick="addExperience()">+ Add Experience Slot</button>
             </div>
 
             <!-- SKILLS -->
             <div class="card">
-                <h2>Clinical Skills[cite: 1]</h2>
-                <span class="subtitle">Comma-separated list (e.g., Patient Assessment, Epic EMR, IV Insertion)[cite: 1]</span>
+                <h2>Clinical Skills</h2>
+                <span class="subtitle">Comma-separated list (e.g., Patient Assessment, Epic EMR, IV Insertion)</span>
                 <textarea id="skills" placeholder="Patient Assessment, Medication Administration, Wound Care, Epic EMR" oninput="handleTextInput('skills', this.value)"></textarea>
             </div>
 
             <!-- DOWNLOAD ACTIONS -->
             <div class="card">
-                <h2>📤 Generate Final Outputs[cite: 1]</h2>
-                <button class="btn btn-main" id="btnPdf" onclick="generatePDF()">Download Academic Layout (PDF)[cite: 1]</button>
-                <button class="btn btn-word" id="btnWord" onclick="generateWord()">Download Editable Document (Word .doc)[cite: 1]</button>
+                <h2>📤 Generate Final Outputs</h2>
+                <button class="btn btn-main" id="btnPdf" onclick="generatePDF()">Download Academic Layout (PDF)</button>
+                <button class="btn btn-word" id="btnWord" onclick="generateWord()">Download Editable Document (Word .doc)</button>
             </div>
 
         </div>
@@ -161,7 +170,6 @@
     </div>
 
     <script>
-        // Restored exact initial text tracking states inside memory object
         let state = {
             fullName: "Kate Donovan",
             credentials: "MSN, RN, CPN",
@@ -199,9 +207,13 @@
             updatePreview();
         }
 
-        // Core fix: Text inputs now directly overwrite state strings permanently
         function handleTextInput(field, value) {
             state[field] = value;
+            updatePreview();
+        }
+
+        function handleSummaryInput(value) {
+            state.summary = value;
             updatePreview();
         }
 
@@ -263,7 +275,7 @@
                 exp.bullets.forEach((b, bIdx) => {
                     bulletsHtml += `
                         <div style="display:flex; gap:5px; margin-bottom:5px; align-items:center;">
-                            <input type="text" value="${b}" placeholder="Describe contribution or role..." oninput="updateExpBullet(${idx}, ${bIdx}, this.value)" style="margin-bottom:0; flex:1;">
+                            <input type="text" value="${b}" placeholder="Describe contribution..." oninput="updateExpBullet(${idx}, ${bIdx}, this.value)" style="margin-bottom:0; flex:1;">
                             <button class="btn-danger" onclick="removeExpBulletSlot(${idx}, ${bIdx})" style="margin-bottom:0; padding:8px;">✕</button>
                         </div>
                     `;
@@ -307,9 +319,9 @@
                             </div>
                         </div>
 
-                        <label style="color:#005A9C; margin-top:10px;">Accomplishment Bullet Points[cite: 1]</label>
+                        <label style="color:#005A9C; margin-top:10px;">Accomplishment Bullet Points</label>
                         ${bulletsHtml}
-                        <button class="btn btn-secondary" onclick="addExpBulletSlot(${idx})">+ Add Bullet Point[cite: 1]</button>
+                        <button class="btn btn-secondary" onclick="addExpBulletSlot(${idx})">+ Add Bullet Point</button>
                         <div style="margin-top:10px; border-top:1px dashed #ccc; padding-top:10px;">
                             <button class="btn-danger" onclick="removeExp(${idx})">✕ Remove Position Card</button>
                         </div>
@@ -371,7 +383,6 @@
         }
 
         function updatePreview() {
-            // Re-read active text fields right out of inputs to bypass any script freezing
             const summaryVal = document.getElementById('summary') ? document.getElementById('summary').value : state.summary;
 
             let html = `
@@ -385,7 +396,6 @@
                 </div>
             `;
 
-            // Explicit render constraint fix for Summary string block
             if(summaryVal && summaryVal.trim() !== "") {
                 html += `
                     <div class="p-section">
@@ -402,12 +412,11 @@
                     state.education.forEach(edu => {
                         if(edu.degree || edu.school) {
                             html += `
-                                <table class="cv-table">
-                                    <tr>
-                                        <td class="td-left"><span class="p-bold">${edu.degree}</span> – ${edu.school}, ${edu.location}</td>
-                                        <td class="td-right">${edu.year}</td>
-                                    </tr>
-                                </table>`;
+                                <div class="p-row-block">
+                                    <div class="p-left-text"><span class="p-bold">${edu.degree}</span> – ${edu.school}, ${edu.location}</div>
+                                    <div class="p-right-date">${edu.year}</div>
+                                    <div style="clear: both;"></div>
+                                </div>`;
                         }
                     });
                     html += `</div>`;
@@ -422,12 +431,11 @@
                         if(exp.title || exp.org) {
                             let dateRangeStr = exp.endYear === 'Present' ? `${exp.startMonth} ${exp.startYear} – Present` : `${exp.startMonth} ${exp.startYear} – ${exp.endMonth} ${exp.endYear}`;
                             html += `
-                                <table class="cv-table" style="margin-top: 5px;">
-                                    <tr>
-                                        <td class="td-left"><span class="p-bold">${exp.title}</span> – ${exp.org}, ${exp.location}</td>
-                                        <td class="td-right">${dateRangeStr}</td>
-                                    </tr>
-                                </table>
+                                <div class="p-row-block" style="margin-top: 6px;">
+                                    <div class="p-left-text"><span class="p-bold">${exp.title}</span> – ${exp.org}, ${exp.location}</div>
+                                    <div class="p-right-date">${dateRangeStr}</div>
+                                    <div style="clear: both;"></div>
+                                </div>
                                 <ul class="p-bullets">
                             `;
                             exp.bullets.forEach(b => {
@@ -494,7 +502,6 @@
         }
 
         function generatePDF() {
-            // Guarantee fresh summary text extraction right at invocation click
             state.summary = document.getElementById('summary').value;
             updatePreview();
             window.print();
@@ -514,8 +521,8 @@
                         .p-section { margin-top: 14pt; margin-bottom: 2pt; }
                         .p-sectitle { font-size: 13pt; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid black; padding-bottom: 2pt; margin: 12pt 0 6pt 0; letter-spacing: 0.5px; }
                         .w-table { width: 100%; border: none; margin-bottom: 2pt; }
-                        .w-left { text-align: left; font-size: 11pt; width: 75%; }
-                        .w-right { text-align: right; font-size: 11pt; width: 25%; }
+                        .w-left { text-align: left; font-size: 11pt; width: 72%; }
+                        .w-right { text-align: right; font-size: 11pt; width: 28%; }
                         .p-bold { font-weight: bold; }
                         .p-text { font-size: 11pt; text-align: justify; margin: 0; }
                         .w-bullet { font-size: 11pt; margin-left: 15pt; margin-bottom: 2pt; }
