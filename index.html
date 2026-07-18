@@ -1,0 +1,246 @@
+import React from 'react';
+import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+
+// 1. Precise styling matching your formatting rules
+const styles = StyleSheet.create({
+  page: {
+    paddingTop: 54,
+    paddingBottom: 54,
+    paddingHorizontal: 54,
+    fontFamily: 'Times-Roman',
+    fontSize: 11,            // Target body text size
+    lineHeight: 1.15,        // Target line spacing
+    color: '#000000',
+  },
+  headerContainer: {
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  fullName: {
+    fontSize: 16,
+    fontFamily: 'Times-Bold',
+    textTransform: 'uppercase',
+    marginBottom: 4,
+  },
+  contactLine: {
+    fontSize: 10,
+    color: '#333333',
+  },
+  sectionContainer: {
+    marginTop: 14,          // Provides the blank line between sections
+    marginBottom: 2,
+  },
+  sectionTitle: {
+    fontSize: 13,           // Target Heading size
+    fontFamily: 'Times-Bold',
+    textTransform: 'uppercase',
+    borderBottomWidth: 1,
+    borderBottomColor: '#000000',
+    paddingBottom: 2,
+    marginBottom: 6,
+  },
+  summaryText: {
+    textAlign: 'justify',
+    fontSize: 10.5,
+  },
+  entryRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'baseline',
+    marginBottom: 2,
+  },
+  entryLeft: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    maxWidth: '75%',
+  },
+  boldText: {
+    fontFamily: 'Times-Bold',
+  },
+  italicText: {
+    fontFamily: 'Times-Italic',
+  },
+  entryRight: {
+    fontSize: 10,
+    textAlign: 'right',
+  },
+  bulletContainer: {
+    flexDirection: 'row',
+    paddingLeft: 12,
+    marginTop: 1,
+    marginBottom: 2,
+  },
+  bullet: {
+    width: 12,
+  },
+  bulletText: {
+    flex: 1,
+    fontSize: 10,
+  },
+  skillsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginTop: 2,
+  },
+  skillItem: {
+    width: '50%',          // Two-column skills layout to save vertical space
+    fontSize: 10,
+    marginBottom: 2,
+  }
+});
+
+// Helper check: Returns true only if an array exists and has content
+const hasData = (arr) => arr && arr.length > 0 && arr.some(item => Object.values(item).some(val => val !== ''));
+
+export const NursingAcademicCV = ({ data }) => (
+  <Document author={data.fullName} title={`${data.fullName} - Professional CV`}>
+    <Page size="LETTER" style={styles.page}>
+      
+      {/* ================= HEADER ================= */}
+      <View style={styles.headerContainer}>
+        <Text style={styles.fullName}>{data.fullName}{data.credentials ? `, ${data.credentials}` : ''}</Text>
+        <Text style={styles.contactLine}>
+          Phone: {data.phone}  |  Email: {data.email}
+          {data.address ? `  |  Address: ${data.address}` : ''}
+          {data.linkedin ? `  |  LinkedIn: ${data.linkedin}` : ''}
+        </Text>
+      </View>
+
+      {/* ================= PROFESSIONAL SUMMARY ================= */}
+      {data.professionalSummary ? (
+        <View style={styles.sectionContainer}>
+          <Text style={styles.sectionTitle}>Professional Summary</Text>
+          <Text style={styles.summaryText}>{data.professionalSummary}</Text>
+        </View>
+      ) : null}
+
+      {/* ================= LICENSURE & CERTIFICATIONS ================= */}
+      {hasData(data.certifications) ? (
+        <View style={styles.sectionContainer} wrap={false}>
+          <Text style={styles.sectionTitle}>Licensure & Certifications</Text>
+          {data.certifications.map((cert, index) => (
+            <View key={index} style={styles.entryRow}>
+              <View style={styles.entryLeft}>
+                <Text style={styles.boldText}>{cert.name}</Text>
+                {cert.details ? <Text> – {cert.details}</Text> : null}
+              </View>
+              <Text style={styles.entryRight}>Exp: {cert.expDate}</Text>
+            </View>
+          ))}
+        </View>
+      ) : null}
+
+      {/* ================= EDUCATION ================= */}
+      {hasData(data.education) ? (
+        <View style={styles.sectionContainer} wrap={false}>
+          <Text style={styles.sectionTitle}>Education</Text>
+          {data.education.map((edu, index) => (
+            <View key={index} style={{ marginBottom: 4 }}>
+              <View style={styles.entryRow}>
+                <View style={styles.entryLeft}>
+                  <Text style={styles.boldText}>{edu.degree}</Text>
+                  <Text> – {edu.schoolName}, {edu.location}</Text>
+                </View>
+                <Text style={styles.entryRight}>{edu.gradDate}</Text>
+              </View>
+              {edu.coursework ? <Text style={[styles.italicText, { fontSize: 9.5 }]}>Relevant Coursework: {edu.coursework}</Text> : null}
+              {edu.honors ? <Text style={[styles.italicText, { fontSize: 9.5 }]}>Honors: {edu.honors}</Text> : null}
+            </View>
+          ))}
+        </View>
+      ) : null}
+
+      {/* ================= PROFESSIONAL EXPERIENCE ================= */}
+      {hasData(data.experience) ? (
+        <View style={styles.sectionContainer}>
+          <Text style={styles.sectionTitle}>Professional Experience</Text>
+          {data.experience.map((exp, index) => (
+            <View key={index} style={{ marginBottom: 8 }} wrap={false}>
+              <View style={styles.entryRow}>
+                <View style={styles.entryLeft}>
+                  <Text style={styles.boldText}>{exp.jobTitle}</Text>
+                  <Text> – {exp.orgName}, {exp.location}</Text>
+                </View>
+                <Text style={styles.entryRight}>{exp.dateRange}</Text>
+              </View>
+              
+              {exp.bullets?.map((bullet, bIndex) => (
+                bullet ? (
+                  <View key={bIndex} style={styles.bulletContainer}>
+                    <Text style={styles.bullet}>•</Text>
+                    <Text style={styles.bulletText}>{bullet}</Text>
+                  </View>
+                ) : null
+              ))}
+            </View>
+          ))}
+        </View>
+      ) : null}
+
+      {/* ================= CLINICAL SKILLS ================= */}
+      {hasData(data.skills) ? (
+        <View style={styles.sectionContainer} wrap={false}>
+          <Text style={styles.sectionTitle}>Clinical Skills</Text>
+          <View style={styles.skillsGrid}>
+            {data.skills.map((skill, index) => (
+              <Text key={index} style={styles.skillItem}>• {skill}</Text>
+            ))}
+          </View>
+        </View>
+      ) : null}
+
+      {/* ================= PROFESSIONAL MEMBERSHIPS ================= */}
+      {hasData(data.memberships) ? (
+        <View style={styles.sectionContainer} wrap={false}>
+          <Text style={styles.sectionTitle}>Professional Memberships</Text>
+          {data.memberships.map((member, index) => (
+            <Text key={index} style={{ fontSize: 10, marginBottom: 2 }}>• {member}</Text>
+          ))}
+        </View>
+      ) : null}
+
+      {/* ================= PROFESSIONAL DEVELOPMENT ================= */}
+      {hasData(data.development) ? (
+        <View style={styles.sectionContainer} wrap={false}>
+          <Text style={styles.sectionTitle}>Professional Development & Training</Text>
+          {data.development.map((dev, index) => (
+            <Text key={index} style={{ fontSize: 10, marginBottom: 2 }}>• {dev}</Text>
+          ))}
+        </View>
+      ) : null}
+
+      {/* ================= AWARDS & RECOGNITION ================= */}
+      {hasData(data.awards) ? (
+        <View style={styles.sectionContainer} wrap={false}>
+          <Text style={styles.sectionTitle}>Awards & Recognition</Text>
+          {data.awards.map((award, index) => (
+            <Text key={index} style={{ fontSize: 10, marginBottom: 2 }}>• {award}</Text>
+          ))}
+        </View>
+      ) : null}
+
+      {/* ================= VOLUNTEER EXPERIENCE ================= */}
+      {hasData(data.volunteer) ? (
+        <View style={styles.sectionContainer}>
+          <Text style={styles.sectionTitle}>Volunteer Experience</Text>
+          {data.volunteer.map((vol, index) => (
+            <View key={index} style={{ marginBottom: 4 }} wrap={false}>
+              <View style={styles.entryRow}>
+                <Text style={styles.boldText}>{vol.role} – {vol.orgName}</Text>
+                <Text style={styles.entryRight}>{vol.dates}</Text>
+              </View>
+              {vol.description ? <Text style={{ fontSize: 9.5, paddingLeft: 12 }}>{vol.description}</Text> : null}
+            </View>
+          ))}
+        </View>
+      ) : null}
+
+      {/* ================= REFERENCES ================= */}
+      <View style={styles.sectionContainer} wrap={false}>
+        <Text style={styles.sectionTitle}>References</Text>
+        <Text style={{ fontSize: 10 }}>Available upon request.</Text>
+      </View>
+
+    </Page>
+  </Document>
+);
