@@ -37,6 +37,7 @@
         .p-name { font-size: 16pt; font-weight: bold; text-transform: uppercase; margin: 0 0 4px 0; }
         .p-contact { font-size: 10pt; margin: 0; color: #222; }
         .p-section { margin-top: 14px; margin-bottom: 2px; }
+        .p-section:first-of-type { margin-top: 10px; }
         .p-sectitle { font-size: 13pt; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid black; padding-bottom: 2px; margin: 0 0 6px 0; letter-spacing: 0.5px; }
         .p-row { display: table; width: 100%; margin-bottom: 2px; }
         .p-left { display: table-cell; text-align: left; width: 75%; font-size: 11pt; }
@@ -95,9 +96,9 @@
                         <label>Full Name</label>
                         <input type="text" id="fullName" placeholder="Jane Doe" oninput="update()">
                     </div>
-                    <div class="col">
-                        <label>Credentials</label>
-                        <input type="text" id="credentials" placeholder="RN, BSN" oninput="update()">
+                    <div class="col" style="position: relative;">
+                        <label style="color: #005A9C;">Credentials (Order: Degree, Licensure, Certs)</label>
+                        <input type="text" id="credentials" placeholder="e.g., MSN, RN, CPN" oninput="update()">
                     </div>
                 </div>
                 <div class="row">
@@ -199,7 +200,6 @@
             update();
         }
 
-        // Safe global state functions to prevent window namespace crashes
         function updateEduField(idx, field, val) {
             state.education[idx][field] = val;
             update();
@@ -246,7 +246,7 @@
                     <div style="background:#fcfcfc; padding:10px; border:1px solid #eee; margin-bottom:10px; border-radius:4px;">
                         <div class="row">
                             <div class="col"><label>Job Title</label><input type="text" value="${exp.title}" oninput="updateExpField(${idx}, 'title', this.value)"></div>
-                            <div class="col"><label>Organization</label><input type="text" value="${exp.org}" oninput="window.updateExpField(${idx}, 'org', this.value)"></div>
+                            <div class="col"><label>Organization</label><input type="text" value="${exp.org}" oninput="updateExpField(${idx}, 'org', this.value)"></div>
                         </div>
                         <div class="row">
                             <div class="col"><label>Location</label><input type="text" value="${exp.location}" oninput="updateExpField(${idx}, 'location', this.value)"></div>
