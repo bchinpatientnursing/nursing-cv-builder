@@ -50,14 +50,14 @@
         .p-grid-item { display: inline-block; width: 50%; font-size: 10pt; margin-bottom: 2px; vertical-align: top; }
         .p-grid-item::before { content: "• "; }
 
-        /* ================= MAGIC PRINT STYLES ================= */
+        /* Print Media Stylesheet */
         @media print {
             body, html { background: white !important; padding: 0 !important; margin: 0 !important; }
-            h1, p, .panel:first-child, .btn, .card { display: none !important; } /* Hide everything but preview */
+            h1, p, .panel:first-child, .btn, .card { display: none !important; }
             .container { display: block !important; width: 100% !important; }
             .panel { display: block !important; width: 100% !important; padding: 0 !important; }
             .preview-pane { box-shadow: none !important; padding: 0 !important; border: none !important; position: static !important; }
-            @page { margin: 0.75in; } /* Forces clean professional margins on the paper */
+            @page { margin: 0.75in; }
         }
     </style>
 </head>
@@ -132,7 +132,7 @@
             <!-- EDUCATION -->
             <div class="card">
                 <h2>Education</h2>
-                <span class="subtitle">List oldest or newest. Ensure reverse chronological order (newest at top) is followed.</span>
+                <span class="subtitle">List qualifications. Ensure reverse chronological order (newest at top) is followed.</span>
                 <div id="educationContainer"></div>
                 <button class="btn btn-secondary" onclick="addEducation()">+ Add Education Slot</button>
             </div>
@@ -169,9 +169,8 @@
         </div>
     </div>
 
-    <!-- SCRIPT INJECTION FOR OFFLINE COMPILATION -->
+    <!-- BULLETPROOF SCRIPT ENGINE -->
     <script>
-        // Master Application State Object
         let state = {
             fullName: "Kate Donovan",
             credentials: "RN, BSN",
@@ -200,6 +199,22 @@
             update();
         }
 
+        // Safe global state functions to prevent window namespace crashes
+        function updateEduField(idx, field, val) {
+            state.education[idx][field] = val;
+            update();
+        }
+
+        function updateExpField(idx, field, val) {
+            state.experience[idx][field] = val;
+            update();
+        }
+
+        function updateExpBullet(idx, bIdx, val) {
+            state.experience[idx].bullets[bIdx] = val;
+            update();
+        }
+
         function renderFormLists() {
             const eduCont = document.getElementById('educationContainer');
             eduCont.innerHTML = '';
@@ -207,14 +222,14 @@
                 eduCont.innerHTML += `
                     <div style="background:#fcfcfc; padding:10px; border:1px solid #eee; margin-bottom:10px; border-radius:4px;">
                         <div class="row">
-                            <div class="col"><label>Degree</label><input type="text" value="${edu.degree}" oninput="window.state.education(${idx}, 'degree', this.value)"></div>
-                            <div class="col"><label>School</label><input type="text" value="${edu.school}" oninput="window.state.education(${idx}, 'school', this.value)"></div>
+                            <div class="col"><label>Degree</label><input type="text" value="${edu.degree}" oninput="updateEduField(${idx}, 'degree', this.value)"></div>
+                            <div class="col"><label>School</label><input type="text" value="${edu.school}" oninput="updateEduField(${idx}, 'school', this.value)"></div>
                         </div>
                         <div class="row">
-                            <div class="col"><label>Location</label><input type="text" value="${edu.location}" oninput="window.state.education(${idx}, 'location', this.value)"></div>
+                            <div class="col"><label>Location</label><input type="text" value="${edu.location}" oninput="updateEduField(${idx}, 'location', this.value)"></div>
                             <div class="col">
                                 <label>Graduation Year</label>
-                                <select onchange="window.state.education(${idx}, 'year', this.value); checkChronology();">
+                                <select onchange="updateEduField(${idx}, 'year', this.value); checkChronology();">
                                     ${YEARS.map(y => `<option value="${y}" ${edu.year===y?'selected':''}>${y}</option>`).join('')}
                                 </select>
                             </div>
@@ -224,34 +239,30 @@
                 `;
             });
 
-            window.state.education = function(idx, key, val) { state.education[idx][key] = val; update(); };
-            window.state.experience = function(idx, key, val) { state.experience[idx][key] = val; update(); };
-            window.state.bullet = function(idx, bIdx, val) { state.experience[idx].bullets[bIdx] = val; update(); };
-
             const expCont = document.getElementById('experienceContainer');
             expCont.innerHTML = '';
             state.experience.forEach((exp, idx) => {
                 expCont.innerHTML += `
                     <div style="background:#fcfcfc; padding:10px; border:1px solid #eee; margin-bottom:10px; border-radius:4px;">
                         <div class="row">
-                            <div class="col"><label>Job Title</label><input type="text" value="${exp.title}" oninput="window.state.experience(${idx}, 'title', this.value)"></div>
-                            <div class="col"><label>Organization</label><input type="text" value="${exp.org}" oninput="window.state.experience(${idx}, 'org', this.value)"></div>
+                            <div class="col"><label>Job Title</label><input type="text" value="${exp.title}" oninput="updateExpField(${idx}, 'title', this.value)"></div>
+                            <div class="col"><label>Organization</label><input type="text" value="${exp.org}" oninput="window.updateExpField(${idx}, 'org', this.value)"></div>
                         </div>
                         <div class="row">
-                            <div class="col"><label>Location</label><input type="text" value="${exp.location}" oninput="window.state.experience(${idx}, 'location', this.value)"></div>
+                            <div class="col"><label>Location</label><input type="text" value="${exp.location}" oninput="updateExpField(${idx}, 'location', this.value)"></div>
                             <div class="col">
                                 <label>End Year</label>
-                                <select onchange="window.state.experience(${idx}, 'endYear', this.value); checkChronology();">
+                                <select onchange="updateExpField(${idx}, 'endYear', this.value); checkChronology();">
                                     ${YEARS.map(y => `<option value="${y}" ${exp.endYear===y?'selected':''}>${y}</option>`).join('')}
                                 </select>
                             </div>
                         </div>
                         <label style="color:#005A9C;">Bullet 1: Clinical Scope & Competency</label>
-                        <textarea oninput="window.state.bullet(${idx}, 0, this.value)">${exp.bullets[0]||''}</textarea>
+                        <textarea oninput="updateExpBullet(${idx}, 0, this.value)">${exp.bullets[0]||''}</textarea>
                         <label style="color:#005A9C;">Bullet 2: Interdisciplinary Care Coordination</label>
-                        <textarea oninput="window.state.bullet(${idx}, 1, this.value)">${exp.bullets[1]||''}</textarea>
+                        <textarea oninput="updateExpBullet(${idx}, 1, this.value)">${exp.bullets[1]||''}</textarea>
                         <label style="color:#005A9C;">Bullet 3: Quality Initiatives & Academic Inquiry</label>
-                        <textarea oninput="window.state.bullet(${idx}, 2, this.value)">${exp.bullets[2]||''}</textarea>
+                        <textarea oninput="updateExpBullet(${idx}, 2, this.value)">${exp.bullets[2]||''}</textarea>
                         <button class="btn-danger" onclick="removeExp(${idx})">✕ Remove</button>
                     </div>
                 `;
@@ -415,28 +426,90 @@
         }
 
         function generateWord() {
-            let previewContent = document.getElementById('preview').innerHTML;
             let docContent = `
                 <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
                 <head>
                     <title>Academic CV</title>
                     <style>
-                        body { font-family: "Times New Roman", Serif; font-size: 11pt; line-height: 1.15; color: black; }
+                        body { font-family: "Times New Roman", Serif; font-size: 11pt; line-height: 1.15; color: black; margin: 0.75in; }
                         .p-header { text-align: center; margin-bottom: 15pt; }
-                        .p-name { font-size: 16pt; font-weight: bold; text-transform: uppercase; }
-                        .p-contact { font-size: 10pt; }
+                        .p-name { font-size: 16pt; font-weight: bold; text-transform: uppercase; margin: 0; }
+                        .p-contact { font-size: 10pt; margin: 0; color: #222; }
                         .p-section { margin-top: 14pt; margin-bottom: 2pt; }
-                        .p-sectitle { font-size: 13pt; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid black; padding-bottom: 2pt; margin-bottom: 6pt; }
+                        .p-sectitle { font-size: 13pt; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid black; padding-bottom: 2pt; margin: 12pt 0 6pt 0; letter-spacing: 0.5px; }
+                        .w-table { width: 100%; border: none; margin-bottom: 2pt; }
+                        .w-left { text-align: left; font-size: 11pt; }
+                        .w-right { text-align: right; font-size: 10pt; }
                         .p-bold { font-weight: bold; }
-                        .p-italic { font-style: italic; }
-                        .p-bullet-item { font-size: 10pt; }
+                        .p-text { font-size: 10.5pt; text-align: justify; margin: 0; }
+                        .w-bullet { font-size: 10pt; margin-left: 15pt; margin-bottom: 2pt; }
                     </style>
                 </head>
                 <body>
-                    ${previewContent}
+                    <div class="p-header">
+                        <div class="p-name">${state.fullName}${state.credentials ? ', ' + state.credentials : ''}</div>
+                        <div class="p-contact">Phone: ${state.phone} | Email: ${state.email}${state.address ? ' | Address: ' + state.address : ''}${state.linkedin ? ' | LinkedIn: ' + state.linkedin : ''}</div>
+                    </div>
+            `;
+
+            if(state.summary.trim() !== "") {
+                docContent += `<div class="p-section"><div class="p-sectitle">Professional Summary</div><p class="p-text">${state.summary}</p></div>`;
+            }
+
+            if(state.education.length > 0) {
+                docContent += `<div class="p-section"><div class="p-sectitle">Education</div>`;
+                state.education.forEach(edu => {
+                    if(edu.degree || edu.school) {
+                        docContent += `
+                            <table class="w-table">
+                                <tr>
+                                    <td class="w-left"><span class="p-bold">${edu.degree}</span> – ${edu.school}, ${edu.location}</td>
+                                    <td class="w-right">${edu.year}</td>
+                                </tr>
+                            </table>`;
+                    }
+                });
+                docContent += `</div>`;
+            }
+
+            if(state.experience.length > 0) {
+                docContent += `<div class="p-section"><div class="p-sectitle">Professional Experience</div>`;
+                state.experience.forEach(exp => {
+                    if(exp.title || exp.org) {
+                        docContent += `
+                            <table class="w-table" style="margin-top: 5pt;">
+                                <tr>
+                                    <td class="w-left"><span class="p-bold">${exp.title}</span> – ${exp.org}, ${exp.location}</td>
+                                    <td class="w-right">${exp.endYear}</td>
+                                </tr>
+                            </table>`;
+                        exp.bullets.forEach(b => {
+                            if(b && b.trim() !== "") {
+                                docContent += `<div class="w-bullet">• ${b}</div>`;
+                            }
+                        });
+                    }
+                });
+                docContent += `</div>`;
+            }
+
+            if(state.skills.trim() !== "") {
+                docContent += `<div class="p-section"><div class="p-sectitle">Clinical Skills</div>`;
+                state.skills.split(',').forEach(s => {
+                    if(s && s.trim() !== "") docContent += `<div class="w-bullet">• ${s.trim()}</div>`;
+                });
+                docContent += `</div>`;
+            }
+
+            docContent += `
+                    <div class="p-section">
+                        <div class="p-sectitle">References</div>
+                        <p class="p-text">Available upon request.</p>
+                    </div>
                 </body>
                 </html>
             `;
+
             const blob = new Blob(['\ufeff' + docContent], {type: 'application/msword'});
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
