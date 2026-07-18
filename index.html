@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Academic CV Builder</title>
+    <title>Professional CV Builder</title>
     <style>
         /* Global UI Styling */
         * { box-sizing: border-box; font-family: "Arial", "Helvetica", sans-serif; }
@@ -103,7 +103,8 @@
                     </div>
                     <div class="form-col">
                         <label>Credentials</label>
-                        <input type="text" id="credentials" placeholder="e.g., MSN, RN, CPN" oninput="handleTextInput('credentials', this.value)">
+                        <span class="subtitle" style="margin-bottom:4px; font-style:italic;">Order: Highest Degree, License, State Designation, Certs</span>
+                        <input type="text" id="credentials" placeholder="e.g., MSN, RN, APRN, CPN" oninput="handleTextInput('credentials', this.value)">
                     </div>
                 </div>
                 <div class="form-row">
@@ -132,13 +133,13 @@
             <div class="card">
                 <h2>Professional Summary</h2>
                 <label>3–4 Sentence Professional Overview</label>
-                <textarea id="summary" placeholder="Summarize experience and core expertise here..." oninput="handleSummaryInput(this.value)"></textarea>
+                <textarea id="summary" placeholder="Example: Compassionate and detail-oriented Registered Nurse with 5+ years of experience in acute care settings. Skilled in patient assessment, interdisciplinary collaboration, and delivering safe, evidence-based care..." oninput="handleSummaryInput(this.value)"></textarea>
             </div>
 
             <!-- LICENSURE & CERTIFICATIONS -->
             <div class="card">
                 <h2>Licensure & Certifications</h2>
-                <span class="subtitle">Check the items you hold to activate data entry and printable layouts.</span>
+                <span class="subtitle">Check standard items to activate fields, or add multiple custom specialty certs at the bottom.</span>
                 
                 <!-- RN Toggle -->
                 <div class="checkbox-row">
@@ -160,7 +161,7 @@
                 </div>
                 <div id="subform-bls" class="cert-subform">
                     <div class="form-row">
-                        <div class="form-col"><label>Expiration Date</label><input type="text" id="blsExp" placeholder="MM/YYYY" oninput="handleCertInput('bls', 'exp', this.value)"></div>
+                        <div class="form-col"><label>Expiration Date</label><input type="text" id="blsExp" placeholder="MM/DD/YYYY" oninput="handleCertInput('bls', 'exp', this.value)"></div>
                     </div>
                 </div>
 
@@ -171,7 +172,7 @@
                 </div>
                 <div id="subform-acls" class="cert-subform">
                     <div class="form-row">
-                        <div class="form-col"><label>Expiration Date</label><input type="text" id="aclsExp" placeholder="MM/YYYY" oninput="handleCertInput('acls', 'exp', this.value)"></div>
+                        <div class="form-col"><label>Expiration Date</label><input type="text" id="aclsExp" placeholder="MM/DD/YYYY" oninput="handleCertInput('acls', 'exp', this.value)"></div>
                     </div>
                 </div>
 
@@ -182,20 +183,15 @@
                 </div>
                 <div id="subform-pals" class="cert-subform">
                     <div class="form-row">
-                        <div class="form-col"><label>Expiration Date</label><input type="text" id="palsExp" placeholder="MM/YYYY" oninput="handleCertInput('pals', 'exp', this.value)"></div>
+                        <div class="form-col"><label>Expiration Date</label><input type="text" id="palsExp" placeholder="MM/DD/YYYY" oninput="handleCertInput('pals', 'exp', this.value)"></div>
                     </div>
                 </div>
 
-                <!-- Custom Specialty Toggle -->
-                <div class="checkbox-row">
-                    <input type="checkbox" id="hasSpec" onchange="toggleCertSubform('spec', this.checked)">
-                    <label style="display:inline; font-size:13px; text-transform:none; cursor:pointer;" for="hasSpec">Specialty / Other Certifications</label>
-                </div>
-                <div id="subform-spec" class="cert-subform">
-                    <div class="form-row">
-                        <div class="form-col"><label>Certification Title (e.g., CCRN, CPN)</label><input type="text" id="specTitle" placeholder="CCRN" oninput="handleCertInput('spec', 'title', this.value)"></div>
-                        <div class="form-col"><label>Expiration Date (Optional)</label><input type="text" id="specExp" placeholder="MM/YYYY" oninput="handleCertInput('spec', 'exp', this.value)"></div>
-                    </div>
+                <!-- Specialty Certifications Block -->
+                <div style="margin-top: 15px; border-top: 1px dashed #ddd; padding-top: 15px;">
+                    <label style="color: #005A9C; margin-bottom: 8px;">Specialty Certifications (e.g., CCRN, CMSRN, TNCC, CPN)</label>
+                    <div id="specialtyCertsContainer"></div>
+                    <button class="btn btn-secondary" onclick="addSpecialtyCert()">+ Add Specialty Certification</button>
                 </div>
             </div>
 
@@ -215,11 +211,19 @@
                 <button class="btn btn-secondary" onclick="addExperience()">+ Add Experience Slot</button>
             </div>
 
+            <!-- PROFESSIONAL MEMBERSHIPS -->
+            <div class="card">
+                <h2>Professional Memberships & Affiliations</h2>
+                <span class="subtitle">Add relevant professional networks or associations.</span>
+                <div id="membershipContainer"></div>
+                <button class="btn btn-secondary" onclick="addMembership()">+ Add Membership Slot</button>
+            </div>
+
             <!-- SKILLS -->
             <div class="card">
-                <h2>Core Skills</h2>
-                <span class="subtitle">Comma-separated list (e.g., Patient Assessment, Workflow Automation, Quality Improvement)</span>
-                <textarea id="skills" placeholder="Skill 1, Skill 2, Skill 3..." oninput="handleTextInput('skills', this.value)"></textarea>
+                <h2>Clinical & Technical Skills</h2>
+                <span class="subtitle">Comma-separated list. We pre-loaded core nursing competencies and project management coordinates below.</span>
+                <textarea id="skills" placeholder="Skills..." oninput="handleTextInput('skills', this.value)"></textarea>
             </div>
 
             <!-- DOWNLOAD ACTIONS -->
@@ -249,12 +253,13 @@
                 rn: { active: false, state: "", num: "", exp: "" },
                 bls: { active: false, exp: "" },
                 acls: { active: false, exp: "" },
-                pals: { active: false, exp: "" },
-                spec: { active: false, title: "", exp: "" }
+                pals: { active: false, exp: "" }
             },
+            specialtyCerts: [],
             education: [],
             experience: [],
-            skills: "",
+            memberships: [],
+            skills: "Patient Assessment & Triage, Medication Administration, Patient Advocacy, Epic EMR, Case Management, Quality Improvement, Care Coordination, Clinical Workflow Optimization, Project Management",
             isValid: true
         };
 
@@ -262,6 +267,7 @@
         const YEARS = ["Present", "2027", "2026", "2025", "2024", "2023", "2022", "2021", "2020", "2019"];
 
         function init() {
+            document.getElementById('skills').value = state.skills;
             renderFormLists();
             updatePreview();
         }
@@ -287,6 +293,23 @@
             updatePreview();
         }
 
+        function addSpecialtyCert() {
+            state.specialtyCerts.push({ title: "", exp: "" });
+            renderFormLists();
+            updatePreview();
+        }
+
+        function updateSpecialtyCertField(idx, field, value) {
+            state.specialtyCerts[idx][field] = value;
+            updatePreview();
+        }
+
+        function removeSpecialtyCert(idx) {
+            state.specialtyCerts.splice(idx, 1);
+            renderFormLists();
+            updatePreview();
+        }
+
         function updateEduField(idx, field, val) {
             state.education[idx][field] = val;
             updatePreview();
@@ -308,6 +331,11 @@
             updatePreview();
         }
 
+        function updateMembershipField(idx, field, val) {
+            state.memberships[idx][field] = val;
+            updatePreview();
+        }
+
         function removeExpBulletSlot(idx, bIdx) {
             state.experience[idx].bullets.splice(bIdx, 1);
             renderFormLists();
@@ -315,6 +343,20 @@
         }
 
         function renderFormLists() {
+            const specCont = document.getElementById('specialtyCertsContainer');
+            specCont.innerHTML = '';
+            state.specialtyCerts.forEach((c, idx) => {
+                specCont.innerHTML += `
+                    <div style="background:#fcfcfc; padding:10px; border:1px solid #eee; margin-bottom:8px; border-radius:4px;">
+                        <div class="form-row" style="margin-bottom:0;">
+                            <div class="form-col"><label>Certification Title</label><input type="text" value="${c.title}" placeholder="e.g., CCRN" oninput="updateSpecialtyCertField(${idx}, 'title', this.value)"></div>
+                            <div class="form-col"><label>Expiration Date</label><input type="text" value="${c.exp}" placeholder="MM/DD/YYYY" oninput="updateSpecialtyCertField(${idx}, 'exp', this.value)"></div>
+                            <div style="display:flex; align-items:flex-end; margin-bottom:12px;"><button class="btn-danger" style="margin-bottom:0; padding:8px 12px;" onclick="removeSpecialtyCert(${idx})">✕</button></div>
+                        </div>
+                    </div>
+                `;
+            });
+
             const eduCont = document.getElementById('educationContainer');
             eduCont.innerHTML = '';
             state.education.forEach((edu, idx) => {
@@ -398,6 +440,21 @@
                     </div>
                 `;
             });
+
+            const memCont = document.getElementById('membershipContainer');
+            memCont.innerHTML = '';
+            state.memberships.forEach((mem, idx) => {
+                memCont.innerHTML += `
+                    <div style="background:#fcfcfc; padding:12px; border:1px solid #eee; margin-bottom:10px; border-radius:4px;">
+                        <div class="form-row">
+                            <div class="form-col"><label>Association / Society Name</label><input type="text" value="${mem.name}" placeholder="e.g., American Nurses Association (ANA)" oninput="updateMembershipField(${idx}, 'name', this.value)"></div>
+                            <div class="form-col"><label>Role</label><input type="text" value="${mem.role}" placeholder="Active Member" oninput="updateMembershipField(${idx}, 'role', this.value)"></div>
+                            <div class="form-col"><label>Year Active</label><input type="text" value="${mem.year}" placeholder="2024 – Present" oninput="updateMembershipField(${idx}, 'year', this.value)"></div>
+                        </div>
+                        <button class="btn-danger" onclick="removeMembership(${idx})">✕ Remove Membership</button>
+                    </div>
+                `;
+            });
         }
 
         function getYearVal(y) {
@@ -454,45 +511,38 @@
                 `;
             }
 
-            // Certifications Preview Logic Block
-            let activeCerts = Object.keys(state.certs).filter(k => state.certs[k].active);
-            if (activeCerts.length > 0) {
+            let hasStandardCerts = Object.keys(state.certs).some(k => state.certs[k].active);
+            let hasSpecialtyCerts = state.specialtyCerts.some(c => c.title);
+            
+            if (hasStandardCerts || hasSpecialtyCerts) {
                 html += `<div class="p-section"><div class="p-sectitle">Licensure & Certifications</div>`;
-                activeCerts.forEach(k => {
+                
+                Object.keys(state.certs).forEach(k => {
                     let c = state.certs[k];
-                    if (k === 'rn') {
-                        html += `
-                            <table class="p-print-table">
-                                <tr>
-                                    <td class="p-left-cell"><span class="p-bold">Registered Nurse (RN)</span>${c.state ? ' – State of ' + c.state : ''}${c.num ? ', License #' + c.num : ''}</td>
-                                    <td class="p-right-cell">${c.exp ? 'Exp. ' + c.exp : ''}</td>
-                                </tr>
-                            </table>`;
-                    } else if (k === 'bls') {
-                        html += `
-                            <table class="p-print-table">
-                                <tr>
-                                    <td class="p-left-cell">Basic Life Support (BLS)</td>
-                                    <td class="p-right-cell">${c.exp ? 'Exp. ' + c.exp : ''}</td>
-                                </tr>
-                            </table>`;
-                    } else if (k === 'acls') {
-                        html += `
-                            <table class="p-print-table">
-                                <tr>
-                                    <td class="p-left-cell">Advanced Cardiovascular Life Support (ACLS)</td>
-                                    <td class="p-right-cell">${c.exp ? 'Exp. ' + c.exp : ''}</td>
-                                </tr>
-                            </table>`;
-                    } else if (k === 'pals') {
-                        html += `
-                            <table class="p-print-table">
-                                <tr>
-                                    <td class="p-left-cell">Pediatric Advanced Life Support (PALS)</td>
-                                    <td class="p-right-cell">${c.exp ? 'Exp. ' + c.exp : ''}</td>
-                                </tr>
-                            </table>`;
-                    } else if (k === 'spec' && c.title) {
+                    if (c.active) {
+                        if (k === 'rn') {
+                            html += `
+                                <table class="p-print-table">
+                                    <tr>
+                                        <td class="p-left-cell"><span class="p-bold">Registered Nurse (RN)</span>${c.state ? ' – State of ' + c.state : ''}${c.num ? ', License #' + c.num : ''}</td>
+                                        <td class="p-right-cell">${c.exp ? 'Exp. ' + c.exp : ''}</td>
+                                    </tr>
+                                </table>`;
+                        } else {
+                            let titles = { bls: "Basic Life Support (BLS)", acls: "Advanced Cardiovascular Life Support (ACLS)", pals: "Pediatric Advanced Life Support (PALS)" };
+                            html += `
+                                <table class="p-print-table">
+                                    <tr>
+                                        <td class="p-left-cell">${titles[k]}</td>
+                                        <td class="p-right-cell">${c.exp ? 'Exp. ' + c.exp : ''}</td>
+                                    </tr>
+                                </table>`;
+                        }
+                    }
+                });
+
+                state.specialtyCerts.forEach(c => {
+                    if (c.title) {
                         html += `
                             <table class="p-print-table">
                                 <tr>
@@ -550,8 +600,27 @@
                 }
             }
 
+            if(state.memberships.length > 0) {
+                let hasMemData = state.memberships.some(m => m.name);
+                if (hasMemData) {
+                    html += `<div class="p-section"><div class="p-sectitle">Professional Memberships & Affiliations</div>`;
+                    state.memberships.forEach(mem => {
+                        if(mem.name) {
+                            html += `
+                                <table class="p-print-table">
+                                    <tr>
+                                        <td class="p-left-cell"><span class="p-bold">${mem.name}</span>${mem.role ? ' – ' + mem.role : ''}</td>
+                                        <td class="p-right-cell">${mem.year || ''}</td>
+                                    </tr>
+                                </table>`;
+                        }
+                    });
+                    html += `</div>`;
+                }
+            }
+
             if(state.skills && state.skills.trim() !== "") {
-                html += `<div class="p-section"><div class="p-sectitle">Skills</div><table class="skills-table"><tr>`;
+                html += `<div class="p-section"><div class="p-sectitle">Clinical & Technical Skills</div><table class="skills-table"><tr>`;
                 let items = state.skills.split(',').map(s => s.trim()).filter(s => s !== "");
                 let col1 = ""; let col2 = "";
                 items.forEach((item, index) => {
@@ -567,6 +636,7 @@
 
         function exportData() {
             state.summary = document.getElementById('summary').value;
+            state.skills = document.getElementById('skills').value;
             const str = JSON.stringify(state, null, 2);
             const blob = new Blob([str], {type: "application/json"});
             const url = URL.createObjectURL(blob);
@@ -595,7 +665,6 @@
                     document.getElementById('summary').value = state.summary || '';
                     document.getElementById('skills').value = state.skills || '';
                     
-                    // Reset Checkboxes & Forms on Upload File Sync
                     Object.keys(state.certs).forEach(k => {
                         let active = state.certs[k].active || false;
                         let box = document.getElementById(`has${k.charAt(0).toUpperCase() + k.slice(1)}`);
@@ -605,9 +674,6 @@
                             document.getElementById('rnState').value = state.certs.rn.state || '';
                             document.getElementById('rnNum').value = state.certs.rn.num || '';
                             document.getElementById('rnExp').value = state.certs.rn.exp || '';
-                        } else if (k === 'spec') {
-                            document.getElementById('specTitle').value = state.certs.spec.title || '';
-                            document.getElementById('specExp').value = state.certs.spec.exp || '';
                         } else {
                             let inputEl = document.getElementById(`${k}Exp`);
                             if(inputEl) inputEl.value = state.certs[k].exp || '';
@@ -625,12 +691,14 @@
 
         function generatePDF() {
             state.summary = document.getElementById('summary').value;
+            state.skills = document.getElementById('skills').value;
             updatePreview();
             window.print();
         }
 
         function generateWord() {
             state.summary = document.getElementById('summary').value;
+            state.skills = document.getElementById('skills').value;
             let docHeader = `
                 <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
                 <head>
@@ -665,44 +733,36 @@
                 docHeader += `<div class="p-section"><div class="p-sectitle">Professional Summary</div><p class="p-text">${state.summary}</p></div>`;
             }
 
-            let activeCerts = Object.keys(state.certs).filter(k => state.certs[k].active);
-            if (activeCerts.length > 0) {
+            let hasStandardCerts = Object.keys(state.certs).some(k => state.certs[k].active);
+            let hasSpecialtyCerts = state.specialtyCerts.some(c => c.title);
+            if (hasStandardCerts || hasSpecialtyCerts) {
                 docHeader += `<div class="p-section"><div class="p-sectitle">Licensure & Certifications</div>`;
-                activeCerts.forEach(k => {
+                Object.keys(state.certs).forEach(k => {
                     let c = state.certs[k];
-                    if (k === 'rn') {
-                        docHeader += `
-                            <table class="w-table">
-                                <tr>
-                                    <td class="w-left"><span class="p-bold">Registered Nurse (RN)</span>${c.state ? ' – State of ' + c.state : ''}${c.num ? ', License #' + c.num : ''}</td>
-                                    <td class="w-right">${c.exp ? 'Exp. ' + c.exp : ''}</td>
-                                </tr>
-                            </table>`;
-                    } else if (k === 'bls') {
-                        docHeader += `
-                            <table class="w-table">
-                                <tr>
-                                    <td class="w-left">Basic Life Support (BLS)</td>
-                                    <td class="w-right">${c.exp ? 'Exp. ' + c.exp : ''}</td>
-                                </tr>
-                            </table>`;
-                    } else if (k === 'acls') {
-                        docHeader += `
-                            <table class="w-table">
-                                <tr>
-                                    <td class="w-left">Advanced Cardiovascular Life Support (ACLS)</td>
-                                    <td class="w-right">${c.exp ? 'Exp. ' + c.exp : ''}</td>
-                                </tr>
-                            </table>`;
-                    } else if (k === 'pals') {
-                        docHeader += `
-                            <table class="w-table">
-                                <tr>
-                                    <td class="w-left">Pediatric Advanced Life Support (PALS)</td>
-                                    <td class="w-right">${c.exp ? 'Exp. ' + c.exp : ''}</td>
-                                </tr>
-                            </table>`;
-                    } else if (k === 'spec' && c.title) {
+                    if (c.active) {
+                        if (k === 'rn') {
+                            docHeader += `
+                                <table class="w-table">
+                                    <tr>
+                                        <td class="w-left"><span class="p-bold">Registered Nurse (RN)</span>${c.state ? ' – State of ' + c.state : ''}${c.num ? ', License #' + c.num : ''}</td>
+                                        <td class="w-right">${c.exp ? 'Exp. ' + c.exp : ''}</td>
+                                    </tr>
+                                </table>`;
+                        } else {
+                            let titles = { bls: "Basic Life Support (BLS)", acls: "Advanced Cardiovascular Life Support (ACLS)", pals: "Pediatric Advanced Life Support (PALS)" };
+                            docHeader += `
+                                <table class="w-table">
+                                    <tr>
+                                        <td class="w-left">${titles[k]}</td>
+                                        <td class="w-right">${c.exp ? 'Exp. ' + c.exp : ''}</td>
+                                    </tr>
+                                </table>`;
+                        }
+                    }
+                });
+
+                state.specialtyCerts.forEach(c => {
+                    if (c.title) {
                         docHeader += `
                             <table class="w-table">
                                 <tr>
@@ -753,8 +813,27 @@
                 docHeader += `</div>`;
             }
 
+            if(state.memberships.length > 0) {
+                let hasMemData = state.memberships.some(m => m.name);
+                if (hasMemData) {
+                    docHeader += `<div class="p-section"><div class="p-sectitle">Professional Memberships & Affiliations</div>`;
+                    state.memberships.forEach(mem => {
+                        if(mem.name) {
+                            docHeader += `
+                                <table class="w-table">
+                                    <tr>
+                                        <td class="w-left"><span class="p-bold">${mem.name}</span>${mem.role ? ' – ' + mem.role : ''}</td>
+                                        <td class="w-right">${mem.year || ''}</td>
+                                    </tr>
+                                </table>`;
+                        }
+                    });
+                    docHeader += `</div>`;
+                }
+            }
+
             if(state.skills && state.skills.trim() !== "") {
-                docHeader += `<div class="p-section"><div class="p-sectitle">Skills</div><table class="w-table"><tr>`;
+                docHeader += `<div class="p-section"><div class="p-sectitle">Clinical & Technical Skills</div><table class="w-table"><tr>`;
                 let items = state.skills.split(',').map(s => s.trim()).filter(s => s !== "");
                 let c1 = ""; let c2 = "";
                 items.forEach((item, idx) => {
@@ -803,6 +882,16 @@
             state.experience.splice(idx, 1);
             renderFormLists();
             checkChronology();
+        }
+        function addMembership() {
+            state.memberships.push({ name: "", role: "", year: "" });
+            renderFormLists();
+            updatePreview();
+        }
+        function removeMembership(idx) {
+            state.memberships.splice(idx, 1);
+            renderFormLists();
+            updatePreview();
         }
 
         window.onload = function() {
