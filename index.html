@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Academic Nursing CV Builder</title>
     <style>
-        /* Global & Form Panel Reset */
+        /* Global UI Styling */
         * { box-sizing: border-box; font-family: "Arial", "Helvetica", sans-serif; }
         body { background-color: #f0f4f8; color: #333; margin: 0; padding: 20px; }
         .container { max-width: 1300px; margin: 0 auto; display: flex; gap: 25px; }
@@ -31,11 +31,10 @@
         .btn-word:hover { background-color: #124596; }
         .error-box { background-color: #fff0f0; border: 2px solid #cc0000; padding: 10px; border-radius: 4px; color: #cc0000; font-weight: bold; font-size: 12px; margin-bottom: 15px; display: none; }
         
-        /* ================= MODERN CRISP ARIAL PRINT CANVAS ================= */
+        /* ================= ARIAL PRINT CANVAS RE-ENGINEERING ================= */
         .preview-pane { background: white; padding: 54px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); color: black; line-height: 1.4; font-size: 10.5pt; position: sticky; top: 20px; }
         
-        /* Strict enforcement of clean modern sans-serif across all printable text nodes */
-        .preview-pane, .preview-pane *, .p-header, .p-name, .p-contact, .p-section, .p-sectitle, .p-flex-header, .p-text, .p-bullet-item, .skills-table td {
+        .preview-pane, .preview-pane *, .p-header, .p-name, .p-contact, .p-section, .p-sectitle, .p-text, .p-bullet-item, .skills-table td {
             font-family: "Arial", "Helvetica", sans-serif !important;
             color: black !important;
         }
@@ -46,10 +45,13 @@
         .p-section { margin-top: 20px; margin-bottom: 5px; width: 100%; }
         .p-sectitle { font-size: 12pt; font-weight: bold; text-transform: uppercase; border-bottom: 1.5px solid black; padding-bottom: 3px; margin: 0 0 12px 0; letter-spacing: 0.5px; }
         
-        /* Flexbox Print Engine - Keeps Header Left, Dates Locked Right cleanly */
-        .p-flex-header { display: flex; justify-content: space-between; align-items: flex-start; width: 100%; margin-bottom: 4px; gap: 20px; }
-        .p-left-content { text-align: left; font-size: 10.5pt; line-height: 1.4; flex: 1; }
-        .p-right-date { text-align: right; font-size: 10.5pt; white-space: nowrap; line-height: 1.4; font-weight: bold; }
+        /* Fixed-Width Layout Tables - Structural Margins Locked */
+        .p-print-table { width: 100% !important; border-collapse: collapse !important; margin-top: 8px; margin-bottom: 2px; table-layout: fixed !important; }
+        .p-print-table td { padding: 0 !important; vertical-align: top !important; font-size: 10.5pt !important; line-height: 1.4 !important; }
+        
+        /* Strict Alignment Directives */
+        .p-left-cell { text-align: left !important; width: 75% !important; padding-right: 15px !important; }
+        .p-right-cell { text-align: right !important; width: 25% !important; white-space: nowrap !important; font-weight: bold !important; }
         
         .p-bold { font-weight: bold; }
         .p-text { font-size: 10.5pt; text-align: justify; margin: 0 0 6px 0; line-height: 1.4; }
@@ -65,8 +67,6 @@
             .container { display: block !important; width: 100% !important; }
             .preview-panel { width: 100% !important; padding: 0 !important; }
             .preview-pane { box-shadow: none !important; padding: 0 !important; border: none !important; position: static !important; }
-            
-            /* AUTOMATED BYPASS: Strips browser layout strings by forcing structural page boundaries */
             @page { size: letter; margin: 20mm 15mm 20mm 15mm !important; }
         }
     </style>
@@ -101,7 +101,7 @@
                         <input type="text" id="fullName" placeholder="Jane Doe" oninput="handleTextInput('fullName', this.value)">
                     </div>
                     <div class="form-col">
-                        <label>Credentials (Order: Highest Degree, Licensure, Certs)</label>
+                        <label>Credentials</label>
                         <input type="text" id="credentials" placeholder="e.g., MSN, RN, CPN" oninput="handleTextInput('credentials', this.value)">
                     </div>
                 </div>
@@ -131,7 +131,7 @@
             <div class="card">
                 <h2>Professional Summary</h2>
                 <label>3–4 Sentence Professional Overview</label>
-                <textarea id="summary" placeholder="Compassionate and detail-oriented Registered Nurse..." oninput="handleSummaryInput(this.value)"></textarea>
+                <textarea id="summary" placeholder="Overview..." oninput="handleSummaryInput(this.value)"></textarea>
             </div>
 
             <!-- EDUCATION -->
@@ -154,7 +154,7 @@
             <div class="card">
                 <h2>Clinical Skills</h2>
                 <span class="subtitle">Comma-separated list (e.g., Patient Assessment, Epic EMR, IV Insertion)</span>
-                <textarea id="skills" placeholder="Patient Assessment, Medication Administration, Wound Care, Epic EMR" oninput="handleTextInput('skills', this.value)"></textarea>
+                <textarea id="skills" placeholder="Skills..." oninput="handleTextInput('skills', this.value)"></textarea>
             </div>
 
             <!-- DOWNLOAD ACTIONS -->
@@ -393,10 +393,12 @@
                     state.education.forEach(edu => {
                         if(edu.degree || edu.school) {
                             html += `
-                                <div class="p-flex-header">
-                                    <div class="p-left-content"><span class="p-bold">${edu.degree}</span> – ${edu.school}, ${edu.location}</div>
-                                    <div class="p-right-date">${edu.year}</div>
-                                </div>`;
+                                <table class="p-print-table">
+                                    <tr>
+                                        <td class="p-left-cell"><span class="p-bold">${edu.degree}</span> – ${edu.school}, ${edu.location}</td>
+                                        <td class="p-right-cell">${edu.year}</td>
+                                    </tr>
+                                </table>`;
                         }
                     });
                     html += `</div>`;
@@ -411,10 +413,12 @@
                         if(exp.title || exp.org) {
                             let dateRangeStr = exp.endYear === 'Present' ? `${exp.startMonth} ${exp.startYear} – Present` : `${exp.startMonth} ${exp.startYear} – ${exp.endMonth} ${exp.endYear}`;
                             html += `
-                                <div class="p-flex-header" style="margin-top: 8px;">
-                                    <div class="p-left-content"><span class="p-bold">${exp.title}</span> – ${exp.org}, ${exp.location}</div>
-                                    <div class="p-right-date">${dateRangeStr}</div>
-                                </div>
+                                <table class="p-print-table">
+                                    <tr>
+                                        <td class="p-left-cell"><span class="p-bold">${exp.title}</span> – ${exp.org}, ${exp.location}</td>
+                                        <td class="p-right-cell">${dateRangeStr}</td>
+                                    </tr>
+                                </table>
                                 <ul class="p-bullets">
                             `;
                             exp.bullets.forEach(b => {
@@ -493,7 +497,6 @@
                 <head>
                     <title>Academic CV</title>
                     <style>
-                        /* Strips headers/footers in downloaded Word template instantly */
                         @page WordSection1 { size: 8.5in 11.0in; margin: 0.75in 0.75in 0.75in 0.75in; mso-header-margin: 0in; mso-footer-margin: 0in; mso-header: none; mso-footer: none; }
                         div.Section1 { page: WordSection1; }
                         body { font-family: "Arial", Sans-Serif; font-size: 10.5pt; line-height: 1.4; color: black; }
