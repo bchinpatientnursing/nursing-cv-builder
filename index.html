@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <title>Academic Nursing CV Builder</title>
     <style>
-        /* Interactive Input Form Side Styling Only */
-        * { box-sizing: border-box; }
-        body { background-color: #f0f4f8; color: #333; margin: 0; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        /* Global & Form Panel Reset */
+        * { box-sizing: border-box; font-family: "Arial", "Helvetica", sans-serif; }
+        body { background-color: #f0f4f8; color: #333; margin: 0; padding: 20px; }
         .container { max-width: 1300px; margin: 0 auto; display: flex; gap: 25px; }
         .form-panel { width: 50%; padding: 10px; }
         .preview-panel { width: 50%; padding: 10px; }
         .card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px; border-top: 4px solid #005A9C; }
-        h1 { color: #005A9C; margin-top: 0; font-size: 24px; text-align: center; }
+        h1 { color: #005A9C; margin-top: 0; font-size: 24px; text-align: center; font-weight: bold; }
         h2 { color: #005A9C; font-size: 16px; border-bottom: 2px solid #005A9C; padding-bottom: 5px; margin-top: 0; text-transform: uppercase; letter-spacing: 0.5px; }
         .subtitle { font-size: 12px; color: #666; margin-bottom: 15px; display: block; }
         label { display: block; font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #444; text-transform: uppercase; }
@@ -31,33 +31,33 @@
         .btn-word:hover { background-color: #124596; }
         .error-box { background-color: #fff0f0; border: 2px solid #cc0000; padding: 10px; border-radius: 4px; color: #cc0000; font-weight: bold; font-size: 12px; margin-bottom: 15px; display: none; }
         
-        /* ================= UNCOMPROMISING ACADEMIC PRINT CANVAS ================= */
-        .preview-pane { background: white; padding: 54px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); color: black; line-height: 1.3; font-size: 11pt; position: sticky; top: 20px; }
+        /* ================= MODERN CRISP ARIAL PRINT CANVAS ================= */
+        .preview-pane { background: white; padding: 54px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); color: black; line-height: 1.4; font-size: 10.5pt; position: sticky; top: 20px; }
         
-        /* Enforce single serif typeface everywhere on print canvas */
-        .preview-pane, .preview-pane *, .p-header, .p-name, .p-contact, .p-section, .p-sectitle, .p-row-block, .p-text, .p-bullet-item, .skills-table td {
-            font-family: "Times New Roman", Times, serif !important;
+        /* Strict enforcement of clean modern sans-serif across all printable text nodes */
+        .preview-pane, .preview-pane *, .p-header, .p-name, .p-contact, .p-section, .p-sectitle, .p-flex-header, .p-text, .p-bullet-item, .skills-table td {
+            font-family: "Arial", "Helvetica", sans-serif !important;
             color: black !important;
         }
         
-        .p-header { text-align: center; margin-bottom: 22px; width: 100%; }
-        .p-name { font-size: 16pt; font-weight: bold; text-transform: uppercase; margin: 0 0 5px 0; letter-spacing: 0.75px; }
-        .p-contact { font-size: 10.5pt; margin: 0; }
-        .p-section { margin-top: 18px; margin-bottom: 4px; width: 100%; clear: both; }
-        .p-sectitle { font-size: 13pt; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid black; padding-bottom: 3px; margin: 0 0 10px 0; letter-spacing: 0.75px; }
+        .p-header { text-align: center; margin-bottom: 25px; width: 100%; }
+        .p-name { font-size: 18pt; font-weight: bold; text-transform: uppercase; margin: 0 0 6px 0; letter-spacing: 0.5px; }
+        .p-contact { font-size: 10pt; margin: 0; color: #333 !important; }
+        .p-section { margin-top: 20px; margin-bottom: 5px; width: 100%; }
+        .p-sectitle { font-size: 12pt; font-weight: bold; text-transform: uppercase; border-bottom: 1.5px solid black; padding-bottom: 3px; margin: 0 0 12px 0; letter-spacing: 0.5px; }
         
-        /* Flawless Block Alignment Engine - Avoids Table Squishing completely */
-        .p-row-block { width: 100%; margin-bottom: 4px; clear: both; position: relative; display: block; }
-        .p-left-text { float: left; width: 72%; text-align: left; font-size: 11pt; margin: 0; padding: 0; line-height: 1.3; }
-        .p-right-date { float: right; width: 28%; text-align: right; font-size: 11pt; margin: 0; padding: 0; white-space: nowrap; line-height: 1.3; }
+        /* Flexbox Print Engine - Keeps Header Left, Dates Locked Right cleanly */
+        .p-flex-header { display: flex; justify-content: space-between; align-items: flex-start; width: 100%; margin-bottom: 4px; gap: 20px; }
+        .p-left-content { text-align: left; font-size: 10.5pt; line-height: 1.4; flex: 1; }
+        .p-right-date { text-align: right; font-size: 10.5pt; white-space: nowrap; line-height: 1.4; font-weight: bold; }
         
         .p-bold { font-weight: bold; }
-        .p-text { font-size: 11pt; text-align: justify; margin: 0 0 4px 0; line-height: 1.3; }
-        .p-bullets { margin: 4px 0 8px 0; padding-left: 24px; list-style-type: disc; clear: both; }
-        .p-bullet-item { font-size: 11pt; margin-bottom: 4px; text-align: justify; line-height: 1.3; }
+        .p-text { font-size: 10.5pt; text-align: justify; margin: 0 0 6px 0; line-height: 1.4; }
+        .p-bullets { margin: 4px 0 10px 0; padding-left: 20px; list-style-type: disc; }
+        .p-bullet-item { font-size: 10.5pt; margin-bottom: 5px; text-align: justify; line-height: 1.4; }
         
-        .skills-table { width: 100%; border-collapse: collapse; margin-top: 4px; clear: both; }
-        .skills-table td { width: 50%; font-size: 11pt; padding: 3px 0; vertical-align: top; }
+        .skills-table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+        .skills-table td { width: 50%; font-size: 10.5pt; padding: 4px 0; vertical-align: top; }
 
         @media print {
             body, html { background: white !important; padding: 0 !important; margin: 0 !important; }
@@ -65,7 +65,9 @@
             .container { display: block !important; width: 100% !important; }
             .preview-panel { width: 100% !important; padding: 0 !important; }
             .preview-pane { box-shadow: none !important; padding: 0 !important; border: none !important; position: static !important; }
-            @page { size: letter; margin: 0.75in !important; }
+            
+            /* AUTOMATED BYPASS: Strips browser layout strings by forcing structural page boundaries */
+            @page { size: letter; margin: 20mm 15mm 20mm 15mm !important; }
         }
     </style>
 </head>
@@ -330,27 +332,6 @@
             });
         }
 
-        function addEducation() {
-            state.education.unshift({ degree: "", school: "", location: "", year: "2026" });
-            renderFormLists();
-            checkChronology();
-        }
-        function removeEdu(idx) {
-            state.education.splice(idx, 1);
-            renderFormLists();
-            checkChronology();
-        }
-        function addExperience() {
-            state.experience.unshift({ title: "", org: "", location: "", startMonth: "Jan", startYear: "2026", endMonth: "Present", endYear: "Present", bullets: [""] });
-            renderFormLists();
-            checkChronology();
-        }
-        function removeExp(idx) {
-            state.experience.splice(idx, 1);
-            renderFormLists();
-            checkChronology();
-        }
-
         function getYearVal(y) {
             if (y === 'Present') return 9999;
             return parseInt(y) || 0;
@@ -412,10 +393,9 @@
                     state.education.forEach(edu => {
                         if(edu.degree || edu.school) {
                             html += `
-                                <div class="p-row-block">
-                                    <div class="p-left-text"><span class="p-bold">${edu.degree}</span> – ${edu.school}, ${edu.location}</div>
+                                <div class="p-flex-header">
+                                    <div class="p-left-content"><span class="p-bold">${edu.degree}</span> – ${edu.school}, ${edu.location}</div>
                                     <div class="p-right-date">${edu.year}</div>
-                                    <div style="clear: both;"></div>
                                 </div>`;
                         }
                     });
@@ -431,10 +411,9 @@
                         if(exp.title || exp.org) {
                             let dateRangeStr = exp.endYear === 'Present' ? `${exp.startMonth} ${exp.startYear} – Present` : `${exp.startMonth} ${exp.startYear} – ${exp.endMonth} ${exp.endYear}`;
                             html += `
-                                <div class="p-row-block" style="margin-top: 6px;">
-                                    <div class="p-left-text"><span class="p-bold">${exp.title}</span> – ${exp.org}, ${exp.location}</div>
+                                <div class="p-flex-header" style="margin-top: 8px;">
+                                    <div class="p-left-content"><span class="p-bold">${exp.title}</span> – ${exp.org}, ${exp.location}</div>
                                     <div class="p-right-date">${dateRangeStr}</div>
-                                    <div style="clear: both;"></div>
                                 </div>
                                 <ul class="p-bullets">
                             `;
@@ -514,26 +493,30 @@
                 <head>
                     <title>Academic CV</title>
                     <style>
-                        body { font-family: "Times New Roman", Serif; font-size: 11pt; line-height: 1.15; color: black; margin: 0.75in; }
-                        .p-header { text-align: center; margin-bottom: 15pt; }
+                        /* Strips headers/footers in downloaded Word template instantly */
+                        @page WordSection1 { size: 8.5in 11.0in; margin: 0.75in 0.75in 0.75in 0.75in; mso-header-margin: 0in; mso-footer-margin: 0in; mso-header: none; mso-footer: none; }
+                        div.Section1 { page: WordSection1; }
+                        body { font-family: "Arial", Sans-Serif; font-size: 10.5pt; line-height: 1.4; color: black; }
+                        .p-header { text-align: center; margin-bottom: 20pt; }
                         .p-name { font-size: 16pt; font-weight: bold; text-transform: uppercase; margin: 0; }
-                        .p-contact { font-size: 10.5pt; margin: 0; color: #222; }
-                        .p-section { margin-top: 14pt; margin-bottom: 2pt; }
-                        .p-sectitle { font-size: 13pt; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid black; padding-bottom: 2pt; margin: 12pt 0 6pt 0; letter-spacing: 0.5px; }
+                        .p-contact { font-size: 10pt; margin: 0; color: #333; }
+                        .p-section { margin-top: 16pt; margin-bottom: 4pt; }
+                        .p-sectitle { font-size: 12pt; font-weight: bold; text-transform: uppercase; border-bottom: 1.5px solid black; padding-bottom: 2pt; margin: 12pt 0 8pt 0; letter-spacing: 0.5px; }
                         .w-table { width: 100%; border: none; margin-bottom: 2pt; }
-                        .w-left { text-align: left; font-size: 11pt; width: 72%; }
-                        .w-right { text-align: right; font-size: 11pt; width: 28%; }
+                        .w-left { text-align: left; font-size: 10.5pt; width: 75%; }
+                        .w-right { text-align: right; font-size: 10.5pt; width: 25%; font-weight: bold; }
                         .p-bold { font-weight: bold; }
-                        .p-text { font-size: 11pt; text-align: justify; margin: 0; }
-                        .w-bullet { font-size: 11pt; margin-left: 15pt; margin-bottom: 2pt; }
-                        .w-skill-col { width: 50%; font-size: 11pt; }
+                        .p-text { font-size: 10.5pt; text-align: justify; margin: 0; }
+                        .w-bullet { font-size: 10.5pt; margin-left: 15pt; margin-bottom: 2pt; }
+                        .w-skill-col { width: 50%; font-size: 10.5pt; }
                     </style>
                 </head>
                 <body>
-                    <div class="p-header">
-                        <div class="p-name">${state.fullName}${state.credentials ? ', ' + state.credentials : ''}</div>
-                        <div class="p-contact">Phone: ${state.phone} &bull; Email: ${state.email}${state.address ? ' | Address: ' + state.address : ''}${state.linkedin ? ' | LinkedIn: ' + state.linkedin : ''}</div>
-                    </div>
+                    <div class="Section1">
+                        <div class="p-header">
+                            <div class="p-name">${state.fullName}${state.credentials ? ', ' + state.credentials : ''}</div>
+                            <div class="p-contact">Phone: ${state.phone} &bull; Email: ${state.email}${state.address ? ' | Address: ' + state.address : ''}${state.linkedin ? ' | LinkedIn: ' + state.linkedin : ''}</div>
+                        </div>
             `;
 
             if(state.summary && state.summary.trim() !== "") {
@@ -590,9 +573,10 @@
             }
 
             docHeader += `
-                    <div class="p-section">
-                        <div class="p-sectitle">References</div>
-                        <p class="p-text">Available upon request.</p>
+                        <div class="p-section">
+                            <div class="p-sectitle">References</div>
+                            <p class="p-text">Available upon request.</p>
+                        </div>
                     </div>
                 </body>
                 </html>
@@ -606,6 +590,27 @@
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
+        }
+
+        function addEducation() {
+            state.education.unshift({ degree: "", school: "", location: "", year: "2026" });
+            renderFormLists();
+            checkChronology();
+        }
+        function removeEdu(idx) {
+            state.education.splice(idx, 1);
+            renderFormLists();
+            checkChronology();
+        }
+        function addExperience() {
+            state.experience.unshift({ title: "", org: "", location: "", startMonth: "Jan", startYear: "2026", endMonth: "Present", endYear: "Present", bullets: [""] });
+            renderFormLists();
+            checkChronology();
+        }
+        function removeExp(idx) {
+            state.experience.splice(idx, 1);
+            renderFormLists();
+            checkChronology();
         }
 
         window.onload = function() {
