@@ -49,6 +49,16 @@
         .p-grid { display: block; margin-top: 2px; }
         .p-grid-item { display: inline-block; width: 50%; font-size: 10pt; margin-bottom: 2px; vertical-align: top; }
         .p-grid-item::before { content: "• "; }
+
+        /* ================= MAGIC PRINT STYLES ================= */
+        @media print {
+            body, html { background: white !important; padding: 0 !important; margin: 0 !important; }
+            h1, p, .panel:first-child, .btn, .card { display: none !important; } /* Hide everything but preview */
+            .container { display: block !important; width: 100% !important; }
+            .panel { display: block !important; width: 100% !important; padding: 0 !important; }
+            .preview-pane { box-shadow: none !important; padding: 0 !important; border: none !important; position: static !important; }
+            @page { margin: 0.75in; } /* Forces clean professional margins on the paper */
+        }
     </style>
 </head>
 <body>
@@ -191,7 +201,6 @@
         }
 
         function renderFormLists() {
-            // Render Edu List
             const eduCont = document.getElementById('educationContainer');
             eduCont.innerHTML = '';
             state.education.forEach((edu, idx) => {
@@ -215,12 +224,10 @@
                 `;
             });
 
-            // Proxy individual element modifications inside arrays
             window.state.education = function(idx, key, val) { state.education[idx][key] = val; update(); };
             window.state.experience = function(idx, key, val) { state.experience[idx][key] = val; update(); };
             window.state.bullet = function(idx, bIdx, val) { state.experience[idx].bullets[bIdx] = val; update(); };
 
-            // Render Exp List
             const expCont = document.getElementById('experienceContainer');
             expCont.innerHTML = '';
             state.experience.forEach((exp, idx) => {
@@ -279,12 +286,9 @@
 
         function checkChronology() {
             let valid = true;
-            
-            // Check Education ordering
             for(let i=0; i<state.education.length-1; i++) {
                 if(getYearVal(state.education[i].year) < getYearVal(state.education[i+1].year)) { valid = false; }
             }
-            // Check Experience ordering
             for(let i=0; i<state.experience.length-1; i++) {
                 if(getYearVal(state.experience[i].endYear) < getYearVal(state.experience[i+1].endYear)) { valid = false; }
             }
@@ -307,7 +311,6 @@
         }
 
         function update() {
-            // Read basic text values back into state dynamically on keystroke
             const fn = document.getElementById('fullName').value; if(fn!==undefined && fn!=="") state.fullName = fn;
             const cr = document.getElementById('credentials').value; state.credentials = cr;
             const ph = document.getElementById('phone').value; state.phone = ph;
@@ -317,7 +320,6 @@
             const sm = document.getElementById('summary').value; state.summary = sm;
             const sk = document.getElementById('skills').value; state.skills = sk;
 
-            // Render Print Preview
             let html = `
                 <div class="p-header">
                     <div class="p-name">${state.fullName}${state.credentials ? ', '+state.credentials : ''}</div>
@@ -326,24 +328,14 @@
             `;
 
             if(state.summary.trim() !== "") {
-                html += `
-                    <div class="p-section">
-                        <div class="p-sectitle">Professional Summary</div>
-                        <p class="p-text">${state.summary}</p>
-                    </div>
-                `;
+                html += `<div class="p-section"><div class="p-sectitle">Professional Summary</div><p class="p-text">${state.summary}</p></div>`;
             }
 
             if(state.education.length > 0) {
                 html += `<div class="p-section"><div class="p-sectitle">Education</div>`;
                 state.education.forEach(edu => {
                     if(edu.degree || edu.school) {
-                        html += `
-                            <div class="p-row">
-                                <div class="p-left"><span class="p-bold">${edu.degree}</span> – ${edu.school}, ${edu.location}</div>
-                                <div class="p-right">${edu.year}</div>
-                            </div>
-                        `;
+                        html += `<div class="p-row"><div class="p-left"><span class="p-bold">${edu.degree}</span> – ${edu.school}, ${edu.location}</div><div class="p-right">${edu.year}</div></div>`;
                     }
                 });
                 html += `</div>`;
@@ -377,13 +369,7 @@
                 html += `</div></div>`;
             }
 
-            html += `
-                <div class="p-section">
-                    <div class="p-sectitle">References</div>
-                    <p class="p-text">Available upon request.</p>
-                </div>
-            `;
-
+            html += `<div class="p-section"><div class="p-sectitle">References</div><p class="p-text">Available upon request.</p></div>`;
             document.getElementById('preview').innerHTML = html;
         }
 
@@ -461,7 +447,6 @@
             document.body.removeChild(a);
         }
 
-        // Initialize values natively
         window.onload = function() {
             document.getElementById('fullName').value = state.fullName;
             document.getElementById('credentials').value = state.credentials;
