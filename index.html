@@ -6,24 +6,23 @@
     <style>
         * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         body { background-color: #f0f4f8; color: #333; margin: 0; padding: 20px; }
-        .container { max-width: 1000px; margin: 0 auto; display: table; width: 100%; }
-        .panel { display: table-cell; width: 50%; padding: 20px; vertical-align: top; }
+        .container { max-width: 1200px; margin: 0 auto; display: flex; gap: 20px; }
+        .form-panel { width: 50%; padding: 10px; }
+        .preview-panel { width: 50%; padding: 10px; }
         .card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px; border-top: 4px solid #005A9C; }
         h1 { color: #005A9C; margin-top: 0; font-size: 24px; text-align: center; }
         h2 { color: #005A9C; font-size: 16px; border-bottom: 2px solid #005A9C; padding-bottom: 5px; margin-top: 0; text-transform: uppercase; letter-spacing: 0.5px; }
-        h3 { font-size: 14px; margin: 10px 0 5px 0; color: #333; }
         .subtitle { font-size: 12px; color: #666; margin-bottom: 15px; display: block; }
         label { display: block; font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #444; text-transform: uppercase; }
         input, select, textarea { width: 100%; padding: 8px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; }
-        textarea { height: 60px; resize: vertical; }
-        .row { display: table; width: 100%; table-layout: fixed; margin-bottom: 5px; }
-        .col { display: table-cell; padding-right: 10px; vertical-align: top; }
-        .col:last-child { padding-right: 0; }
-        .btn { background-color: #005A9C; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; font-size: 13px; margin-bottom: 10px; transition: background 0.2s; }
+        textarea { height: 85px; resize: vertical; }
+        .form-row { display: flex; gap: 10px; }
+        .form-col { flex: 1; }
+        .btn { background-color: #005A9C; color: white; border: none; padding: 12px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; font-size: 13px; margin-bottom: 10px; transition: background 0.2s; }
         .btn:hover { background-color: #004070; }
         .btn-secondary { background-color: #fff; color: #005A9C; border: 1px dashed #005A9C; }
         .btn-secondary:hover { background-color: #f4f8fb; }
-        .btn-danger { background-color: #fff; color: #cc0000; border: 1px solid #cc0000; font-size: 11px; padding: 4px 8px; width: auto; margin-bottom: 15px; }
+        .btn-danger { background-color: #fff; color: #cc0000; border: 1px solid #cc0000; font-size: 11px; padding: 4px 8px; width: auto; margin-bottom: 15px; border-radius: 4px; cursor: pointer; }
         .btn-danger:hover { background-color: #fff0f0; }
         .btn-main { background-color: #2e7d32; font-size: 15px; padding: 12px; margin-top: 10px; }
         .btn-main:hover { background-color: #1b5e20; }
@@ -31,34 +30,42 @@
         .btn-word:hover { background-color: #124596; }
         .error-box { background-color: #fff0f0; border: 2px solid #cc0000; padding: 10px; border-radius: 4px; color: #cc0000; font-weight: bold; font-size: 12px; margin-bottom: 15px; display: none; }
         
-        /* Live Preview Styles - Simulates Strict Printed Academic CV */
-        .preview-pane { background: white; padding: 54px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); font-family: "Times New Roman", Times, serif; color: black; line-height: 1.15; font-size: 11pt; position: sticky; top: 20px; }
-        .p-header { text-align: center; margin-bottom: 15px; }
-        .p-name { font-size: 16pt; font-weight: bold; text-transform: uppercase; margin: 0 0 4px 0; }
-        .p-contact { font-size: 10pt; margin: 0; color: #222; }
-        .p-section { margin-top: 14px; margin-bottom: 2px; }
+        /* Strict Academic Print Canvas Styling */
+        .preview-pane { background: white; padding: 54px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); font-family: "Times New Roman", Times, serif; color: black; line-height: 1.2; font-size: 11pt; position: sticky; top: 20px; }
+        .p-header { text-align: center; margin-bottom: 20px; width: 100%; }
+        .p-name { font-size: 18pt; font-weight: bold; text-transform: uppercase; margin: 0 0 6px 0; letter-spacing: 0.5px; }
+        .p-contact { font-size: 10pt; margin: 0; color: #000; word-spacing: 1px; }
+        .p-section { margin-top: 16px; margin-bottom: 4px; width: 100%; }
         .p-section:first-of-type { margin-top: 10px; }
-        .p-sectitle { font-size: 13pt; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid black; padding-bottom: 2px; margin: 0 0 6px 0; letter-spacing: 0.5px; }
-        .p-row { display: table; width: 100%; margin-bottom: 2px; }
-        .p-left { display: table-cell; text-align: left; width: 75%; font-size: 11pt; }
-        .p-right { display: table-cell; text-align: right; width: 25%; font-size: 10pt; font-style: normal; }
+        .p-sectitle { font-size: 13pt; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid black; padding-bottom: 2px; margin: 0 0 8px 0; letter-spacing: 0.5px; }
+        
+        /* Bulletproof Print Layout Tables */
+        .cv-table { width: 100%; border-collapse: collapse; margin-bottom: 6px; table-layout: fixed; }
+        .cv-table td { padding: 0; vertical-align: top; font-family: "Times New Roman", Times, serif; font-size: 11pt; }
+        .td-left { text-align: left; width: 80%; padding-right: 15px; }
+        .td-right { text-align: right; width: 20%; white-space: nowrap; font-size: 11pt; }
+        
         .p-bold { font-weight: bold; }
-        .p-italic { font-style: italic; }
-        .p-text { font-size: 10.5pt; text-align: justify; margin: 0; }
-        .p-bullets { margin: 2px 0; padding-left: 15px; }
-        .p-bullet-item { font-size: 10pt; margin-bottom: 2px; list-style-type: disc; }
-        .p-grid { display: block; margin-top: 2px; }
-        .p-grid-item { display: inline-block; width: 50%; font-size: 10pt; margin-bottom: 2px; vertical-align: top; }
-        .p-grid-item::before { content: "• "; }
+        .p-text { font-size: 11pt; text-align: justify; margin: 0 0 4px 0; font-family: "Times New Roman", Times, serif; }
+        .p-bullets { margin: 2px 0 6px 0; padding-left: 20px; list-style-type: disc; }
+        .p-bullet-item { font-size: 10.5pt; margin-bottom: 3px; text-align: justify; }
+        
+        .skills-table { width: 100%; border-collapse: collapse; }
+        .skills-table td { width: 50%; font-size: 10.5pt; padding: 2px 0; vertical-align: top; font-family: "Times New Roman", Times, serif; }
 
-        /* Print Media Stylesheet */
+        /* ================= ABSOLUTE PRINT COMPILATION ================= */
         @media print {
             body, html { background: white !important; padding: 0 !important; margin: 0 !important; }
-            h1, p, .panel:first-child, .btn, .card { display: none !important; }
+            .form-panel, h1, p, .btn, .card { display: none !important; }
             .container { display: block !important; width: 100% !important; }
-            .panel { display: block !important; width: 100% !important; padding: 0 !important; }
+            .preview-panel { width: 100% !important; padding: 0 !important; }
             .preview-pane { box-shadow: none !important; padding: 0 !important; border: none !important; position: static !important; }
-            @page { margin: 0.75in; }
+            
+            /* The Secret Weapon: Forcibly deletes browser website links, dates, and header text slots */
+            @page { 
+                size: letter;
+                margin: 0.75in !important; 
+            }
         }
     </style>
 </head>
@@ -66,23 +73,18 @@
 
     <h1>📋 Academic Nursing CV Builder & Real-Time Layout Tool</h1>
     <p style="text-align:center; color:#555; max-width:800px; margin: 0 auto 25px auto; font-size: 14px;">
-        Fill out your professional entries below. If you leave an area completely empty, it will automatically vanish from your generated documents. 
-        Save your <strong>.cvdata</strong> file locally to bring back your entries in 6 months.
+        Fill out your entries below. Blanks vanish automatically. Save your <strong>.cvdata</strong> file locally to preserve progress.
     </p>
 
     <div class="container">
-        <!-- LEFT HAND FORM PANEL -->
-        <div class="panel">
+        <!-- FORM CONTROL PANEL -->
+        <div class="form-panel">
             
             <div class="card">
                 <h2>🔄 Data Operations</h2>
-                <span class="subtitle">Bring back a 6-month old draft, or download your current state data.</span>
-                <div class="row">
-                    <div class="col">
-                        <label>Upload .cvdata file</label>
-                        <input type="file" id="importFile" accept=".cvdata,.json" onchange="importData(event)">
-                    </div>
-                </div>
+                <span class="subtitle">Upload a saved draft or export your current state data.</span>
+                <label>Upload .cvdata file</label>
+                <input type="file" id="importFile" accept=".cvdata,.json" onchange="importData(event)">
                 <button class="btn btn-secondary" onclick="exportData()">💾 Save Progress Data File (.cvdata)</button>
             </div>
 
@@ -91,34 +93,34 @@
             <!-- CONTACT -->
             <div class="card">
                 <h2>Full Name & Contact</h2>
-                <div class="row">
-                    <div class="col">
+                <div class="form-row">
+                    <div class="form-col">
                         <label>Full Name</label>
-                        <input type="text" id="fullName" placeholder="Jane Doe" oninput="update()">
+                        <input type="text" id="fullName" placeholder="Jane Doe" oninput="handleTextInput('fullName', this.value)">
                     </div>
-                    <div class="col" style="position: relative;">
-                        <label style="color: #005A9C;">Credentials (Order: Degree, Licensure, Certs)</label>
-                        <input type="text" id="credentials" placeholder="e.g., MSN, RN, CPN" oninput="update()">
+                    <div class="form-col">
+                        <label>Credentials (Order: Degree, Licensure, Certs)</label>
+                        <input type="text" id="credentials" placeholder="e.g., MSN, RN, CPN" oninput="handleTextInput('credentials', this.value)">
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">
+                <div class="form-row">
+                    <div class="form-col">
                         <label>Phone</label>
-                        <input type="text" id="phone" placeholder="(555) 123-4567" oninput="update()">
+                        <input type="text" id="phone" placeholder="(555) 123-4567" oninput="handleTextInput('phone', this.value)">
                     </div>
-                    <div class="col">
+                    <div class="form-col">
                         <label>Email</label>
-                        <input type="text" id="email" placeholder="jdoe@hospital.org" oninput="update()">
+                        <input type="text" id="email" placeholder="jdoe@hospital.org" oninput="handleTextInput('email', this.value)">
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">
+                <div class="form-row">
+                    <div class="form-col">
                         <label>Address (Optional)</label>
-                        <input type="text" id="address" placeholder="Boston, MA" oninput="update()">
+                        <input type="text" id="address" placeholder="Boston, MA" oninput="handleTextInput('address', this.value)">
                     </div>
                     <div class="col">
                         <label>LinkedIn (Optional)</label>
-                        <input type="text" id="linkedin" placeholder="linkedin.com/in/username" oninput="update()">
+                        <input type="text" id="linkedin" placeholder="linkedin.com/in/username" oninput="handleTextInput('linkedin', this.value)">
                     </div>
                 </div>
             </div>
@@ -127,13 +129,13 @@
             <div class="card">
                 <h2>Professional Summary</h2>
                 <label>3–4 Sentence Professional Overview</label>
-                <textarea id="summary" placeholder="Compassionate and detail-oriented Registered Nurse with experience in acute care..." oninput="update()"></textarea>
+                <textarea id="summary" placeholder="Compassionate and detail-oriented Registered Nurse..." oninput="handleTextInput('summary', this.value)"></textarea>
             </div>
 
             <!-- EDUCATION -->
             <div class="card">
                 <h2>Education</h2>
-                <span class="subtitle">List qualifications. Ensure reverse chronological order (newest at top) is followed.</span>
+                <span class="subtitle">Ensure reverse chronological order (newest at top) is followed.</span>
                 <div id="educationContainer"></div>
                 <button class="btn btn-secondary" onclick="addEducation()">+ Add Education Slot</button>
             </div>
@@ -141,7 +143,7 @@
             <!-- EXPERIENCE -->
             <div class="card">
                 <h2>Professional Experience</h2>
-                <span class="subtitle">List nursing positions. Each role features structured prompts for clinical reporting.</span>
+                <span class="subtitle">List nursing positions. Each features clinical reporting prompts.</span>
                 <div id="experienceContainer"></div>
                 <button class="btn btn-secondary" onclick="addExperience()">+ Add Experience Slot</button>
             </div>
@@ -150,7 +152,7 @@
             <div class="card">
                 <h2>Clinical Skills</h2>
                 <span class="subtitle">Comma-separated skills (e.g., Patient Assessment, Epic EMR, IV Insertion)</span>
-                <textarea id="skills" placeholder="Patient Assessment, Medication Administration, Wound Care, Epic EMR" oninput="update()"></textarea>
+                <textarea id="skills" placeholder="Patient Assessment, Medication Administration, Wound Care, Epic EMR" oninput="handleTextInput('skills', this.value)"></textarea>
             </div>
 
             <!-- DOWNLOAD ACTIONS -->
@@ -162,57 +164,67 @@
 
         </div>
 
-        <!-- RIGHT HAND PRINT PREVIEW -->
-        <div class="panel">
-            <div class="preview-pane" id="preview">
-                <!-- Dynamic Content Hydrated by JavaScript -->
-            </div>
+        <!-- PRINT PREVIEW PANEL -->
+        <div class="preview-panel">
+            <div class="preview-pane" id="preview"></div>
         </div>
     </div>
 
-    <!-- BULLETPROOF SCRIPT ENGINE -->
     <script>
         let state = {
             fullName: "Kate Donovan",
-            credentials: "RN, BSN",
+            credentials: "MSN, RN, CPN",
             phone: "(617) 555-0199",
             email: "kdonovan@bch.org",
             address: "Boston, MA",
             linkedin: "linkedin.com/in/katedonovan-rn",
             summary: "Detail-oriented and innovative Registered Nurse within the Inpatient Medical Programs at Boston Children's Hospital. Specialized in providing high-acuity pediatric clinical care, implementing workflow technologies, and coordinating interdisciplinary care pathways. Committed to evidence-based practice and preserving human connection within advanced clinical frameworks.",
             education: [
-                { degree: "Master of Business Administration (MBA)", school: "Northeast University", location: "Boston, MA", month: "May", year: "2026" },
-                { degree: "Bachelor of Science in Nursing (BSN)", school: "Boston College", location: "Chestnut Hill, MA", month: "May", year: "2023" }
+                { degree: "Master of Business Administration (MBA)", school: "Northeast University", location: "Boston, MA", year: "2026" },
+                { degree: "Bachelor of Science in Nursing (BSN)", school: "Boston College", location: "Chestnut Hill, MA", year: "2023" }
             ],
             experience: [
-                { title: "Clinical Director of Innovation and Education", org: "Boston Children's Hospital", location: "Boston, MA", startMonth: "Nov", startYear: "2025", endMonth: "Present", endYear: "Present", bullets: ["Manage localized quality improvement initiatives and advanced clinical technology workflows across a high-acuity pediatric inpatient footprint.","Coordinate nursing educational tracks, transforming complex operational and technological guidelines into digestible training pathways.","Collaborate closely with Senior Nursing Directors to implement dynamic, frontline-focused care protocols."] },
-                { title: "Staff Nurse, Inpatient Medical Program", org: "Boston Children's Hospital", location: "Boston, MA", startMonth: "June", startYear: "2023", endMonth: "Oct", endYear: "2025", bullets: ["Delivered comprehensive, safe, and family-centered acute care to pediatric populations within specialized medical units.","Assessed clinical parameters, administered high-risk medications, and initiated continuous monitoring for complex patient profiles.","Served as an active unit council representative assisting with technology implementation and safety metrics."] }
+                { title: "Clinical Director of Innovation and Education", org: "Boston Children's Hospital", location: "Boston, MA", endYear: "Present", bullets: ["Manage localized quality improvement initiatives and advanced clinical technology workflows across a high-acuity pediatric inpatient footprint.","Coordinate nursing educational tracks, transforming complex operational and technological guidelines into digestible training pathways.","Collaborate closely with Senior Nursing Directors to implement dynamic, frontline-focused care protocols."] },
+                { title: "Staff Nurse, Inpatient Medical Program", org: "Boston Children's Hospital", location: "Boston, MA", startMonth: "June", startYear: "2023", endMonth: "Oct", endYear: "2025", endYear: "2025", bullets: ["Delivered comprehensive, safe, and family-centered acute care to pediatric populations within specialized medical units.","Assessed clinical parameters, administered high-risk medications, and initiated continuous monitoring for complex patient profiles.","Served as an active unit council representative assisting with technology implementation and safety metrics."] }
             ],
             skills: "Patient Assessment & Triage, Medication Administration, Pediatric Advanced Life Support (PALS), Quality Improvement, Workflow Automation, Epic EMR, Care Coordination",
             isValid: true
         };
 
-        const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Present"];
         const YEARS = ["Present", "2027", "2026", "2025", "2024", "2023", "2022", "2021", "2020", "2019"];
 
         function init() {
+            document.getElementById('fullName').value = state.fullName;
+            document.getElementById('credentials').value = state.credentials;
+            document.getElementById('phone').value = state.phone;
+            document.getElementById('email').value = state.email;
+            document.getElementById('address').value = state.address;
+            document.getElementById('linkedin').value = state.linkedin;
+            document.getElementById('summary').value = state.summary;
+            document.getElementById('skills').value = state.skills;
+            
             renderFormLists();
-            update();
+            updatePreview();
+        }
+
+        function handleTextInput(field, value) {
+            state[field] = value;
+            updatePreview();
         }
 
         function updateEduField(idx, field, val) {
             state.education[idx][field] = val;
-            update();
+            updatePreview();
         }
 
         function updateExpField(idx, field, val) {
             state.experience[idx][field] = val;
-            update();
+            updatePreview();
         }
 
         function updateExpBullet(idx, bIdx, val) {
             state.experience[idx].bullets[bIdx] = val;
-            update();
+            updatePreview();
         }
 
         function renderFormLists() {
@@ -220,14 +232,14 @@
             eduCont.innerHTML = '';
             state.education.forEach((edu, idx) => {
                 eduCont.innerHTML += `
-                    <div style="background:#fcfcfc; padding:10px; border:1px solid #eee; margin-bottom:10px; border-radius:4px;">
-                        <div class="row">
-                            <div class="col"><label>Degree</label><input type="text" value="${edu.degree}" oninput="updateEduField(${idx}, 'degree', this.value)"></div>
+                    <div style="background:#fcfcfc; padding:12px; border:1px solid #eee; margin-bottom:10px; border-radius:4px;">
+                        <div class="form-row">
+                            <div class="form-col"><label>Degree</label><input type="text" value="${edu.degree}" oninput="updateEduField(${idx}, 'degree', this.value)"></div>
                             <div class="col"><label>School</label><input type="text" value="${edu.school}" oninput="updateEduField(${idx}, 'school', this.value)"></div>
                         </div>
-                        <div class="row">
-                            <div class="col"><label>Location</label><input type="text" value="${edu.location}" oninput="updateEduField(${idx}, 'location', this.value)"></div>
-                            <div class="col">
+                        <div class="form-row">
+                            <div class="form-col"><label>Location</label><input type="text" value="${edu.location}" oninput="updateEduField(${idx}, 'location', this.value)"></div>
+                            <div class="form-col">
                                 <label>Graduation Year</label>
                                 <select onchange="updateEduField(${idx}, 'year', this.value); checkChronology();">
                                     ${YEARS.map(y => `<option value="${y}" ${edu.year===y?'selected':''}>${y}</option>`).join('')}
@@ -243,21 +255,21 @@
             expCont.innerHTML = '';
             state.experience.forEach((exp, idx) => {
                 expCont.innerHTML += `
-                    <div style="background:#fcfcfc; padding:10px; border:1px solid #eee; margin-bottom:10px; border-radius:4px;">
-                        <div class="row">
-                            <div class="col"><label>Job Title</label><input type="text" value="${exp.title}" oninput="updateExpField(${idx}, 'title', this.value)"></div>
-                            <div class="col"><label>Organization</label><input type="text" value="${exp.org}" oninput="updateExpField(${idx}, 'org', this.value)"></div>
+                    <div style="background:#fcfcfc; padding:12px; border:1px solid #eee; margin-bottom:10px; border-radius:4px;">
+                        <div class="form-row">
+                            <div class="form-col"><label>Job Title</label><input type="text" value="${exp.title}" oninput="updateExpField(${idx}, 'title', this.value)"></div>
+                            <div class="form-col"><label>Organization</label><input type="text" value="${exp.org}" oninput="updateExpField(${idx}, 'org', this.value)"></div>
                         </div>
-                        <div class="row">
-                            <div class="col"><label>Location</label><input type="text" value="${exp.location}" oninput="updateExpField(${idx}, 'location', this.value)"></div>
-                            <div class="col">
+                        <div class="form-row">
+                            <div class="form-col"><label>Location</label><input type="text" value="${exp.location}" oninput="updateExpField(${idx}, 'location', this.value)"></div>
+                            <div class="form-col">
                                 <label>End Year</label>
                                 <select onchange="updateExpField(${idx}, 'endYear', this.value); checkChronology();">
                                     ${YEARS.map(y => `<option value="${y}" ${exp.endYear===y?'selected':''}>${y}</option>`).join('')}
                                 </select>
                             </div>
                         </div>
-                        <label style="color:#005A9C;">Bullet 1: Clinical Scope & Competency</label>
+                        <label style="color:#005A9C; margin-top:5px;">Bullet 1: Clinical Scope & Competency</label>
                         <textarea oninput="updateExpBullet(${idx}, 0, this.value)">${exp.bullets[0]||''}</textarea>
                         <label style="color:#005A9C;">Bullet 2: Interdisciplinary Care Coordination</label>
                         <textarea oninput="updateExpBullet(${idx}, 1, this.value)">${exp.bullets[1]||''}</textarea>
@@ -270,7 +282,7 @@
         }
 
         function addEducation() {
-            state.education.unshift({ degree: "", school: "", location: "", month: "May", year: "2026" });
+            state.education.unshift({ degree: "", school: "", location: "", year: "2026" });
             renderFormLists();
             checkChronology();
         }
@@ -280,7 +292,7 @@
             checkChronology();
         }
         function addExperience() {
-            state.experience.unshift({ title: "", org: "", location: "", startMonth: "Jan", startYear: "2026", endMonth: "Present", endYear: "Present", bullets: ["", "", ""] });
+            state.experience.unshift({ title: "", org: "", location: "", endYear: "Present", bullets: ["", "", ""] });
             renderFormLists();
             checkChronology();
         }
@@ -318,66 +330,86 @@
                 btnP.disabled = false; btnW.disabled = false;
                 btnP.style.background = '#2e7d32'; btnW.style.background = '#185abd';
             }
-            update();
+            updatePreview();
         }
 
-        function update() {
-            const fn = document.getElementById('fullName').value; if(fn!==undefined && fn!=="") state.fullName = fn;
-            const cr = document.getElementById('credentials').value; state.credentials = cr;
-            const ph = document.getElementById('phone').value; state.phone = ph;
-            const em = document.getElementById('email').value; state.email = em;
-            const ad = document.getElementById('address').value; state.address = ad;
-            const li = document.getElementById('linkedin').value; state.linkedin = li;
-            const sm = document.getElementById('summary').value; state.summary = sm;
-            const sk = document.getElementById('skills').value; state.skills = sk;
-
+        function updatePreview() {
             let html = `
                 <div class="p-header">
-                    <div class="p-name">${state.fullName}${state.credentials ? ', '+state.credentials : ''}</div>
-                    <div class="p-contact">Phone: ${state.phone} | Email: ${state.email}${state.address?' | Address: '+state.address:''}${state.linkedin?' | LinkedIn: '+state.linkedin:''}</div>
+                    <div class="p-name">${state.fullName}${state.credentials ? ', ' + state.credentials : ''}</div>
+                    <div class="p-contact">
+                        Phone: ${state.phone} &bull; Email: ${state.email}
+                        ${state.address ? ' &bull; Address: ' + state.address : ''}
+                        ${state.linkedin ? ' &bull; LinkedIn: ' + state.linkedin : ''}
+                    </div>
                 </div>
             `;
 
-            if(state.summary.trim() !== "") {
-                html += `<div class="p-section"><div class="p-sectitle">Professional Summary</div><p class="p-text">${state.summary}</p></div>`;
+            if(state.summary && state.summary.trim() !== "") {
+                html += `
+                    <div class="p-section">
+                        <div class="p-sectitle">Professional Summary</div>
+                        <p class="p-text">${state.summary}</p>
+                    </div>
+                `;
             }
 
             if(state.education.length > 0) {
-                html += `<div class="p-section"><div class="p-sectitle">Education</div>`;
-                state.education.forEach(edu => {
-                    if(edu.degree || edu.school) {
-                        html += `<div class="p-row"><div class="p-left"><span class="p-bold">${edu.degree}</span> – ${edu.school}, ${edu.location}</div><div class="p-right">${edu.year}</div></div>`;
-                    }
-                });
-                html += `</div>`;
+                let hasData = state.education.some(e => e.degree || e.school);
+                if (hasData) {
+                    html += `<div class="p-section"><div class="p-sectitle">Education</div>`;
+                    state.education.forEach(edu => {
+                        if(edu.degree || edu.school) {
+                            html += `
+                                <table class="cv-table">
+                                    <tr>
+                                        <td class="td-left"><span class="p-bold">${edu.degree}</span> – ${edu.school}, ${edu.location}</td>
+                                        <td class="td-right">${edu.year}</td>
+                                    </tr>
+                                </table>`;
+                        }
+                    });
+                    html += `</div>`;
+                }
             }
 
             if(state.experience.length > 0) {
-                html += `<div class="p-section"><div class="p-sectitle">Professional Experience</div>`;
-                state.experience.forEach(exp => {
-                    if(exp.title || exp.org) {
-                        html += `
-                            <div class="p-row" style="margin-top:5px;">
-                                <div class="p-left"><span class="p-bold">${exp.title}</span> – ${exp.org}, ${exp.location}</div>
-                                <div class="p-right">${exp.endYear}</div>
-                            </div>
-                            <ul class="p-bullets">
-                        `;
-                        exp.bullets.forEach(b => {
-                            if(b && b.trim()!=="") html += `<li class="p-bullet-item">${b}</li>`;
-                        });
-                        html += `</ul>`;
-                    }
-                });
-                html += `</div>`;
+                let hasData = state.experience.some(e => e.title || e.org);
+                if (hasData) {
+                    html += `<div class="p-section"><div class="p-sectitle">Professional Experience</div>`;
+                    state.experience.forEach(exp => {
+                        if(exp.title || exp.org) {
+                            html += `
+                                <table class="cv-table" style="margin-top: 4px;">
+                                    <tr>
+                                        <td class="td-left"><span class="p-bold">${exp.title}</span> – ${exp.org}, ${exp.location}</td>
+                                        <td class="td-right">${exp.endYear}</td>
+                                    </tr>
+                                </table>
+                                <ul class="p-bullets">
+                            `;
+                            exp.bullets.forEach(b => {
+                                if(b && b.trim() !== "") html += `<li class="p-bullet-item">${b}</li>`;
+                            });
+                            html += `</ul>`;
+                        }
+                    });
+                    html += `</div>`;
+                }
             }
 
-            if(state.skills.trim() !== "") {
-                html += `<div class="p-section"><div class="p-sectitle">Clinical Skills</div><div class="p-grid">`;
-                state.skills.split(',').forEach(s => {
-                    if(s && s.trim()!=="") html += `<div class="p-grid-item">${s.trim()}</div>`;
+            if(state.skills && state.skills.trim() !== "") {
+                html += `<div class="p-section"><div class="p-sectitle">Clinical Skills</div><table class="skills-table"><tr>`;
+                let items = state.skills.split(',').map(s => s.trim()).filter(s => s !== "");
+                
+                let col1 = "";
+                let col2 = "";
+                items.forEach((item, index) => {
+                    if (index % 2 === 0) col1 += `<div>&bull; ${item}</div>`;
+                    else col2 += `<div>&bull; ${item}</div>`;
                 });
-                html += `</div></div>`;
+                
+                html += `<td>${col1}</td><td>${col2}</td></tr></table></div>`;
             }
 
             html += `<div class="p-section"><div class="p-sectitle">References</div><p class="p-text">Available upon request.</p></div>`;
@@ -426,7 +458,7 @@
         }
 
         function generateWord() {
-            let docContent = `
+            let docHeader = `
                 <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
                 <head>
                     <title>Academic CV</title>
@@ -438,29 +470,30 @@
                         .p-section { margin-top: 14pt; margin-bottom: 2pt; }
                         .p-sectitle { font-size: 13pt; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid black; padding-bottom: 2pt; margin: 12pt 0 6pt 0; letter-spacing: 0.5px; }
                         .w-table { width: 100%; border: none; margin-bottom: 2pt; }
-                        .w-left { text-align: left; font-size: 11pt; }
-                        .w-right { text-align: right; font-size: 10pt; }
+                        .w-left { text-align: left; font-size: 11pt; width: 80%; }
+                        .w-right { text-align: right; font-size: 11pt; width: 20%; }
                         .p-bold { font-weight: bold; }
-                        .p-text { font-size: 10.5pt; text-align: justify; margin: 0; }
-                        .w-bullet { font-size: 10pt; margin-left: 15pt; margin-bottom: 2pt; }
+                        .p-text { font-size: 11pt; text-align: justify; margin: 0; }
+                        .w-bullet { font-size: 10.5pt; margin-left: 15pt; margin-bottom: 2pt; }
+                        .w-skill-col { width: 50%; font-size: 10.5pt; }
                     </style>
                 </head>
                 <body>
                     <div class="p-header">
                         <div class="p-name">${state.fullName}${state.credentials ? ', ' + state.credentials : ''}</div>
-                        <div class="p-contact">Phone: ${state.phone} | Email: ${state.email}${state.address ? ' | Address: ' + state.address : ''}${state.linkedin ? ' | LinkedIn: ' + state.linkedin : ''}</div>
+                        <div class="p-contact">Phone: ${state.phone} &bull; Email: ${state.email}${state.address ? ' | Address: ' + state.address : ''}${state.linkedin ? ' | LinkedIn: ' + state.linkedin : ''}</div>
                     </div>
             `;
 
-            if(state.summary.trim() !== "") {
-                docContent += `<div class="p-section"><div class="p-sectitle">Professional Summary</div><p class="p-text">${state.summary}</p></div>`;
+            if(state.summary && state.summary.trim() !== "") {
+                docHeader += `<div class="p-section"><div class="p-sectitle">Professional Summary</div><p class="p-text">${state.summary}</p></div>`;
             }
 
             if(state.education.length > 0) {
-                docContent += `<div class="p-section"><div class="p-sectitle">Education</div>`;
+                docHeader += `<div class="p-section"><div class="p-sectitle">Education</div>`;
                 state.education.forEach(edu => {
                     if(edu.degree || edu.school) {
-                        docContent += `
+                        docHeader += `
                             <table class="w-table">
                                 <tr>
                                     <td class="w-left"><span class="p-bold">${edu.degree}</span> – ${edu.school}, ${edu.location}</td>
@@ -469,14 +502,14 @@
                             </table>`;
                     }
                 });
-                docContent += `</div>`;
+                docHeader += `</div>`;
             }
 
             if(state.experience.length > 0) {
-                docContent += `<div class="p-section"><div class="p-sectitle">Professional Experience</div>`;
+                docHeader += `<div class="p-section"><div class="p-sectitle">Professional Experience</div>`;
                 state.experience.forEach(exp => {
                     if(exp.title || exp.org) {
-                        docContent += `
+                        docHeader += `
                             <table class="w-table" style="margin-top: 5pt;">
                                 <tr>
                                     <td class="w-left"><span class="p-bold">${exp.title}</span> – ${exp.org}, ${exp.location}</td>
@@ -485,23 +518,26 @@
                             </table>`;
                         exp.bullets.forEach(b => {
                             if(b && b.trim() !== "") {
-                                docContent += `<div class="w-bullet">• ${b}</div>`;
+                                docHeader += `<div class="w-bullet">• ${b}</div>`;
                             }
                         });
                     }
                 });
-                docContent += `</div>`;
+                docHeader += `</div>`;
             }
 
-            if(state.skills.trim() !== "") {
-                docContent += `<div class="p-section"><div class="p-sectitle">Clinical Skills</div>`;
-                state.skills.split(',').forEach(s => {
-                    if(s && s.trim() !== "") docContent += `<div class="w-bullet">• ${s.trim()}</div>`;
+            if(state.skills && state.skills.trim() !== "") {
+                docHeader += `<div class="p-section"><div class="p-sectitle">Clinical Skills</div><table class="w-table"><tr>`;
+                let items = state.skills.split(',').map(s => s.trim()).filter(s => s !== "");
+                let c1 = ""; let c2 = "";
+                items.forEach((item, idx) => {
+                    if (idx % 2 === 0) c1 += `<div>• ${item}</div>`;
+                    else c2 += `<div>• ${item}</div>`;
                 });
-                docContent += `</div>`;
+                docHeader += `<td class="w-skill-col">${c1}</td><td class="w-skill-col">${c2}</td></tr></table></div>`;
             }
 
-            docContent += `
+            docHeader += `
                     <div class="p-section">
                         <div class="p-sectitle">References</div>
                         <p class="p-text">Available upon request.</p>
@@ -510,7 +546,7 @@
                 </html>
             `;
 
-            const blob = new Blob(['\ufeff' + docContent], {type: 'application/msword'});
+            const blob = new Blob(['\ufeff' + docHeader], {type: 'application/msword'});
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -521,14 +557,6 @@
         }
 
         window.onload = function() {
-            document.getElementById('fullName').value = state.fullName;
-            document.getElementById('credentials').value = state.credentials;
-            document.getElementById('phone').value = state.phone;
-            document.getElementById('email').value = state.email;
-            document.getElementById('address').value = state.address;
-            document.getElementById('linkedin').value = state.linkedin;
-            document.getElementById('summary').value = state.summary;
-            document.getElementById('skills').value = state.skills;
             init();
         };
     </script>
