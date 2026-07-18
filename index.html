@@ -100,31 +100,32 @@
                 <div class="form-row">
                     <div class="form-col">
                         <label>Full Name</label>
-                        <input type="text" id="fullName" placeholder="Jane Doe" oninput="handleTextInput('fullName', this.value)">
+                        <input type="text" id="fullName" placeholder="e.g., Jane Doe" oninput="handleTextInput('fullName', this.value)">
                     </div>
                     <div class="form-col">
                         <label>Credentials</label>
-                        <input type="text" id="credentials" placeholder="e.g., RN, BSN" oninput="handleTextInput('credentials', this.value)">
+                        <span class="subtitle" style="margin-bottom:4px; font-style:italic; color:#005A9C;">Order: Highest Degree, Licensure, State Designation & Certifications</span>
+                        <input type="text" id="credentials" placeholder="e.g., MSN, RN, APRN, CPN" oninput="handleTextInput('credentials', this.value)">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-col">
                         <label>Phone</label>
-                        <input type="text" id="phone" placeholder="(555) 123-4567" oninput="handleTextInput('phone', this.value)">
+                        <input type="text" id="phone" placeholder="e.g., (555) 123-4567" oninput="handleTextInput('phone', this.value)">
                     </div>
                     <div class="form-col">
                         <label>Email</label>
-                        <input type="text" id="email" placeholder="jdoe@organization.org" oninput="handleTextInput('email', this.value)">
+                        <input type="text" id="email" placeholder="e.g., jdoe@organization.org" oninput="handleTextInput('email', this.value)">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-col">
                         <label>Address (Optional)</label>
-                        <input type="text" id="address" placeholder="City, State" oninput="handleTextInput('address', this.value)">
+                        <input type="text" id="address" placeholder="e.g., City, State" oninput="handleTextInput('address', this.value)">
                     </div>
                     <div class="form-col">
                         <label>LinkedIn (Optional)</label>
-                        <input type="text" id="linkedin" placeholder="linkedin.com/in/username" oninput="handleTextInput('linkedin', this.value)">
+                        <input type="text" id="linkedin" placeholder="e.g., linkedin.com/in/username" oninput="handleTextInput('linkedin', this.value)">
                     </div>
                 </div>
             </div>
@@ -133,7 +134,7 @@
             <div class="card">
                 <h2>Professional Summary</h2>
                 <label>3–4 Sentence Professional Overview</label>
-                <textarea id="summary" placeholder="Overview..." oninput="handleSummaryInput(this.value)"></textarea>
+                <textarea id="summary" placeholder="Example: Compassionate and detail-oriented Registered Nurse with 5+ years of experience in acute care settings. Skilled in patient assessment, interdisciplinary collaboration, and delivering safe, evidence-based care. Known for excellent communication, strong critical-thinking skills, and commitment to patient advocacy." oninput="handleSummaryInput(this.value)"></textarea>
             </div>
 
             <!-- LICENSURE & CERTIFICATIONS -->
@@ -147,9 +148,9 @@
                 </div>
                 <div id="subform-rn" class="cert-subform">
                     <div class="form-row">
-                        <div class="form-col"><label>State of Licensure</label><input type="text" id="rnState" placeholder="MA" oninput="handleCertInput('rn', 'state', this.value)"></div>
-                        <div class="form-col"><label>License Number</label><input type="text" id="rnNum" placeholder="RN123456" oninput="handleCertInput('rn', 'num', this.value)"></div>
-                        <div class="form-col"><label>Expiration Date</label><input type="text" id="rnExp" placeholder="MM/DD/YYYY" oninput="handleCertInput('rn', 'exp', this.value)"></div>
+                        <div class="form-col"><label>State of Licensure</label><input type="text" id="rnState" placeholder="e.g., MA" oninput="handleCertInput('rn', 'state', this.value)"></div>
+                        <div class="form-col"><label>License Number</label><input type="text" id="rnNum" placeholder="e.g., RN123456" oninput="handleCertInput('rn', 'num', this.value)"></div>
+                        <div class="form-col"><label>Expiration Date</label><input type="text" id="rnExp" placeholder="e.g., MM/DD/YYYY" oninput="handleCertInput('rn', 'exp', this.value)"></div>
                     </div>
                 </div>
 
@@ -159,7 +160,7 @@
                 </div>
                 <div id="subform-bls" class="cert-subform">
                     <div class="form-row">
-                        <div class="form-col"><label>Expiration Date</label><input type="text" id="blsExp" placeholder="MM/DD/YYYY" oninput="handleCertInput('bls', 'exp', this.value)"></div>
+                        <div class="form-col"><label>Expiration Date</label><input type="text" id="blsExp" placeholder="e.g., MM/DD/YYYY" oninput="handleCertInput('bls', 'exp', this.value)"></div>
                     </div>
                 </div>
 
@@ -169,7 +170,7 @@
                 </div>
                 <div id="subform-acls" class="cert-subform">
                     <div class="form-row">
-                        <div class="form-col"><label>Expiration Date</label><input type="text" id="aclsExp" placeholder="MM/DD/YYYY" oninput="handleCertInput('acls', 'exp', this.value)"></div>
+                        <div class="form-col"><label>Expiration Date</label><input type="text" id="aclsExp" placeholder="e.g., MM/DD/YYYY" oninput="handleCertInput('acls', 'exp', this.value)"></div>
                     </div>
                 </div>
 
@@ -179,7 +180,7 @@
                 </div>
                 <div id="subform-pals" class="cert-subform">
                     <div class="form-row">
-                        <div class="form-col"><label>Expiration Date</label><input type="text" id="palsExp" placeholder="MM/DD/YYYY" oninput="handleCertInput('pals', 'exp', this.value)"></div>
+                        <div class="form-col"><label>Expiration Date</label><input type="text" id="palsExp" placeholder="e.g., MM/DD/YYYY" oninput="handleCertInput('pals', 'exp', this.value)"></div>
                     </div>
                 </div>
 
@@ -209,8 +210,8 @@
             <!-- SKILLS -->
             <div class="card">
                 <h2>Clinical Skills</h2>
-                <span class="subtitle">Comma-separated list. Preloaded items follow your custom configuration rules.</span>
-                <textarea id="skills" placeholder="Skills..." oninput="handleTextInput('skills', this.value)"></textarea>
+                <span class="subtitle">Comma-separated list of competencies.</span>
+                <textarea id="skills" placeholder="Patient Assessment & Triage, Medication Administration, Wound Care & Dressing Changes, IV Insertion & Line Management, Telemetry / Cardiac Monitoring, Chronic & Acute Care Management, Care Planning & Patient Education, EMR Systems (Epic, Cerner, Meditech)" oninput="handleTextInput('skills', this.value)"></textarea>
             </div>
 
             <!-- PROFESSIONAL MEMBERSHIPS -->
@@ -261,88 +262,31 @@
 
     <script>
         let state = {
-            fullName: "Jane Doe",
-            credentials: "RN, BSN",
-            phone: "(555) 123-4567",
-            email: "jdoe@organization.org",
-            address: "Boston, MA",
-            linkedin: "linkedin.com/in/username",
-            summary: "Compassionate and detail-oriented Registered Nurse with 5+ years of experience in acute care settings. Skilled in patient assessment, interdisciplinary collaboration, and delivering safe, evidence-based care. Known for excellent communication, strong critical-thinking skills, and commitment to patient advocacy.",
+            fullName: "",
+            credentials: "",
+            phone: "",
+            email: "",
+            address: "",
+            linkedin: "",
+            summary: "",
             certs: {
-                rn: { active: true, state: "__", num: "____", exp: "________" },
-                bls: { active: true, exp: "_______" },
-                acls: { active: true, exp: "________" },
-                pals: { active: true, exp: "________" }
+                rn: { active: false, state: "", num: "", exp: "" },
+                bls: { active: false, exp: "" },
+                acls: { active: false, exp: "" },
+                pals: { active: false, exp: "" }
             },
-            specialtyCerts: [
-                { title: "CCRN (Critical Care Registered Nurse)", exp: "________" }
-            ],
-            education: [
-                { degree: "BSN (Bachelor of Science in Nursing)", school: "School Name", location: "City, State", year: "Graduation Date (Month, Year)" }
-            ],
-            experience: [
-                { 
-                    title: "Staff Nurse / Charge Nurse", 
-                    org: "Organization Name", 
-                    location: "City, State", 
-                    startMonth: "Month", 
-                    startYear: "Year", 
-                    endMonth: "Present", 
-                    endYear: "Present", 
-                    bullets: [
-                        "Provide direct patient care to ______ population.",
-                        "Perform assessments, administer medications, and develop individualized care plans.",
-                        "Collaborate with interdisciplinary team members to ensure optimal outcomes.",
-                        "Document patient cares accurately in the EMR.",
-                        "Precepted new staff and students.",
-                        "Led quality improvement initiatives.",
-                        "Improved patient satisfaction scores or contributed to unit goals.",
-                        "Recognized with awards or shout-outs."
-                    ] 
-                }
-            ],
-            trainings: [
-                { name: "Workshops, seminars, continuing education modules", provider: "Leadership or preceptor training courses", year: "Quality improvement or safety training" }
-            ],
-            awards: [
-                { name: "DAISY nomination or award", body: "Employee of the Month/Quarter/Year", year: "Internal recognitions or letters of appreciation" }
-            ],
-            memberships: [
-                { name: "American Nurses Association (ANA)", role: "Specialty organizations (e.g., AACN, ENA)", year: "Local or facility-based committees or councils" }
-            ],
-            volunteers: [
-                { org: "Organization Name", role: "Role Title", year: "Dates Active", desc: "Brief description of contributions" }
-            ],
-            skills: "Patient Assessment & Triage, Medication Administration, Wound Care & Dressing Changes, IV Insertion & Line Management, Telemetry / Cardiac Monitoring, Chronic & Acute Care Management, Care Planning & Patient Education, EMR Systems (Epic, Cerner, Meditech)",
+            specialtyCerts: [],
+            education: [],
+            experience: [],
+            trainings: [],
+            awards: [],
+            memberships: [],
+            volunteers: [],
+            skills: "",
             isValid: true
         };
 
-        const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec", "Month"];
-        const YEARS = ["Present", "2027", "2026", "2025", "2024", "2023", "2022", "2021", "2020", "2019", "Year"];
-
         function init() {
-            document.getElementById('fullName').value = state.fullName;
-            document.getElementById('credentials').value = state.credentials;
-            document.getElementById('phone').value = state.phone;
-            document.getElementById('email').value = state.email;
-            document.getElementById('address').value = state.address;
-            document.getElementById('linkedin').value = state.linkedin;
-            document.getElementById('summary').value = state.summary;
-            document.getElementById('skills').value = state.skills;
-            
-            Object.keys(state.certs).forEach(k => {
-                let box = document.getElementById(`has${k.charAt(0).toUpperCase() + k.slice(1)}`);
-                if(box) box.checked = state.certs[k].active;
-                document.getElementById(`subform-${k}`).style.display = state.certs[k].active ? "block" : "none";
-                if(k === 'rn') {
-                    document.getElementById('rnState').value = state.certs.rn.state;
-                    document.getElementById('rnNum').value = state.certs.rn.num;
-                    document.getElementById('rnExp').value = state.certs.rn.exp;
-                } else {
-                    document.getElementById(`${k}Exp`).value = state.certs[k].exp;
-                }
-            });
-
             renderFormLists();
             updatePreview();
         }
@@ -372,8 +316,8 @@
                 specCont.innerHTML += `
                     <div style="background:#fcfcfc; padding:10px; border:1px solid #eee; margin-bottom:8px; border-radius:4px;">
                         <div class="form-row" style="margin-bottom:0;">
-                            <div class="form-col"><label>Certification Title</label><input type="text" value="${c.title}" oninput="updateSpecialtyCertField(${idx}, 'title', this.value)"></div>
-                            <div class="form-col"><label>Expiration Date</label><input type="text" value="${c.exp}" oninput="updateSpecialtyCertField(${idx}, 'exp', this.value)"></div>
+                            <div class="form-col"><label>Certification Title</label><input type="text" value="${c.title}" placeholder="e.g., CCRN" oninput="updateSpecialtyCertField(${idx}, 'title', this.value)"></div>
+                            <div class="form-col"><label>Expiration Date</label><input type="text" value="${c.exp}" placeholder="e.g., MM/DD/YYYY" oninput="updateSpecialtyCertField(${idx}, 'exp', this.value)"></div>
                             <div style="display:flex; align-items:flex-end; margin-bottom:12px;"><button class="btn-danger" style="margin-bottom:0; padding:8px 12px;" onclick="removeSpecialtyCert(${idx})">✕</button></div>
                         </div>
                     </div>`;
@@ -385,12 +329,12 @@
                 eduCont.innerHTML += `
                     <div style="background:#fcfcfc; padding:12px; border:1px solid #eee; margin-bottom:10px; border-radius:4px;">
                         <div class="form-row">
-                            <div class="form-col"><label>Degree / Qualification</label><input type="text" value="${edu.degree}" oninput="updateEduField(${idx}, 'degree', this.value)"></div>
-                            <div class="col"><label>Institution Name</label><input type="text" value="${edu.school}" oninput="updateEduField(${idx}, 'school', this.value)"></div>
+                            <div class="form-col"><label>Degree / Qualification</label><input type="text" value="${edu.degree}" placeholder="e.g., BSN" oninput="updateEduField(${idx}, 'degree', this.value)"></div>
+                            <div class="col"><label>Institution Name</label><input type="text" value="${edu.school}" placeholder="e.g., University Name" oninput="updateEduField(${idx}, 'school', this.value)"></div>
                         </div>
                         <div class="form-row">
-                            <div class="form-col"><label>Location (City, State)</label><input type="text" value="${edu.location}" oninput="updateEduField(${idx}, 'location', this.value)"></div>
-                            <div class="form-col"><label>Graduation Year/Date</label><input type="text" value="${edu.year}" oninput="updateEduField(${idx}, 'year', this.value)"></div>
+                            <div class="form-col"><label>Location (City, State)</label><input type="text" value="${edu.location}" placeholder="e.g., Boston, MA" oninput="updateEduField(${idx}, 'location', this.value)"></div>
+                            <div class="form-col"><label>Graduation Date</label><input type="text" value="${edu.year}" placeholder="e.g., Month, Year" oninput="updateEduField(${idx}, 'year', this.value)"></div>
                         </div>
                         <button class="btn-danger" onclick="removeEdu(${idx})">✕ Remove Entry</button>
                     </div>`;
@@ -403,7 +347,7 @@
                 exp.bullets.forEach((b, bIdx) => {
                     bulletsHtml += `
                         <div style="display:flex; gap:5px; margin-bottom:5px; align-items:center;">
-                            <input type="text" value="${b}" oninput="updateExpBullet(${idx}, ${bIdx}, this.value)" style="margin-bottom:0; flex:1;">
+                            <input type="text" value="${b}" placeholder="e.g., Provide direct patient care to..." oninput="updateExpBullet(${idx}, ${bIdx}, this.value)" style="margin-bottom:0; flex:1;">
                             <button class="btn-danger" onclick="removeExpBulletSlot(${idx}, ${bIdx})" style="margin-bottom:0; padding:8px;">✕</button>
                         </div>`;
                 });
@@ -411,17 +355,17 @@
                 expCont.innerHTML += `
                     <div style="background:#fcfcfc; padding:15px; border:1px solid #eee; margin-bottom:15px; border-radius:4px;">
                         <div class="form-row">
-                            <div class="form-col"><label>Job Title</label><input type="text" value="${exp.title}" oninput="updateExpField(${idx}, 'title', this.value)"></div>
-                            <div class="form-col"><label>Organization Name</label><input type="text" value="${exp.org}" oninput="updateExpField(${idx}, 'org', this.value)"></div>
+                            <div class="form-col"><label>Job Title</label><input type="text" value="${exp.title}" placeholder="e.g., Staff Nurse" oninput="updateExpField(${idx}, 'title', this.value)"></div>
+                            <div class="form-col"><label>Organization Name</label><input type="text" value="${exp.org}" placeholder="e.g., General Hospital" oninput="updateExpField(${idx}, 'org', this.value)"></div>
                         </div>
                         <div class="form-row">
-                            <div class="form-col"><label>Location (City, State)</label><input type="text" value="${exp.location}" oninput="updateExpField(${idx}, 'location', this.value)"></div>
+                            <div class="form-col"><label>Location (City, State)</label><input type="text" value="${exp.location}" placeholder="e.g., Boston, MA" oninput="updateExpField(${idx}, 'location', this.value)"></div>
                         </div>
                         <div class="form-row">
-                            <div class="form-col"><label>Start Month</label><input type="text" value="${exp.startMonth}" oninput="updateExpField(${idx}, 'startMonth', this.value)"></div>
-                            <div class="form-col"><label>Start Year</label><input type="text" value="${exp.startYear}" oninput="updateExpField(${idx}, 'startYear', this.value)"></div>
-                            <div class="form-col"><label>End Month</label><input type="text" value="${exp.endMonth}" oninput="updateExpField(${idx}, 'endMonth', this.value)"></div>
-                            <div class="form-col"><label>End Year</label><input type="text" value="${exp.endYear}" oninput="updateExpField(${idx}, 'endYear', this.value)"></div>
+                            <div class="form-col"><label>Start Month</label><input type="text" value="${exp.startMonth}" placeholder="e.g., Month" oninput="updateExpField(${idx}, 'startMonth', this.value)"></div>
+                            <div class="form-col"><label>Start Year</label><input type="text" value="${exp.startYear}" placeholder="e.g., Year" oninput="updateExpField(${idx}, 'startYear', this.value)"></div>
+                            <div class="form-col"><label>End Month</label><input type="text" value="${exp.endMonth}" placeholder="e.g., Present" oninput="updateExpField(${idx}, 'endMonth', this.value)"></div>
+                            <div class="form-col"><label>End Year</label><input type="text" value="${exp.endYear}" placeholder="e.g., Present" oninput="updateExpField(${idx}, 'endYear', this.value)"></div>
                         </div>
                         <label style="color:#005A9C; margin-top:10px;">Responsibilities & Accomplishments</label>
                         ${bulletsHtml}
@@ -438,9 +382,9 @@
                 trainCont.innerHTML += `
                     <div style="background:#fcfcfc; padding:12px; border:1px solid #eee; margin-bottom:10px; border-radius:4px;">
                         <div class="form-row">
-                            <div class="form-col"><label>Modules / Workshops</label><input type="text" value="${t.name}" oninput="updateListField('trainings', ${idx}, 'name', this.value)"></div>
-                            <div class="form-col"><label>Courses</label><input type="text" value="${t.provider}" oninput="updateListField('trainings', ${idx}, 'provider', this.value)"></div>
-                            <div class="form-col"><label>QI Training</label><input type="text" value="${t.year}" oninput="updateListField('trainings', ${idx}, 'year', this.value)"></div>
+                            <div class="form-col"><label>Modules / Workshops</label><input type="text" value="${t.name}" placeholder="e.g., Continuing education modules" oninput="updateListField('trainings', ${idx}, 'name', this.value)"></div>
+                            <div class="form-col"><label>Courses</label><input type="text" value="${t.provider}" placeholder="e.g., Leadership courses" oninput="updateListField('trainings', ${idx}, 'provider', this.value)"></div>
+                            <div class="form-col"><label>QI Training</label><input type="text" value="${t.year}" placeholder="e.g., Quality or safety training" oninput="updateListField('trainings', ${idx}, 'year', this.value)"></div>
                         </div>
                         <button class="btn-danger" onclick="removeListEntry('trainings', ${idx})">✕ Remove Module</button>
                     </div>`;
@@ -452,9 +396,9 @@
                 awardCont.innerHTML += `
                     <div style="background:#fcfcfc; padding:12px; border:1px solid #eee; margin-bottom:10px; border-radius:4px;">
                         <div class="form-row">
-                            <div class="form-col"><label>Nominations / Awards</label><input type="text" value="${a.name}" oninput="updateListField('awards', ${idx}, 'name', this.value)"></div>
-                            <div class="form-col"><label>Employee Highlights</label><input type="text" value="${a.body}" oninput="updateListField('awards', ${idx}, 'body', this.value)"></div>
-                            <div class="form-col"><label>Internal Recognitions</label><input type="text" value="${a.year}" oninput="updateListField('awards', ${idx}, 'year', this.value)"></div>
+                            <div class="form-col"><label>Nominations / Awards</label><input type="text" value="${a.name}" placeholder="e.g., DAISY nomination or award" oninput="updateListField('awards', ${idx}, 'name', this.value)"></div>
+                            <div class="form-col"><label>Employee Highlights</label><input type="text" value="${a.body}" placeholder="e.g., Employee of the Month" oninput="updateListField('awards', ${idx}, 'body', this.value)"></div>
+                            <div class="form-col"><label>Internal Recognitions</label><input type="text" value="${a.year}" placeholder="e.g., Letters of appreciation" oninput="updateListField('awards', ${idx}, 'year', this.value)"></div>
                         </div>
                         <button class="btn-danger" onclick="removeListEntry('awards', ${idx})">✕ Remove Award</button>
                     </div>`;
@@ -466,9 +410,9 @@
                 memCont.innerHTML += `
                     <div style="background:#fcfcfc; padding:12px; border:1px solid #eee; margin-bottom:10px; border-radius:4px;">
                         <div class="form-row">
-                            <div class="form-col"><label>ANA Membership</label><input type="text" value="${mem.name}" oninput="updateListField('memberships', ${idx}, 'name', this.value)"></div>
-                            <div class="form-col"><label>Specialty Organizations</label><input type="text" value="${mem.role}" oninput="updateListField('memberships', ${idx}, 'role', this.value)"></div>
-                            <div class="form-col"><label>Local Committees</label><input type="text" value="${mem.year}" oninput="updateListField('memberships', ${idx}, 'year', this.value)"></div>
+                            <div class="form-col"><label>ANA Membership</label><input type="text" value="${mem.name}" placeholder="e.g., American Nurses Association" oninput="updateListField('memberships', ${idx}, 'name', this.value)"></div>
+                            <div class="form-col"><label>Specialty Organizations</label><input type="text" value="${mem.role}" placeholder="e.g., AACN, ENA" oninput="updateListField('memberships', ${idx}, 'role', this.value)"></div>
+                            <div class="form-col"><label>Local Committees</label><input type="text" value="${mem.year}" placeholder="e.g., Facility-based committees" oninput="updateListField('memberships', ${idx}, 'year', this.value)"></div>
                         </div>
                         <button class="btn-danger" onclick="removeListEntry('memberships', ${idx})">✕ Remove Membership</button>
                     </div>`;
@@ -480,43 +424,18 @@
                 volCont.innerHTML += `
                     <div style="background:#fcfcfc; padding:15px; border:1px solid #eee; margin-bottom:15px; border-radius:4px;">
                         <div class="form-row">
-                            <div class="form-col"><label>Organization</label><input type="text" value="${v.org}" oninput="updateListField('volunteers', ${idx}, 'org', this.value)"></div>
-                            <div class="form-col"><label>Role</label><input type="text" value="${v.role}" oninput="updateListField('volunteers', ${idx}, 'role', this.value)"></div>
-                            <div class="form-col"><label>Dates</label><input type="text" value="${v.year}" oninput="updateListField('volunteers', ${idx}, 'year', this.value)"></div>
+                            <div class="form-col"><label>Organization</label><input type="text" value="${v.org}" placeholder="Organization name" oninput="updateListField('volunteers', ${idx}, 'org', this.value)"></div>
+                            <div class="form-col"><label>Role</label><input type="text" value="${v.role}" placeholder="Role title" oninput="updateListField('volunteers', ${idx}, 'role', this.value)"></div>
+                            <div class="form-col"><label>Dates</label><input type="text" value="${v.year}" placeholder="Dates Active" oninput="updateListField('volunteers', ${idx}, 'year', this.value)"></div>
                         </div>
                         <label>Brief Description of Contributions</label>
-                        <input type="text" value="${v.desc}" oninput="updateListField('volunteers', ${idx}, 'desc', this.value)">
+                        <input type="text" value="${v.desc}" placeholder="Describe contributions here..." oninput="updateListField('volunteers', ${idx}, 'desc', this.value)">
                         <button class="btn-danger" onclick="removeListEntry('volunteers', ${idx})">✕ Remove Volunteer Card</button>
                     </div>`;
             });
         }
 
-        function getYearVal(y) {
-            if (y === 'Present' || y === 'Year') return 9999;
-            return parseInt(y) || 0;
-        }
-
-        function checkChronology() {
-            let valid = true;
-            for(let i=0; i<state.education.length-1; i++) {
-                if(getYearVal(state.education[i].year) < getYearVal(state.education[i+1].year)) { valid = false; }
-            }
-            for(let i=0; i<state.experience.length-1; i++) {
-                if(getYearVal(state.experience[i].endYear) < getYearVal(state.experience[i+1].endYear)) { valid = false; }
-            }
-            state.isValid = valid;
-            const errBox = document.getElementById('chronError');
-            const btnP = document.getElementById('btnPdf');
-            const btnW = document.getElementById('btnWord');
-            if(!valid) {
-                errBox.style.display = 'block'; btnP.disabled = true; btnW.disabled = true;
-                btnP.style.background = '#ccc'; btnW.style.background = '#ccc';
-            } else {
-                errBox.style.display = 'none'; btnP.disabled = false; btnW.disabled = false;
-                btnP.style.background = '#2e7d32'; btnW.style.background = '#185abd';
-            }
-            updatePreview();
-        }
+        function checkChronology() { updatePreview(); }
 
         function updatePreview() {
             const summaryVal = document.getElementById('summary') ? document.getElementById('summary').value : state.summary;
@@ -532,7 +451,6 @@
                 </div>
             `;
 
-            // Professional Summary
             if(summaryVal && summaryVal.trim() !== "") {
                 html += `
                     <div class="p-section">
@@ -541,7 +459,6 @@
                     </div>`;
             }
 
-            // Licensure & Certifications
             let hasStandardCerts = Object.keys(state.certs).some(k => state.certs[k].active);
             let hasSpecialtyCerts = state.specialtyCerts.some(c => c.title);
             if (hasStandardCerts || hasSpecialtyCerts) {
@@ -553,13 +470,13 @@
                             html += `
                                 <table class="p-print-table">
                                     <tr>
-                                        <td class="p-left-cell">Registered Nurse (RN) – State of ${c.state || '__'}, License # ${c.num || '____'}</td>
-                                        <td class="p-right-cell">Exp. ${c.exp || '________'}</td>
+                                        <td class="p-left-cell">Registered Nurse (RN) – State of ${c.state || '____'}, License # ${c.num || '____'}</td>
+                                        <td class="p-right-cell">${c.exp ? 'Exp. ' + c.exp : 'Exp. ________'}</td>
                                     </tr>
                                 </table>`;
                         } else {
                             let titles = { bls: "Basic Life Support (BLS)", acls: "Advanced Cardiovascular Life Support (ACLS)", pals: "Pediatric Advanced Life Support (PALS)" };
-                            html += `<table class="p-print-table"><tr><td class="p-left-cell">${titles[k]}</td><td class="p-right-cell">Exp. ${c.exp || '________'}</td></tr></table>`;
+                            html += `<table class="p-print-table"><tr><td class="p-left-cell">${titles[k]}</td><td class="p-right-cell">${c.exp ? 'Exp. ' + c.exp : 'Exp. ________'}</td></tr></table>`;
                         }
                     }
                 });
@@ -571,7 +488,6 @@
                 html += `</div>`;
             }
 
-            // Education
             if(state.education.length > 0 && state.education.some(e => e.degree || e.school)) {
                 html += `<div class="p-section"><div class="p-sectitle">Education</div>`;
                 state.education.forEach(edu => {
@@ -588,7 +504,6 @@
                 html += `</div>`;
             }
 
-            // Professional Experience
             if(state.experience.length > 0 && state.experience.some(e => e.title || e.org)) {
                 html += `<div class="p-section"><div class="p-sectitle">Professional Experience</div>`;
                 state.experience.forEach(exp => {
@@ -609,7 +524,6 @@
                 html += `</div>`;
             }
 
-            // Clinical Skills (Strictly Placed directly under Experience matching your precise map)
             if(state.skills && state.skills.trim() !== "") {
                 html += `<div class="p-section"><div class="p-sectitle">Clinical Skills</div><table class="skills-table"><tr>`;
                 let items = state.skills.split(',').map(s => s.trim()).filter(s => s !== "");
@@ -621,40 +535,36 @@
                 html += `<td>${col1}</td><td>${col2}</td></tr></table></div>`;
             }
 
-            // Professional Memberships
-            if(state.memberships.length > 0 && state.memberships.some(m => m.name)) {
+            if(state.memberships.length > 0 && state.memberships.some(m => m.name || m.role || m.year)) {
                 html += `<div class="p-section"><div class="p-sectitle">Professional Memberships</div>`;
-                state.memberships.forEach(mem => { if(mem.name) {
-                    html += `<div class="p-bullet-item">&bull; ${mem.name}</div>`;
+                state.memberships.forEach(mem => { 
+                    if(mem.name) html += `<div class="p-bullet-item">&bull; ${mem.name}</div>`;
                     if(mem.role) html += `<div class="p-bullet-item" style="margin-left:15px;">&bull; ${mem.role}</div>`;
                     if(mem.year) html += `<div class="p-bullet-item" style="margin-left:15px;">&bull; ${mem.year}</div>`;
-                }});
+                });
                 html += `</div>`;
             }
 
-            // Professional Development & Training
-            if(state.trainings.length > 0 && state.trainings.some(t => t.name)) {
+            if(state.trainings.length > 0 && state.trainings.some(t => t.name || t.provider || t.year)) {
                 html += `<div class="p-section"><div class="p-sectitle">Professional Development & Training</div>`;
-                state.trainings.forEach(t => { if(t.name) {
-                    html += `<div class="p-bullet-item">&bull; ${t.name}</div>`;
+                state.trainings.forEach(t => {
+                    if(t.name) html += `<div class="p-bullet-item">&bull; ${t.name}</div>`;
                     if(t.provider) html += `<div class="p-bullet-item" style="margin-left:15px;">&bull; ${t.provider}</div>`;
                     if(t.year) html += `<div class="p-bullet-item" style="margin-left:15px;">&bull; ${t.year}</div>`;
-                }});
+                });
                 html += `</div>`;
             }
 
-            // Awards & Recognition
-            if(state.awards.length > 0 && state.awards.some(a => a.name)) {
+            if(state.awards.length > 0 && state.awards.some(a => a.name || a.body || a.year)) {
                 html += `<div class="p-section"><div class="p-sectitle">Awards & Recognition</div>`;
-                state.awards.forEach(a => { if(a.name) {
-                    html += `<div class="p-bullet-item">&bull; ${a.name}</div>`;
+                state.awards.forEach(a => {
+                    if(a.name) html += `<div class="p-bullet-item">&bull; ${a.name}</div>`;
                     if(a.body) html += `<div class="p-bullet-item" style="margin-left:15px;">&bull; ${a.body}</div>`;
                     if(a.year) html += `<div class="p-bullet-item" style="margin-left:15px;">&bull; ${a.year}</div>`;
-                }});
+                });
                 html += `</div>`;
             }
 
-            // Volunteer Experience
             if(state.volunteers.length > 0 && state.volunteers.some(v => v.org)) {
                 html += `<div class="p-section"><div class="p-sectitle">Volunteer Experience</div>`;
                 state.volunteers.forEach(v => { if(v.org) {
@@ -665,7 +575,6 @@
                 html += `</div>`;
             }
 
-            // References
             html += `<div class="p-section"><div class="p-sectitle">References</div><p class="p-text">Available upon request.</p></div>`;
             document.getElementById('preview').innerHTML = html;
         }
@@ -750,10 +659,10 @@
             if (hasStandardCerts || hasSpecialtyCerts) {
                 docHeader += `<div class="p-section"><div class="p-sectitle">Licensure & Certifications</div>`;
                 Object.keys(state.certs).forEach(k => { let c = state.certs[k]; if (c.active) {
-                    if (k === 'rn') { docHeader += `<table class="w-table"><tr><td class="w-left">Registered Nurse (RN) – State of ${c.state || '__'}, License # ${c.num || '____'}</td><td class="w-right">Exp. ${c.exp || '________'}</td></tr></table>`; }
-                    else { let titles = { bls: "Basic Life Support (BLS)", acls: "Advanced Cardiovascular Life Support (ACLS)", pals: "Pediatric Advanced Life Support (PALS)" }; docHeader += `<table class="w-table"><tr><td class="w-left">${titles[k]}</td><td class="w-right">Exp. ${c.exp || '________'}</td></tr></table>`; }
+                    if (k === 'rn') { docHeader += `<table class="w-table"><tr><td class="w-left">Registered Nurse (RN) – State of ${c.state || '____'}, License # ${c.num || '____'}</td><td class="w-right">${c.exp ? 'Exp. ' + c.exp : 'Exp. ________'}</td></tr></table>`; }
+                    else { let titles = { bls: "Basic Life Support (BLS)", acls: "Advanced Cardiovascular Life Support (ACLS)", pals: "Pediatric Advanced Life Support (PALS)" }; docHeader += `<table class="w-table"><tr><td class="w-left">${titles[k]}</td><td class="w-right">${c.exp ? 'Exp. ' + c.exp : 'Exp. ________'}</td></tr></table>`; }
                 }});
-                state.specialtyCerts.forEach(c => { if (c.title) { docHeader += `<table class="w-table"><tr><td class="w-left">${c.title}</td><td class="w-right">Exp. ${c.exp || '________'}</td></tr></table>`; } });
+                state.specialtyCerts.forEach(c => { if (c.title) { docHeader += `<table class="w-table"><tr><td class="w-left">${c.title}</td><td class="w-right">${c.exp ? 'Exp. ' + c.exp : 'Exp. ________'}</td></tr></table>`; } });
                 docHeader += `</div>`;
             }
 
@@ -780,33 +689,33 @@
                 docHeader += `<td class="w-skill-col">${c1}</td><td class="w-skill-col">${c2}</td></tr></table></div>`;
             }
 
-            if(state.memberships.length > 0 && state.memberships.some(m => m.name)) {
+            if(state.memberships.length > 0 && state.memberships.some(m => m.name || m.role || m.year)) {
                 docHeader += `<div class="p-section"><div class="p-sectitle">Professional Memberships</div>`;
-                state.memberships.forEach(mem => { if(mem.name) { 
-                    docHeader += `<div class="w-bullet">• ${mem.name}</div>`; 
+                state.memberships.forEach(mem => { 
+                    if(mem.name) docHeader += `<div class="w-bullet">• ${mem.name}</div>`; 
                     if(mem.role) docHeader += `<div class="w-bullet" style="margin-left:15pt;">• ${mem.role}</div>`;
                     if(mem.year) docHeader += `<div class="w-bullet" style="margin-left:15pt;">• ${mem.year}</div>`;
-                }});
+                });
                 docHeader += `</div>`;
             }
 
-            if(state.trainings.length > 0 && state.trainings.some(t => t.name)) {
+            if(state.trainings.length > 0 && state.trainings.some(t => t.name || t.provider || t.year)) {
                 docHeader += `<div class="p-section"><div class="p-sectitle">Professional Development & Training</div>`;
-                state.trainings.forEach(t => { if(t.name) { 
-                    docHeader += `<div class="w-bullet">• ${t.name}</div>`; 
+                state.trainings.forEach(t => { 
+                    if(t.name) docHeader += `<div class="w-bullet">• ${t.name}</div>`; 
                     if(t.provider) docHeader += `<div class="w-bullet" style="margin-left:15pt;">• ${t.provider}</div>`;
                     if(t.year) docHeader += `<div class="w-bullet" style="margin-left:15pt;">• ${t.year}</div>`;
-                }});
+                });
                 docHeader += `</div>`;
             }
 
-            if(state.awards.length > 0 && state.awards.some(a => a.name)) {
+            if(state.awards.length > 0 && state.awards.some(a => a.name || a.body || a.year)) {
                 docHeader += `<div class="p-section"><div class="p-sectitle">Awards & Recognition</div>`;
-                state.awards.forEach(a => { if(a.name) { 
-                    docHeader += `<div class="w-bullet">• ${a.name}</div>`; 
+                state.awards.forEach(a => { 
+                    if(a.name) docHeader += `<div class="w-bullet">• ${a.name}</div>`; 
                     if(a.body) docHeader += `<div class="w-bullet" style="margin-left:15pt;">• ${a.body}</div>`;
                     if(a.year) docHeader += `<div class="w-bullet" style="margin-left:15pt;">• ${a.year}</div>`;
-                }});
+                });
                 docHeader += `</div>`;
             }
 
